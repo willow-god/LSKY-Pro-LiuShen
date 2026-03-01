@@ -180,6 +180,11 @@
         {{-- 底部 --}}
         <footer class="relative z-10 py-4" style="background: rgba(255,255,255,0.6); border-top: 1px solid rgba(16,185,129,0.08);">
             <p class="text-center text-slate-400 text-xs">
+                初始项目:&nbsp;<a href="https://github.com/lsky-org/lsky-pro" target="_blank" rel="noreferrer" class="hover:text-emerald-500 transition-colors">兰空图床</a>
+                &nbsp;|&nbsp;
+                UI设计:&nbsp;<a href="https://github.com/willow-god/LSKY-Pro-LiuShen" target="_blank" rel="noreferrer" class="hover:text-emerald-500 transition-colors">清羽飞扬</a>
+            </p>
+            <p class="text-center text-slate-400 text-xs mt-1">
                 &copy; {{ date('Y') }} {{ \App\Utils::config(\App\Enums\ConfigKey::AppName) }}. All rights reserved.
                 @if(\App\Utils::config(\App\Enums\ConfigKey::IcpNo))
                 &nbsp;&middot;&nbsp; <a href="https://beian.miit.gov.cn/" target="_blank" rel="noreferrer" class="hover:text-emerald-500 transition-colors">{{ \App\Utils::config(\App\Enums\ConfigKey::IcpNo) }}</a>

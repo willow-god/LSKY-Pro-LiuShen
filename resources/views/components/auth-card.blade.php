@@ -72,6 +72,11 @@
             {{ $slot }}
         </div>
         <p class="mt-10 text-xs text-slate-400 text-center relative z-10">
+            初始项目:&nbsp;<a href="https://github.com/lsky-org/lsky-pro" target="_blank" rel="noreferrer" class="hover:text-emerald-400 transition-colors">兰空图床</a>
+            &nbsp;|&nbsp;
+            UI设计:&nbsp;<a href="https://github.com/willow-god/LSKY-Pro-LiuShen" target="_blank" rel="noreferrer" class="hover:text-emerald-400 transition-colors">清羽飞扬</a>
+        </p>
+        <p class="mt-1 text-xs text-slate-400 text-center relative z-10">
             &copy; {{ date('Y') }} {{ \App\Utils::config(\App\Enums\ConfigKey::AppName) }}
             @if(\App\Utils::config(\App\Enums\ConfigKey::IcpNo))
             &nbsp;&middot;&nbsp; <a href="https://beian.miit.gov.cn/" target="_blank" class="hover:text-emerald-400 transition-colors">{{ \App\Utils::config(\App\Enums\ConfigKey::IcpNo) }}</a>
