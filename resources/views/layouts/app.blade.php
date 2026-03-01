@@ -10,16 +10,22 @@
     <title>{{ \App\Utils::config(\App\Enums\ConfigKey::AppName) }}</title>
 
     <!-- Fonts -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+    <!-- FontAwesome -->
     <link rel="stylesheet" href="{{ asset('css/fontawesome.css') }}">
     @stack('styles')
 
     <!-- Styles -->
-    <link rel="stylesheet" href="{{ asset('css/common.css') }}?t=20220817">
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}?t=20220817">
+    <link rel="stylesheet" href="{{ asset('css/common.css') }}?t=20260302">
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}?t=20260302">
+    <style>
+        body { font-family: 'Inter', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans CJK SC', 'Source Han Sans SC', 'WenQuanYi Micro Hei', sans-serif; }
+    </style>
 </head>
 <body class="font-sans antialiased overflow-hidden">
-<div class="min-h-screen bg-gray-100" x-data x-cloak>
+<div class="min-h-screen" style="background-color: #f1f5f9;" x-data x-cloak>
     @include('layouts.sidebar')
     @include('layouts.header')
     <div

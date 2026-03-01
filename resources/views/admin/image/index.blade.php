@@ -2,9 +2,15 @@
 
 <x-app-layout>
     <div class="p-2">
+        <div class="mb-2 mt-4 flex items-center gap-2.5">
+            <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background: linear-gradient(135deg, rgba(16,185,129,0.15), rgba(13,148,136,0.15));">
+                <i class="fas fa-photo-video text-sm" style="color: #059669;"></i>
+            </div>
+            <h2 class="font-bold text-lg text-slate-800">图片管理</h2>
+        </div>
         <form class="w-full flex items-center justify-center py-3 md:py-5 lg:py-7" action="{{ route('admin.images') }}" method="get">
             <div class="w-full md:w-[70%] lg:w-[60%] flex flex-col">
-                <input class="px-4 py-2 text-md rounded-md bg-white" name="keywords" placeholder="输入关键字回车搜索..." value="{{ request('keywords') }}" />
+                <input class="px-4 py-2.5 text-sm rounded-xl bg-white border border-slate-200 text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-400 shadow-sm" name="keywords" placeholder="输入关键字回车搜索..." value="{{ request('keywords') }}" />
                 <div class="w-full flex justify-end">
                     <a href="javascript:void(0)" id="grammar" class="inline-block mt-2 text-xs text-gray-600">高级搜索语法</a>
                 </div>
@@ -29,7 +35,7 @@
                         <i data-id="{{ $image->id }}" class="delete fas fa-trash text-red-500 w-4 h-4"></i>
                     </div>
 
-                    <div class="p-2 bg-white w-full flex items-center">
+                    <div class="p-2 bg-slate-50 border-t border-slate-100 w-full flex items-center">
                         @if($image->user)
                             <div class="item-user flex items-center">
                                 <img src="{{ $image->user->avatar }}" class="w-6 h-6 rounded-full">
@@ -163,7 +169,7 @@
                 </dl>
             </div>
 
-            <a href="javascript:void(0)" data-id="__id__" class="delete inline-flex justify-center py-1 px-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 float-right bg-red-500">
+            <a href="javascript:void(0)" data-id="__id__" class="delete inline-flex justify-center py-1 px-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 float-right bg-red-500">
                 删除
             </a>
         </div>

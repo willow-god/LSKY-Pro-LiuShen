@@ -1,112 +1,322 @@
 @import '~toastr';
 
+// ==========================================
+// CSS 变量 - 现代设计系统
+// ==========================================
+:root {
+    --primary: #10b981;
+    --primary-dark: #059669;
+    --primary-light: #34d399;
+    --secondary: #0d9488;
+    --accent: #06b6d4;
+    --sidebar-bg: #ffffff;
+    --sidebar-hover: rgba(16, 185, 129, 0.1);
+    --sidebar-active-bg: rgba(16, 185, 129, 0.12);
+    --sidebar-border: rgba(16, 185, 129, 0.2);
+    --sidebar-text: #065f46;
+    --sidebar-text-muted: #34d399;
+    --header-bg: rgba(255, 255, 255, 0.95);
+    --content-bg: #f1f5f9;
+    --card-bg: #ffffff;
+    --card-shadow: 0 1px 3px 0 rgba(0,0,0,0.07), 0 4px 15px 0 rgba(16,185,129,0.06);
+    --card-shadow-hover: 0 4px 20px 0 rgba(0,0,0,0.1), 0 8px 30px 0 rgba(16,185,129,0.12);
+    --border-color: #e2e8f0;
+    --text-primary: #1e293b;
+    --text-secondary: #64748b;
+    --text-muted: #94a3b8;
+    --radius: 12px;
+    --radius-sm: 8px;
+    --radius-lg: 16px;
+    --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+// ==========================================
+// 全局重置与基础样式
+// ==========================================
 [x-cloak] { display: none !important; }
 
+* {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    font-family: 'Inter', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans CJK SC', 'Source Han Sans SC', 'WenQuanYi Micro Hei', sans-serif;
+    background-color: var(--content-bg);
+    color: var(--text-primary);
+}
+
+// ==========================================
+// 滚动条美化
+// ==========================================
 .scrollbar-none::-webkit-scrollbar {
     display: none;
 }
 
 .scrollbar-none {
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 }
 
-// 滚动条样式
 ::-webkit-scrollbar {
-    width: 8px;
-    min-height: 8px;
-    height: 100%;
+    width: 5px;
+    min-height: 5px;
+    height: 5px;
 }
 
 ::-webkit-scrollbar-thumb {
-    border-radius: 6px;
-    background: #cad3e2;
+    border-radius: 999px;
+    background: linear-gradient(180deg, #34d399, #0d9488);
 }
 
 ::-webkit-scrollbar-track {
-    border-radius: 6px;
-    background: rgb(255, 255, 255);
+    border-radius: 999px;
+    background: transparent;
+}
+
+// ==========================================
+// 进度条容量样式
+// ==========================================
+progress {
+    border-radius: 999px;
+    overflow: hidden;
+    border: none;
+    appearance: none;
+    -webkit-appearance: none;
 }
 
 progress::-webkit-progress-bar {
-    background-color: #d7d7d7;
+    background-color: rgba(99, 102, 241, 0.12);
+    border-radius: 999px;
 }
 
 progress::-webkit-progress-value {
-    background-color: #5dcafa;
+    background: linear-gradient(90deg, #10b981, #0d9488);
+    border-radius: 999px;
+    transition: width 0.5s ease;
+}
+
+progress::-moz-progress-bar {
+    background: linear-gradient(90deg, #10b981, #0d9488);
+    border-radius: 999px;
 }
 
 #capacity-progress {
     progress.green {
-        &::-webkit-progress-value {
-            background: #00ab00;
-        }
+        &::-webkit-progress-value { background: linear-gradient(90deg, #10b981, #34d399); }
     }
     progress.yellowgreen {
-        &::-webkit-progress-value {
-            background: yellowgreen;
-        }
+        &::-webkit-progress-value { background: linear-gradient(90deg, #84cc16, #a3e635); }
     }
     progress.yellow {
-        &::-webkit-progress-value {
-            background: #b9b900;
-        }
+        &::-webkit-progress-value { background: linear-gradient(90deg, #eab308, #facc15); }
     }
     progress.orange {
-        &::-webkit-progress-value {
-            background: #ff9900;
-        }
+        &::-webkit-progress-value { background: linear-gradient(90deg, #f97316, #fb923c); }
     }
     progress.red {
-        &::-webkit-progress-value {
-            background: #ff4141;
-        }
+        &::-webkit-progress-value { background: linear-gradient(90deg, #ef4444, #f87171); }
     }
 }
 
+// ==========================================
+// Toast 通知样式（毛玻璃现代风格）
+// ==========================================
 #toast-container {
+    // 修复宽度与定位
+    &.toast-bottom-right {
+        bottom: 24px;
+        right: 24px;
+    }
+
     & > div {
-        font-size: 13px;
-        padding: 10px 10px 10px 50px;
-        box-shadow: 0 0 12px rgba(183, 183, 183, 0.47);
+        // 清除 toastr 默认的 background-image 勾号图标（根源修复）
+        background-image: none !important;
+        // 毛玻璃基底
+        background-color: rgba(255, 255, 255, 0.88) !important;
+        backdrop-filter: blur(20px) saturate(1.6);
+        -webkit-backdrop-filter: blur(20px) saturate(1.6);
+
+        font-size: 13.5px;
+        font-weight: 500;
+        color: #1e293b !important;
+        min-width: 280px;
+        max-width: 360px;
+        padding: 14px 42px 14px 54px;
+        border-radius: 14px;
+        border: 1px solid rgba(255, 255, 255, 0.6);
+        box-shadow:
+            0 4px 24px rgba(0, 0, 0, 0.10),
+            0 1px 4px rgba(0, 0, 0, 0.06),
+            inset 0 1px 0 rgba(255, 255, 255, 0.8);
+        margin-bottom: 10px;
+        transition: box-shadow 0.2s, transform 0.2s;
+        position: relative;
 
         &:hover {
-            box-shadow: 0 0 12px rgba(161, 161, 161, 0.47);
+            box-shadow:
+                0 8px 36px rgba(0, 0, 0, 0.14),
+                0 2px 8px rgba(0, 0, 0, 0.08);
+            transform: translateY(-1px);
         }
+
+        // 标题
+        .toast-title {
+            font-size: 13.5px;
+            font-weight: 700;
+            color: #0f172a;
+        }
+
+        // 内容文字
+        .toast-message {
+            font-size: 13px;
+            color: #475569;
+            font-weight: 400;
+            margin-top: 2px;
+        }
+    }
+
+    // 左侧彩色 accent 条 + FontAwesome 图标（通过 ::before 伪元素替换 background-image）
+    .toast-success {
+        border-left: 4px solid #10b981 !important;
+        &::before {
+            content: '\f058'; // fa-check-circle
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 18px;
+            color: #10b981;
+        }
+    }
+
+    .toast-error {
+        border-left: 4px solid #ef4444 !important;
+        &::before {
+            content: '\f057'; // fa-times-circle
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 18px;
+            color: #ef4444;
+        }
+    }
+
+    .toast-warning {
+        border-left: 4px solid #f59e0b !important;
+        &::before {
+            content: '\f071'; // fa-exclamation-triangle
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 17px;
+            color: #f59e0b;
+        }
+    }
+
+    .toast-info {
+        border-left: 4px solid #0ea5e9 !important;
+        &::before {
+            content: '\f05a'; // fa-info-circle
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 18px;
+            color: #0ea5e9;
+        }
+    }
+
+    // 进度条
+    .toast-progress {
+        bottom: 0;
+        left: 0;
+        height: 3px;
+        border-radius: 0 0 14px 14px;
+        background: rgba(0, 0, 0, 0.12);
     }
 }
 
+// 关闭按钮
 .toast-close-button {
-    right: -0.15em;
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #94a3b8 !important;
+    font-size: 18px;
+    font-weight: 400;
+    text-shadow: none;
+    opacity: 1;
+    line-height: 1;
+
+    &:hover {
+        color: #475569 !important;
+        opacity: 1;
+    }
 }
 
+// ==========================================
+// 图片查看器遮罩
+// ==========================================
 .viewer-backdrop {
-    background-color: rgba(0, 0, 0, .75);
+    background-color: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(4px);
 }
 
-// infiniteScroll
+// ==========================================
+// 无限滚动
+// ==========================================
 .infinite-scroll {
     width: 100%;
     display: flex;
     justify-content: center;
-    justify-items: center;
-    padding: 3rem 0;
+    align-items: center;
+    padding: 2.5rem 0;
+
     span {
         display: inline-flex;
-        color: #626262;
-        font-size: .9em;
+        align-items: center;
+        gap: 6px;
+        color: var(--text-muted);
+        font-size: .875rem;
         cursor: pointer;
+        padding: 8px 20px;
+        border-radius: 999px;
+        background: rgba(16, 185, 129, 0.06);
+        border: 1px solid rgba(16, 185, 129, 0.15);
+        transition: var(--transition);
+
+        &:hover:not(.disabled) {
+            background: rgba(16, 185, 129, 0.12);
+            color: var(--primary);
+            border-color: rgba(16, 185, 129, 0.3);
+        }
+
         &.disabled {
             cursor: not-allowed;
-            color: grey;
+            opacity: 0.5;
         }
     }
 }
 
-// 我的图片
+// ==========================================
+// 我的图片 - 图片网格
+// ==========================================
 #images-grid {
     a:hover, a.ds-selected {
-        outline-color: #3b82f6;
+        outline-color: var(--primary);
+        border-radius: var(--radius-sm);
 
         .image-selector {
             display: block;
@@ -116,22 +326,25 @@ progress::-webkit-progress-value {
             .image-selector {
                 i {
                     border-color: white;
-                    color: #0061ff;
+                    color: var(--primary);
+                    background: white;
                 }
             }
         }
     }
 }
 
-// 开关样式
+// ==========================================
+// 现代开关样式
+// ==========================================
 .switch {
     position: relative;
     display: inline-block;
-    width: 55px;
-    height: 30px;
+    width: 50px;
+    height: 26px;
 }
 
-.switch input {display:none;}
+.switch input { display: none; }
 
 .slider {
     position: absolute;
@@ -140,38 +353,340 @@ progress::-webkit-progress-value {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: #ccc;
-    transition: .4s;
+    background-color: #cbd5e1;
+    transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .slider:before {
     position: absolute;
     content: "";
-    height: 24px;
-    width: 24px;
-    left: 4px;
+    height: 20px;
+    width: 20px;
+    left: 3px;
     bottom: 3px;
     background-color: white;
-    transition: 0.4s;
+    transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.2);
 }
 
 input:checked + .slider {
-    background-color: #2196F3;
+    background: linear-gradient(135deg, #10b981, #0d9488);
 }
 
 input:focus + .slider {
-    box-shadow: 0 0 1px #2196F3;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.25);
 }
 
 input:checked + .slider:before {
-    transform: translateX(23px);
+    transform: translateX(24px);
 }
 
-/* Rounded sliders */
 .slider.round {
-    border-radius: 34px;
+    border-radius: 999px;
 }
 
 .slider.round:before {
     border-radius: 50%;
+}
+
+// ==========================================
+// 现代卡片样式
+// ==========================================
+.modern-card {
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    box-shadow: var(--card-shadow);
+    border: 1px solid rgba(226, 232, 240, 0.6);
+    transition: var(--transition);
+
+    &:hover {
+        box-shadow: var(--card-shadow-hover);
+        transform: translateY(-1px);
+    }
+}
+
+// ==========================================
+// 渐变文字效果
+// ==========================================
+.gradient-text {
+    background: linear-gradient(135deg, #10b981, #0d9488);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+// ==========================================
+// 侧边栏导航样式
+// ==========================================
+nav.sidebar-nav {
+    .nav-item {
+        position: relative;
+        overflow: hidden;
+
+        &::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(180deg, #10b981, #0d9488);
+            border-radius: 0 3px 3px 0;
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        &.active::before,
+        &:hover::before {
+            opacity: 1;
+        }
+    }
+}
+
+// ==========================================
+// 动画效果
+// ==========================================
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(16px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-16px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes pulse-glow {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.4); }
+    50% { box-shadow: 0 0 0 8px rgba(99, 102, 241, 0); }
+}
+
+.animate-fade-in-up {
+    animation: fadeInUp 0.4s ease-out both;
+}
+
+.animate-slide-in {
+    animation: slideInLeft 0.3s ease-out both;
+}
+
+// ==========================================
+// 玻璃拟态效果
+// ==========================================
+.glass {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.glass-dark {
+    background: rgba(30, 27, 75, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(99, 102, 241, 0.2);
+}
+
+// ==========================================
+// 渐变按钮
+// ==========================================
+.btn-gradient {
+    background: linear-gradient(135deg, #10b981, #0d9488);
+    color: white;
+    border: none;
+    border-radius: var(--radius-sm);
+    padding: 8px 20px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+
+    &::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(135deg, rgba(255,255,255,0.1), transparent);
+        opacity: 0;
+        transition: opacity 0.2s;
+    }
+
+    &:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 20px rgba(16, 185, 129, 0.4);
+
+        &::after {
+            opacity: 1;
+        }
+    }
+
+    &:active {
+        transform: translateY(0);
+        box-shadow: none;
+    }
+}
+
+// ==========================================
+// 表格美化
+// ==========================================
+table {
+    thead tr {
+        background: linear-gradient(135deg, rgba(99, 102, 241, 0.04), rgba(139, 92, 246, 0.04));
+    }
+
+    tbody tr {
+        transition: background-color 0.15s;
+
+        &:hover {
+            background-color: rgba(99, 102, 241, 0.03);
+        }
+    }
+}
+
+// ==========================================
+// 徽章样式
+// ==========================================
+.badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 10px;
+    font-size: 12px;
+    font-weight: 500;
+    border-radius: 999px;
+
+    &.badge-primary {
+        background: rgba(16, 185, 129, 0.12);
+        color: var(--primary);
+    }
+
+    &.badge-success {
+        background: rgba(16, 185, 129, 0.12);
+        color: #059669;
+    }
+
+    &.badge-warning {
+        background: rgba(245, 158, 11, 0.12);
+        color: #d97706;
+    }
+
+    &.badge-danger {
+        background: rgba(239, 68, 68, 0.12);
+        color: #dc2626;
+    }
+}
+
+// ==========================================
+// 响应式辅助
+// ==========================================
+@media (max-width: 640px) {
+    ::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+// ==========================================
+// 补充动画 - 向左淡入
+// ==========================================
+@keyframes fadeInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px) rotate(var(--rotate, 0deg)); }
+    50%       { transform: translateY(-8px) rotate(var(--rotate, 0deg)); }
+}
+
+@keyframes shimmer {
+    0%   { background-position: -200% center; }
+    100% { background-position: 200% center; }
+}
+
+@keyframes scaleIn {
+    from { opacity: 0; transform: scale(0.92); }
+    to   { opacity: 1; transform: scale(1); }
+}
+
+.animate-float {
+    animation: float 4s ease-in-out infinite;
+}
+
+.animate-scale-in {
+    animation: scaleIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+// ==========================================
+// 统计卡片 hover 动效
+// ==========================================
+.stat-card {
+    transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+
+    &:hover {
+        transform: translateY(-3px) scale(1.01);
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1), 0 12px 40px rgba(16, 185, 129, 0.12) !important;
+    }
+}
+
+// ==========================================
+// Box 卡片 hover 动效
+// ==========================================
+.rounded-2xl[style*="box-shadow"] {
+    transition: box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1), transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.2s;
+
+    &:hover {
+        box-shadow: 0 2px 8px rgba(0,0,0,0.06), 0 12px 32px rgba(16,185,129,0.1) !important;
+        border-color: rgba(16, 185, 129, 0.18) !important;
+    }
+}
+
+// ==========================================
+// 输入框焦点增强
+// ==========================================
+input:focus, textarea:focus, select:focus {
+    transform: scale(1.002);
+}
+
+// ==========================================
+// 渐变进度条（Shimmer）
+// ==========================================
+.progress-shimmer {
+    background: linear-gradient(90deg, #10b981 0%, #0d9488 40%, #34d399 60%, #10b981 100%);
+    background-size: 200% auto;
+    animation: shimmer 2.5s linear infinite;
+}
+
+// ==========================================
+// 分隔符
+// ==========================================
+.divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--text-muted);
+    font-size: 12px;
+
+    &::before, &::after {
+        content: '';
+        flex: 1;
+        height: 1px;
+        background: var(--border-color);
+    }
 }

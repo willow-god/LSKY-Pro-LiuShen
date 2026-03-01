@@ -1,39 +1,60 @@
 @section('title', '用户管理')
 
 <x-app-layout>
-    <div class="my-6 md:my-9">
+    <div class="my-6 md:my-8">
+        <div class="mb-5 flex items-center gap-2.5">
+            <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background: linear-gradient(135deg, rgba(16,185,129,0.15), rgba(13,148,136,0.15));">
+                <i class="fas fa-users text-sm" style="color: #059669;"></i>
+            </div>
+            <h2 class="font-bold text-lg text-slate-800">用户管理</h2>
+        </div>
         <form id="search-form" action="{{ route('admin.users') }}" method="get">
-            <div class="mb-3 flex justify-between">
-                <select name="status" class="text-sm rounded-md bg-white border-transparent focus:border-gray-500 focus:bg-white focus:ring-0" onchange="$('#search-form').submit()">
-                    @foreach($statuses as $key => $status)
-                        <option value="{{ $key }}" {{ request('status', -1) == $key ? 'selected' : '' }}>{{ $status }}</option>
-                    @endforeach
-                </select>
-                <input class="px-2 text-sm rounded-md bg-white border-transparent focus:border-gray-500 focus:bg-white focus:ring-0" name="keywords" placeholder="输入关键字回车搜索..." value="{{ request('keywords') }}" />
+            <div class="mb-4 flex justify-between items-center gap-3">
+                <div class="relative">
+                    <select name="status" class="appearance-none text-sm rounded-lg border border-slate-200 bg-white text-slate-700 pl-3 pr-8 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-400 transition-all" style="-webkit-appearance: none; -moz-appearance: none; appearance: none;" onchange="$('#search-form').submit()">
+                        @foreach($statuses as $key => $status)
+                            <option value="{{ $key }}" {{ request('status', -1) == $key ? 'selected' : '' }}>{{ $status }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="relative">
+                    <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+                    <input class="pl-8 pr-4 py-2 text-sm rounded-lg border border-slate-200 bg-white text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-400 transition-all w-52" name="keywords" placeholder="输入关键字回车搜索..." value="{{ request('keywords') }}" />
+                </div>
             </div>
         </form>
 
         <x-table :columns="['ID', '用户名', '邮箱', '角色组', '总容量', '剩余容量', '图片数量', '相册数量', '状态', '操作']">
             @foreach($users as $user)
-            <tr data-id="{{ $user->id }}" data-json='{{ $user->toJson() }}'>
-                <td class="px-6 py-4 whitespace-nowrap">{{ $user->id }}</td>
-                <td class="px-6 py-4 whitespace-nowrap">{{ $user->name }}</td>
-                <td class="px-6 py-4 whitespace-nowrap">{{ $user->email }}</td>
-                <td class="px-6 py-4 whitespace-nowrap">
-                    <span class="rounded-md bg-sky-500 text-sm text-white py-1 px-4">
-                        {{ $user->group->name ?? '-' }}
+            <tr data-id="{{ $user->id }}" data-json='{{ $user->toJson() }}' class="hover:bg-slate-50/80 transition-colors">
+                <td class="px-5 py-3.5 whitespace-nowrap text-sm text-slate-600">{{ $user->id }}</td>
+                <td class="px-5 py-3.5 whitespace-nowrap text-sm font-medium text-slate-800">{{ $user->name }}</td>
+                <td class="px-5 py-3.5 whitespace-nowrap text-sm text-slate-600">{{ $user->email }}</td>
+                <td class="px-5 py-3.5 whitespace-nowrap">
+                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium" style="background: rgba(16,185,129,0.1); color: #059669;">
+                        {{ $user->group->name ?? '默认' }}
                     </span>
                 </td>
-                <td class="px-6 py-4 whitespace-nowrap">{{ \App\Utils::formatSize($user->capacity * 1024) }}</td>
-                <td class="px-6 py-4 whitespace-nowrap">{{ \App\Utils::formatSize(($user->capacity - $user->images_sum_size) * 1024) }}</td>
-                <td class="px-6 py-4 whitespace-nowrap">{{ $user->image_num }}</td>
-                <td class="px-6 py-4 whitespace-nowrap">{{ $user->album_num }}</td>
-                <td class="px-6 py-4 whitespace-nowrap">{{ $user->status ? '正常' : '冻结' }}</td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
-                    <a href="javascript:void(0)" data-operate="detail" class="text-teal-600 hover:text-teal-900">详细</a>
-                    <a href="{{ route('admin.user.edit', ['id' => $user->id]) }}" class="text-indigo-600 hover:text-indigo-900">编辑</a>
+                <td class="px-5 py-3.5 whitespace-nowrap text-sm text-slate-600">{{ \App\Utils::formatSize($user->capacity * 1024) }}</td>
+                <td class="px-5 py-3.5 whitespace-nowrap text-sm text-slate-600">{{ \App\Utils::formatSize(($user->capacity - $user->images_sum_size) * 1024) }}</td>
+                <td class="px-5 py-3.5 whitespace-nowrap text-sm text-slate-600">{{ $user->image_num }}</td>
+                <td class="px-5 py-3.5 whitespace-nowrap text-sm text-slate-600">{{ $user->album_num }}</td>
+                <td class="px-5 py-3.5 whitespace-nowrap">
+                    @if($user->status)
+                        <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium" style="background: rgba(16,185,129,0.1); color: #059669;">
+                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>正常
+                        </span>
+                    @else
+                        <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium" style="background: rgba(239,68,68,0.1); color: #dc2626;">
+                            <span class="w-1.5 h-1.5 rounded-full bg-red-400"></span>冻结
+                        </span>
+                    @endif
+                </td>
+                <td class="px-5 py-3.5 whitespace-nowrap text-sm font-medium flex items-center gap-3">
+                    <a href="javascript:void(0)" data-operate="detail" class="text-slate-500 hover:text-emerald-600 transition-colors"><i class="fas fa-eye text-xs mr-0.5"></i>详细</a>
+                    <a href="{{ route('admin.user.edit', ['id' => $user->id]) }}" class="text-emerald-500 hover:text-emerald-700 transition-colors"><i class="fas fa-edit text-xs mr-0.5"></i>编辑</a>
                     @if(Auth::user()->id != $user->id)
-                        <a href="javascript:void(0)" data-operate="delete" class="text-red-600 hover:text-red-900">删除</a>
+                        <a href="javascript:void(0)" data-operate="delete" class="text-red-400 hover:text-red-600 transition-colors"><i class="fas fa-trash text-xs mr-0.5"></i>删除</a>
                     @endif
                 </td>
             </tr>
@@ -56,7 +77,7 @@
         <div class="flex w-full items-center justify-center py-4">
             <img class="rounded-full h-24 w-24" src="__avatar__">
         </div>
-        <div class="relative rounded-md bg-white mb-8 overflow-hidden">
+        <div class="relative rounded-xl bg-white mb-8 overflow-hidden shadow-custom">
             <dl>
                 <div class="bg-white px-2 py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                     <dt class="text-sm font-medium text-gray-500">用户名</dt>

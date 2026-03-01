@@ -1,3 +1,80 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
+
+@layer utilities {
+    /* 现代阴影类 - 替代旧的 shadow-custom */
+    .shadow-custom {
+        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.06), 0 4px 15px 0 rgba(16, 185, 129, 0.06);
+    }
+
+    .shadow-custom-hover {
+        box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.08), 0 8px 30px 0 rgba(16, 185, 129, 0.1);
+    }
+
+    /* 分页美化 */
+    nav[aria-label="Pagination"] span,
+    nav[aria-label="Pagination"] a {
+        @apply text-sm;
+    }
+}
+
+/* 分页按钮全局美化 */
+nav[aria-label="Pagination"] > div > span,
+nav[aria-label="Pagination"] > div > a {
+    border-color: rgba(226, 232, 240, 0.8) !important;
+    color: #64748b;
+    border-radius: 8px;
+    transition: all 0.15s;
+    font-size: 0.8125rem;
+}
+
+nav[aria-label="Pagination"] > div > a:hover {
+    background: rgba(99, 102, 241, 0.06) !important;
+    color: #6366f1 !important;
+    border-color: rgba(99, 102, 241, 0.2) !important;
+}
+
+nav[aria-label="Pagination"] > div > span[aria-current="page"] > span {
+    background: linear-gradient(135deg, #4f46e5, #7c3aed) !important;
+    border-color: transparent !important;
+    color: white !important;
+    border-radius: 8px;
+}
+
+/* 管理页面 section 卡片 */
+.admin-section {
+    background: white;
+    border-radius: 16px;
+    border: 1px solid rgba(226, 232, 240, 0.8);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 4px 16px rgba(16, 185, 129, 0.05);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    transition: box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1), transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.admin-section:hover {
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.07), 0 8px 32px rgba(16, 185, 129, 0.09);
+    transform: translateY(-1px);
+}
+
+/* 管理页面 section 标题 */
+.admin-section-title {
+    font-size: 0.9375rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.admin-section-title::before {
+    content: '';
+    width: 3px;
+    height: 16px;
+    border-radius: 99px;
+    background: linear-gradient(180deg, #10b981, #059669);
+    display: inline-block;
+}
+

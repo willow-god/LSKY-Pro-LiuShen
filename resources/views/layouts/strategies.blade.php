@@ -1,12 +1,12 @@
 <!-- Strategies dropdown -->
 <x-dropdown>
     <x-slot name="trigger">
-        <button type="button" class="bg-gray-800 flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
-            <span class="sr-only">Open strategies menu</span>
-            <div class="h-8 w-8 rounded-full flex items-center justify-center bg-white">
-                <i class="fas fa-server text-gray-900"></i>
+        <button type="button" class="flex items-center gap-1.5 pl-1 pr-2 py-1 rounded-lg text-slate-600 hover:bg-emerald-50 hover:text-emerald-700 transition-all duration-200" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
+            <div class="h-8 w-8 rounded-full flex items-center justify-center flex-shrink-0" style="background: rgba(99,102,241,0.1);">
+                <i class="fas fa-server text-emerald-500 text-xs"></i>
             </div>
-            <span class="px-2 sm:block hidden" id="strategy-selected" data-id="0">获取中...</span>
+            <span class="text-sm font-medium hidden sm:block" id="strategy-selected" data-id="0">获取中...</span>
+            <i class="fas fa-chevron-down text-xs text-slate-400 hidden sm:block"></i>
         </button>
     </x-slot>
 

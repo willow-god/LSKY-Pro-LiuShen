@@ -10,21 +10,27 @@
         <title>{{ \App\Utils::config(\App\Enums\ConfigKey::AppName) }}</title>
 
         <!-- Fonts -->
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+        <!-- FontAwesome -->
         <link rel="stylesheet" href="{{ asset('css/fontawesome.css') }}">
         @stack('styles')
 
         <!-- Styles -->
-        <link rel="stylesheet" href="{{ asset('css/common.css') }}?t=20220817">
-        <link rel="stylesheet" href="{{ asset('css/app.css') }}?t=20220817">
+        <link rel="stylesheet" href="{{ asset('css/common.css') }}?t=20260302">
+        <link rel="stylesheet" href="{{ asset('css/app.css') }}?t=20260302">
+        <style>
+            body { font-family: 'Inter', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans CJK SC', 'Source Han Sans SC', 'WenQuanYi Micro Hei', sans-serif; }
+        </style>
     </head>
     <body class="font-sans antialiased">
-        <div class="min-h-screen text-gray-900 bg-gray-100">
+        <div class="min-h-screen text-slate-900" style="background: linear-gradient(135deg, #f0f4ff 0%, #faf5ff 50%, #f0f9ff 100%);">
             {{ $slot }}
         </div>
     </body>
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}?t=20220817"></script>
+    <script src="{{ asset('js/app.js') }}?t=20260301"></script>
     @if(file_exists(public_path('js/custom.js')))
         <script src="{{ asset('js/custom.js') }}"></script>
     @endif

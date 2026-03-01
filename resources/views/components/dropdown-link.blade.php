@@ -1,1 +1,1 @@
-<a {{$attributes->merge(['class' => 'block px-4 py-2 active:bg-gray-100 text-sm text-gray-700 truncate hover:bg-sky-500 hover:text-white', 'role' => 'menuitem', 'tabindex' => '-1']) }}>{{ $slot }}</a>
+<a {{$attributes->merge(['class' => 'flex items-center gap-2.5 px-4 py-2 text-sm text-slate-700 hover:bg-emerald-50 hover:text-emerald-700 transition-all duration-150 truncate', 'role' => 'menuitem', 'tabindex' => '-1']) }}>{{ $slot }}</a>

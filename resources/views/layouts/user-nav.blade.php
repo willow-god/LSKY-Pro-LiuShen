@@ -1,10 +1,10 @@
 <!-- Profile dropdown -->
 <x-dropdown>
     <x-slot name="trigger">
-        <button type="button" class="bg-gray-800 flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
-            <span class="sr-only">Open user menu</span>
-            <img class="h-8 w-8 rounded-full" src="{{ Auth::user()->avatar }}" alt="">
-            <span class="px-2 sm:block hidden">{{ Auth::user()->name }}</span>
+        <button type="button" class="flex items-center gap-2 pl-1 pr-2 py-1 rounded-lg hover:bg-emerald-50 transition-all duration-200 text-slate-700" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
+            <img class="h-8 w-8 rounded-full ring-2 ring-emerald-100 object-cover" src="{{ Auth::user()->avatar }}" alt="">
+            <span class="text-sm font-medium hidden sm:block">{{ Auth::user()->name }}</span>
+            <i class="fas fa-chevron-down text-xs text-slate-400 hidden sm:block"></i>
         </button>
     </x-slot>
 
@@ -12,12 +12,18 @@
         <!-- Authentication -->
         <form method="POST" action="{{ route('logout') }}">
             @csrf
-            <x-dropdown-link href="{{ route('images') }}">我的图片</x-dropdown-link>
-            <x-dropdown-link href="{{ route('dashboard') }}">仪表盘</x-dropdown-link>
-            <x-dropdown-link href="{{ route('settings') }}">设置</x-dropdown-link>
-            <x-dropdown-link :href="route('logout')" onclick="event.preventDefault(); this.closest('form').submit();">
-                {{ __('Log Out') }}
-            </x-dropdown-link>
+            <div class="px-4 py-2 border-b border-slate-100">
+                <p class="text-xs text-slate-500">登录身份</p>
+                <p class="text-sm font-medium text-slate-700 truncate">{{ Auth::user()->email }}</p>
+            </div>
+            <x-dropdown-link href="{{ route('images') }}"><i class="fas fa-images w-4 text-emerald-400"></i> 我的图片</x-dropdown-link>
+            <x-dropdown-link href="{{ route('dashboard') }}"><i class="fas fa-tachometer-alt w-4 text-emerald-400"></i> 仪表盘</x-dropdown-link>
+            <x-dropdown-link href="{{ route('settings') }}"><i class="fas fa-cog w-4 text-emerald-400"></i> 个人设置</x-dropdown-link>
+            <div class="border-t border-slate-100 mt-1 pt-1">
+                <x-dropdown-link :href="route('logout')" onclick="event.preventDefault(); this.closest('form').submit();" class="text-red-500 hover:text-red-600 hover:bg-red-50">
+                    <i class="fas fa-sign-out-alt w-4"></i> {{ __('Log Out') }}
+                </x-dropdown-link>
+            </div>
         </form>
     </x-slot>
 </x-dropdown>

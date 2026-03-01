@@ -16,7 +16,9 @@ mix.js('resources/js/app.js', 'public/js').postCss('resources/css/app.css', 'pub
     require('tailwindcss'),
     require('autoprefixer'),
 ]);
-mix.less('resources/css/fontawesome.less', 'public/css');
+// fontawesome webfonts + pre-built CSS (paths already relative to webfonts/)
+mix.copy('node_modules/@fortawesome/fontawesome-free/webfonts', 'public/webfonts')
+mix.copy('node_modules/@fortawesome/fontawesome-free/css/all.min.css', 'public/css/fontawesome.css')
 mix.less('resources/css/common.less', 'public/css');
 mix.less('resources/css/gallery.less', 'public/css');
 
@@ -55,3 +57,4 @@ mix.copy('node_modules/imagesloaded/imagesloaded.pkgd.min.js', 'public/js/images
 // markdown css
 mix.copy('node_modules/github-markdown-css/github-markdown.css', 'public/css/markdown-css')
 mix.copy('node_modules/github-markdown-css/github-markdown-light.css', 'public/css/markdown-css')
+

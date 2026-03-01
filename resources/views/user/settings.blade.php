@@ -1,25 +1,31 @@
 @section('title', '设置')
 
 <x-app-layout>
-    <div class="my-6 md:my-9">
-        <p class="mb-3 font-semibold text-lg text-gray-700">基础设置</p>
+    <div class="my-6 md:my-8 max-w-3xl">
+        <div class="mb-5 flex items-center gap-2.5">
+            <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background: linear-gradient(135deg, rgba(16,185,129,0.15), rgba(13,148,136,0.15));">
+                <i class="fas fa-user-cog text-sm" style="color: #059669;"></i>
+            </div>
+            <h2 class="font-bold text-lg text-slate-800">基础设置</h2>
+        </div>
+
         <form action="{{ route('settings.update') }}" method="POST">
             @csrf
-            <div class="overflow-hidden sm:rounded-md shadow-custom">
-                <div class="px-3 py-4 bg-white sm:p-6">
-                    <div class="grid grid-cols-6 gap-6">
+            <div class="rounded-2xl overflow-hidden" style="background: white; border: 1px solid rgba(226,232,240,0.8); box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 16px rgba(16,185,129,0.05);">
+                <div class="px-6 py-5">
+                    <div class="grid grid-cols-6 gap-5">
                         <div class="col-span-6 sm:col-span-3">
-                            <label for="email" class="block text-sm font-medium text-gray-700">邮箱</label>
+                            <label for="email" class="block text-sm font-medium text-slate-700 mb-1.5">邮箱</label>
                             <x-input type="text" id="email" autocomplete="email" value="{{ Auth::user()->email }}" disabled readonly/>
                         </div>
 
                         <div class="col-span-6 sm:col-span-3">
-                            <label for="name" class="block text-sm font-medium text-gray-700">昵称</label>
+                            <label for="name" class="block text-sm font-medium text-slate-700 mb-1.5">昵称</label>
                             <x-input type="text" name="name" id="name" autocomplete="name" value="{{ Auth::user()->name }}"/>
                         </div>
 
                         <div class="col-span-6 sm:col-span-3">
-                            <label for="default_strategy" class="block text-sm font-medium text-gray-700">默认上传策略</label>
+                            <label for="default_strategy" class="block text-sm font-medium text-slate-700 mb-1.5">默认上传策略</label>
                             <x-select id="default_strategy" name="configs[default_strategy]" autocomplete="default-strategy">
                                 @if(Auth::user()->group)
                                     <option value="0">未选择</option>
@@ -33,7 +39,7 @@
                         </div>
 
                         <div class="col-span-6 sm:col-span-3">
-                            <label for="default_album" class="block text-sm font-medium text-gray-700">默认上传相册</label>
+                            <label for="default_album" class="block text-sm font-medium text-slate-700 mb-1.5">默认上传相册</label>
                             <x-select id="default_album" name="configs[default_album]" autocomplete="default-album">
                                 @if(Auth::user()->albums->isNotEmpty())
                                     <option value="0">未选择</option>
@@ -47,13 +53,16 @@
                         </div>
 
                         <div class="col-span-6">
-                            <label for="url" class="block text-sm font-medium text-gray-700">个人主页</label>
+                            <label for="url" class="block text-sm font-medium text-slate-700 mb-1.5">个人主页</label>
                             <x-input type="url" name="url" id="url" autocomplete="url" value="{{ Auth::user()->url }}" placeholder="个人主页地址，http(s)://"/>
                         </div>
 
                         <div class="col-span-6">
-                            <label for="password" class="block text-sm font-medium text-gray-700">密码</label>
-                            <x-input type="password" name="password" id="password" placeholder="不修改请留空" autocomplete="new-password" />
+                            <label for="password" class="block text-sm font-medium text-slate-700 mb-1.5">
+                                密码
+                                <span class="text-slate-400 font-normal text-xs ml-1">（不修改请留空）</span>
+                            </label>
+                            <x-input type="password" name="password" id="password" placeholder="输入新密码" autocomplete="new-password" />
                         </div>
 
                         <div class="col-span-6">
@@ -77,9 +86,9 @@
                             </x-fieldset>
                         </div>
                     </div>
-                    <div class="px-4 py-3 text-right sm:px-6">
-                        <x-button>保存设置</x-button>
-                    </div>
+                </div>
+                <div class="px-6 py-4 flex justify-end" style="background: rgba(248,250,252,0.8); border-top: 1px solid rgba(226,232,240,0.8);">
+                    <x-button><i class="fas fa-save mr-1.5"></i>保存设置</x-button>
                 </div>
             </div>
         </form>

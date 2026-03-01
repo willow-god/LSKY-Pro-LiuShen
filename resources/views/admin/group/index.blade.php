@@ -2,10 +2,16 @@
 
 <x-app-layout>
     <div class="my-6 md:my-9">
+        <div class="mb-5 flex items-center gap-2.5">
+            <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background: linear-gradient(135deg, rgba(16,185,129,0.15), rgba(13,148,136,0.15));">
+                <i class="fas fa-layer-group text-sm" style="color: #059669;"></i>
+            </div>
+            <h2 class="font-bold text-lg text-slate-800">角色组管理</h2>
+        </div>
         <form action="{{ route('admin.groups') }}" method="get">
             <div class="mb-3 flex justify-between w-full">
                 <x-button type="button" onclick="window.location.href = '{{ route('admin.group.create') }}'">创建角色组</x-button>
-                <input class="px-2 text-sm rounded-md bg-white border-transparent focus:border-gray-500 focus:bg-white focus:ring-0" name="keywords" placeholder="输入名称回车搜索..." value="{{ request('keywords') }}" />
+                <input class="px-3 py-1.5 text-sm rounded-lg bg-white border border-slate-200 text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-400" name="keywords" placeholder="输入名称回车搜索..." value="{{ request('keywords') }}" />
             </div>
         </form>
 
@@ -42,7 +48,7 @@
                 <td class="px-6 py-4 whitespace-nowrap">{{ $group->users_count }}</td>
                 <td class="px-6 py-4 whitespace-nowrap">{{ $group->strategies_count }}</td>
                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
-                    <a href="{{ route('admin.group.edit', ['id' => $group->id]) }}" class="text-indigo-600 hover:text-indigo-900">编辑</a>
+                    <a href="{{ route('admin.group.edit', ['id' => $group->id]) }}" class="text-emerald-600 hover:text-emerald-900">编辑</a>
                     @if(! $group->is_default && ! $group->is_guest)
                     <a href="javascript:void(0)" data-operate="delete" class="text-red-600 hover:text-red-900">删除</a>
                     @endif

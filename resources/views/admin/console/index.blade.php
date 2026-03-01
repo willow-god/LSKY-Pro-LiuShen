@@ -8,139 +8,127 @@
         </p>
     @endif
     <div class="my-6 md:my-9">
-        <p class="mb-3 font-semibold text-lg text-gray-700">概览</p>
+        <p class="admin-section-title">概览</p>
         <div class="relative grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-            <div class="flex justify-between rounded-md bg-white p-3 overflow-hidden shadow-custom">
-                <div class="flex flex-col justify-between space-y-2 w-[80%]">
-                    <p class="font-bold text-2xl text-red-700 truncate">
-                        {{ \App\Utils::shortenNumber(\App\Models\Image::query()->count()) }}
-                    </p>
-                    <p class="text-md text-gray-600">图片数量</p>
+            {{-- 图片数量 --}}
+            <div class="stat-card rounded-2xl p-5 flex items-center gap-4 relative overflow-hidden" style="background: linear-gradient(135deg, #ecfdf5, #d1fae5); border: 1px solid rgba(16,185,129,0.2); box-shadow: 0 4px 20px rgba(16,185,129,0.1);">
+                <div class="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0" style="background: rgba(16,185,129,0.15);">
+                    <i class="fas fa-images text-xl" style="color: #059669;"></i>
                 </div>
-                <i class="fas fa-images text-red-600 text-2xl"></i>
+                <div>
+                    <p class="text-xs font-medium" style="color: #6b7280;">图片数量</p>
+                    <p class="font-bold text-2xl mt-0.5" style="color: #065f46;">{{ \App\Utils::shortenNumber(\App\Models\Image::query()->count()) }}</p>
+                </div>
             </div>
-            <div class="flex justify-between rounded-md bg-white p-3 overflow-hidden shadow-custom">
-                <div class="flex flex-col justify-between space-y-2 w-[80%]">
-                    <p class="font-bold text-2xl text-lime-700 truncate">
-                        {{ \App\Utils::shortenNumber(\App\Models\Album::query()->count()) }}
-                    </p>
-                    <p class="text-md text-gray-600">相册数量</p>
+            {{-- 相册数量 --}}
+            <div class="stat-card rounded-2xl p-5 flex items-center gap-4 relative overflow-hidden" style="background: linear-gradient(135deg, #f0f9ff, #e0f2fe); border: 1px solid rgba(14,165,233,0.2); box-shadow: 0 4px 20px rgba(14,165,233,0.1);">
+                <div class="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0" style="background: rgba(14,165,233,0.15);">
+                    <i class="fas fa-tags text-xl" style="color: #0284c7;"></i>
                 </div>
-                <i class="fas fa-tags text-lime-600 text-2xl"></i>
+                <div>
+                    <p class="text-xs font-medium" style="color: #6b7280;">相册数量</p>
+                    <p class="font-bold text-2xl mt-0.5" style="color: #0c4a6e;">{{ \App\Utils::shortenNumber(\App\Models\Album::query()->count()) }}</p>
+                </div>
             </div>
-            <div class="flex justify-between rounded-md bg-white p-3 overflow-hidden shadow-custom">
-                <div class="flex flex-col justify-between space-y-2 w-[80%]">
-                    <p class="font-bold text-2xl text-blue-700 truncate">
-                        {{ \App\Utils::shortenNumber(\App\Models\User::query()->count()) }}
-                    </p>
-                    <p class="text-md text-gray-600">用户数量</p>
+            {{-- 用户数量 --}}
+            <div class="stat-card rounded-2xl p-5 flex items-center gap-4 relative overflow-hidden" style="background: linear-gradient(135deg, #f0fdfa, #ccfbf1); border: 1px solid rgba(20,184,166,0.2); box-shadow: 0 4px 20px rgba(20,184,166,0.1);">
+                <div class="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0" style="background: rgba(20,184,166,0.15);">
+                    <i class="fas fa-users text-xl" style="color: #0d9488;"></i>
                 </div>
-                <i class="fas fa-users text-blue-600 text-2xl"></i>
+                <div>
+                    <p class="text-xs font-medium" style="color: #6b7280;">用户数量</p>
+                    <p class="font-bold text-2xl mt-0.5" style="color: #134e4a;">{{ \App\Utils::shortenNumber(\App\Models\User::query()->count()) }}</p>
+                </div>
             </div>
-            <div class="flex justify-between rounded-md bg-white p-3 overflow-hidden shadow-custom">
-                <div class="flex flex-col justify-between space-y-2 w-[80%]">
-                    <p class="font-bold text-2xl text-cyan-700 truncate">
-                        {{ \App\Utils::formatSize(\App\Models\Image::query()->sum('size') * 1024) }}
-                    </p>
-                    <p class="text-md text-gray-600">占用储存</p>
+            {{-- 占用储存 --}}
+            <div class="stat-card rounded-2xl p-5 flex items-center gap-4 relative overflow-hidden" style="background: linear-gradient(135deg, #f8fafc, #f1f5f9); border: 1px solid rgba(100,116,139,0.18); box-shadow: 0 4px 20px rgba(100,116,139,0.1);">
+                <div class="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0" style="background: rgba(100,116,139,0.1);">
+                    <i class="fas fa-server text-xl" style="color: #64748b;"></i>
                 </div>
-                <i class="fas fa-server text-cyan-600 text-2xl"></i>
+                <div>
+                    <p class="text-xs font-medium" style="color: #6b7280;">占用储存</p>
+                    <p class="font-bold text-xl mt-0.5 leading-tight" style="color: #1e293b;">{{ \App\Utils::formatSize(\App\Models\Image::query()->sum('size') * 1024) }}</p>
+                </div>
             </div>
 
-            <div class="flex justify-between rounded-md bg-white p-3 overflow-hidden shadow-custom">
-                <div class="flex flex-col justify-between space-y-2 w-[80%]">
-                    <p class="font-bold text-2xl text-zinc-700 truncate">{{ \App\Utils::shortenNumber($numbers['today']) }}</p>
-                    <p class="text-md text-gray-600">今日上传</p>
+            {{-- 上传统计 4 项 --}}
+            @foreach([['today','今日上传'],['yesterday','昨日上传'],['week','本周上传'],['month','本月上传']] as [$key,$label])
+            <div class="stat-card flex items-center gap-4 rounded-xl bg-white p-4 shadow-custom" style="transition: transform 0.25s cubic-bezier(0.4,0,0.2,1), box-shadow 0.25s cubic-bezier(0.4,0,0.2,1);">
+                <div class="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0" style="background: rgba(16,185,129,0.08);">
+                    <i class="fas fa-upload text-emerald-500"></i>
                 </div>
-                <i class="fas fa-upload text-zinc-600 text-2xl"></i>
-            </div>
-            <div class="flex justify-between rounded-md bg-white p-3 overflow-hidden shadow-custom">
-                <div class="flex flex-col justify-between space-y-2 w-[80%]">
-                    <p class="font-bold text-2xl text-zinc-700 truncate">{{ \App\Utils::shortenNumber($numbers['yesterday']) }}</p>
-                    <p class="text-md text-gray-600">昨日上传</p>
+                <div>
+                    <p class="font-bold text-xl text-slate-700">{{ \App\Utils::shortenNumber($numbers[$key]) }}</p>
+                    <p class="text-sm text-slate-500">{{ $label }}</p>
                 </div>
-                <i class="fas fa-upload text-zinc-600 text-2xl"></i>
             </div>
-            <div class="flex justify-between rounded-md bg-white p-3 overflow-hidden shadow-custom">
-                <div class="flex flex-col justify-between space-y-2 w-[80%]">
-                    <p class="font-bold text-2xl text-zinc-700 truncate">{{ \App\Utils::shortenNumber($numbers['week']) }}</p>
-                    <p class="text-md text-gray-600">本周上传</p>
-                </div>
-                <i class="fas fa-upload text-zinc-600 text-2xl"></i>
-            </div>
-            <div class="flex justify-between rounded-md bg-white p-3 overflow-hidden shadow-custom">
-                <div class="flex flex-col justify-between space-y-2 w-[80%]">
-                    <p class="font-bold text-2xl text-zinc-700 truncate">{{ \App\Utils::shortenNumber($numbers['month']) }}</p>
-                    <p class="text-md text-gray-600">本月上传</p>
-                </div>
-                <i class="fas fa-upload text-zinc-600 text-2xl"></i>
-            </div>
+            @endforeach
         </div>
 
-        <p class="mb-3 font-semibold text-lg text-gray-700">趋势</p>
-        <div class="relative p-4 rounded-md bg-white h-80 mb-8 shadow-custom" id="chart">
+        <p class="admin-section-title">趋势</p>
+        <div class="admin-section h-80 p-4" id="chart">
             <canvas></canvas>
         </div>
 
-        <p class="mb-3 font-semibold text-lg text-gray-700">系统情况</p>
-        <div class="relative rounded-md bg-white mb-8 overflow-hidden shadow-custom">
+        <p class="admin-section-title">系统情况</p>
+        <div class="admin-section !p-0 overflow-hidden">
             <dl>
-                <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                    <dt class="text-sm font-medium text-gray-500">操作系统</dt>
-                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                <div class="bg-slate-50/60 px-5 py-4 sm:grid sm:grid-cols-3 sm:gap-4">
+                    <dt class="text-sm font-medium text-slate-500">操作系统</dt>
+                    <dd class="mt-1 text-sm text-slate-700 sm:mt-0 sm:col-span-2">
                         {{ php_uname() }}
                     </dd>
                 </div>
-                <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                    <dt class="text-sm font-medium text-gray-500">运行环境</dt>
-                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                <div class="bg-white px-5 py-4 sm:grid sm:grid-cols-3 sm:gap-4">
+                    <dt class="text-sm font-medium text-slate-500">运行环境</dt>
+                    <dd class="mt-1 text-sm text-slate-700 sm:mt-0 sm:col-span-2">
                         {{ request()->server('SERVER_SOFTWARE') }}
                     </dd>
                 </div>
-                <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                    <dt class="text-sm font-medium text-gray-500">PHP 版本</dt>
-                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                <div class="bg-slate-50/60 px-5 py-4 sm:grid sm:grid-cols-3 sm:gap-4">
+                    <dt class="text-sm font-medium text-slate-500">PHP 版本</dt>
+                    <dd class="mt-1 text-sm text-slate-700 sm:mt-0 sm:col-span-2">
                         {{ phpversion() }}
                     </dd>
                 </div>
-                <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                    <dt class="text-sm font-medium text-gray-500">文件上传限制</dt>
-                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                <div class="bg-white px-5 py-4 sm:grid sm:grid-cols-3 sm:gap-4">
+                    <dt class="text-sm font-medium text-slate-500">文件上传限制</dt>
+                    <dd class="mt-1 text-sm text-slate-700 sm:mt-0 sm:col-span-2">
                         {{ ini_get("upload_max_filesize") }}
                     </dd>
                 </div>
-                <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                    <dt class="text-sm font-medium text-gray-500">POST 数据最大限制</dt>
-                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                <div class="bg-slate-50/60 px-5 py-4 sm:grid sm:grid-cols-3 sm:gap-4">
+                    <dt class="text-sm font-medium text-slate-500">POST 数据最大限制</dt>
+                    <dd class="mt-1 text-sm text-slate-700 sm:mt-0 sm:col-span-2">
                         {{ ini_get('post_max_size') }}
                     </dd>
                 </div>
             </dl>
         </div>
 
-        <p class="mb-3 font-semibold text-lg text-gray-700">软件信息</p>
-        <div class="relative rounded-md bg-white mb-8 overflow-hidden shadow-custom">
+        <p class="admin-section-title">软件信息</p>
+        <div class="admin-section !p-0 overflow-hidden">
             <dl>
-                <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                    <dt class="text-sm font-medium text-gray-500">软件版本</dt>
-                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{{ \App\Utils::config(\App\Enums\ConfigKey::AppVersion) }}</dd>
+                <div class="bg-slate-50/60 px-5 py-4 sm:grid sm:grid-cols-3 sm:gap-4">
+                    <dt class="text-sm font-medium text-slate-500">软件版本</dt>
+                    <dd class="mt-1 text-sm text-slate-700 sm:mt-0 sm:col-span-2">{{ \App\Utils::config(\App\Enums\ConfigKey::AppVersion) }}</dd>
                 </div>
-                <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                    <dt class="text-sm font-medium text-gray-500">官方网站</dt>
-                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                        <a target="_blank" class="hover:text-blue-500" href="https://www.lsky.pro">https://www.lsky.pro</a>
+                <div class="bg-white px-5 py-4 sm:grid sm:grid-cols-3 sm:gap-4">
+                    <dt class="text-sm font-medium text-slate-500">官方网站</dt>
+                    <dd class="mt-1 text-sm text-slate-700 sm:mt-0 sm:col-span-2">
+                        <a target="_blank" class="text-emerald-500 hover:text-emerald-600" href="https://www.lsky.pro">https://www.lsky.pro</a>
                     </dd>
                 </div>
-                <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                    <dt class="text-sm font-medium text-gray-500">使用手册</dt>
-                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                        <a target="_blank" class="hover:text-blue-500" href="https://docs.lsky.pro">https://docs.lsky.pro</a>
+                <div class="bg-white px-5 py-4 sm:grid sm:grid-cols-3 sm:gap-4">
+                    <dt class="text-sm font-medium text-slate-500">使用手册</dt>
+                    <dd class="mt-1 text-sm text-slate-700 sm:mt-0 sm:col-span-2">
+                        <a target="_blank" class="text-emerald-500 hover:text-emerald-600" href="https://docs.lsky.pro">https://docs.lsky.pro</a>
                     </dd>
                 </div>
-                <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                    <dt class="text-sm font-medium text-gray-500">仓库地址</dt>
-                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                        <a target="_blank" class="hover:text-blue-500" href="https://github.com/lsky-org/lsky-pro">https://github.com/lsky-org/lsky-pro</a>
+                <div class="bg-slate-50/60 px-5 py-4 sm:grid sm:grid-cols-3 sm:gap-4">
+                    <dt class="text-sm font-medium text-slate-500">仓库地址</dt>
+                    <dd class="mt-1 text-sm text-slate-700 sm:mt-0 sm:col-span-2">
+                        <a target="_blank" class="text-emerald-500 hover:text-emerald-600" href="https://github.com/lsky-org/lsky-pro">https://github.com/lsky-org/lsky-pro</a>
                     </dd>
                 </div>
             </dl>

@@ -11,7 +11,7 @@ module.exports = {
     theme: {
         extend: {
             fontFamily: {
-                sans: ['Nunito', ...defaultTheme.fontFamily.sans],
+                sans: ['Inter', 'Nunito', ...defaultTheme.fontFamily.sans],
             },
             boxShadow: {
                 custom: '0px 4px 6px -1px rgba(0, 0, 0, 0.04)',

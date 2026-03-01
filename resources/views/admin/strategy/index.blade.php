@@ -2,10 +2,16 @@
 
 <x-app-layout>
     <div class="my-6 md:my-9">
+        <div class="mb-5 flex items-center gap-2.5">
+            <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background: linear-gradient(135deg, rgba(16,185,129,0.15), rgba(13,148,136,0.15));">
+                <i class="fas fa-hdd text-sm" style="color: #059669;"></i>
+            </div>
+            <h2 class="font-bold text-lg text-slate-800">储存策略管理</h2>
+        </div>
         <form action="{{ route('admin.strategies') }}" method="get">
             <div class="mb-3 flex justify-between w-full">
                 <x-button type="button" onclick="window.location.href = '{{ route('admin.strategy.create') }}'">创建储存策略</x-button>
-                <input class="px-2 text-sm rounded-md bg-white border-transparent focus:border-gray-500 focus:bg-white focus:ring-0" name="keywords" placeholder="输入名称回车搜索..." value="{{ request('keywords') }}" />
+                <input class="px-3 py-1.5 text-sm rounded-lg bg-white border border-slate-200 text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-400" name="keywords" placeholder="输入名称回车搜索..." value="{{ request('keywords') }}" />
             </div>
         </form>
 
@@ -15,14 +21,14 @@
                 <td class="px-6 py-4 whitespace-nowrap">{{ $strategy->id }}</td>
                 <td class="px-6 py-4 whitespace-nowrap name">{{ $strategy->name }}</td>
                 <td class="px-6 py-4 whitespace-nowrap">
-                    <span class="rounded-md bg-sky-500 text-sm text-white py-1 px-4">
+                    <span class="inline-flex items-center rounded-full bg-emerald-50 text-emerald-700 text-xs font-medium py-1 px-3 border border-emerald-100">
                         {{ \App\Models\Strategy::DRIVERS[$strategy->key] }}
                     </span>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap">{{ $strategy->images_count }}</td>
                 <td class="px-6 py-4 whitespace-nowrap">{{ \App\Utils::formatSize($strategy->images_sum_size * 1024) }}</td>
                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
-                    <a href="{{ route('admin.strategy.edit', ['id' => $strategy->id]) }}" class="text-indigo-600 hover:text-indigo-900">编辑</a>
+                    <a href="{{ route('admin.strategy.edit', ['id' => $strategy->id]) }}" class="text-emerald-600 hover:text-emerald-900">编辑</a>
                     <a href="javascript:void(0)" data-operate="delete" class="text-red-600 hover:text-red-900">删除</a>
                 </td>
             </tr>

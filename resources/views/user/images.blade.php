@@ -7,71 +7,72 @@
 @endpush
 
 <x-app-layout>
-    <div class="relative flex justify-between items-center px-2 py-2 z-[3] top-0 left-0 right-0 bg-white border-solid border-b">
-        <div class="space-x-2 flex justify-between items-center">
-            <a class="text-sm py-2 px-3 hover:bg-gray-100 rounded text-gray-800" href="javascript:getAlbums()"><i class="fas fa-bars text-blue-500"></i> 相册</a>
-            <div class="flex-row hidden lg:flex">
-                <a data-operate="movements" class="hidden text-sm py-2 px-3 hover:bg-gray-100 rounded text-gray-800" href="javascript:void(0)">移动到相册</a>
-                <a data-operate="remove" class="hidden text-sm py-2 px-3 hover:bg-gray-100 rounded text-gray-800" href="javascript:void(0)">移出当前相册</a>
-                <a data-operate="permission" class="hidden text-sm py-2 px-3 hover:bg-gray-100 rounded text-gray-800" href="javascript:void(0)">设置权限</a>
-                <a data-operate="detail" class="hidden text-sm py-2 px-3 hover:bg-gray-100 rounded text-gray-800" href="javascript:void(0)">详细信息</a>
-                <a data-operate="rename" class="hidden text-sm py-2 px-3 hover:bg-gray-100 rounded text-gray-800" href="javascript:void(0)">重命名</a>
-                <a data-operate="delete" class="hidden text-sm py-2 px-3 hover:bg-gray-100 rounded text-gray-800" href="javascript:void(0)">删除</a>
+    <div class="relative flex justify-between items-center px-3 py-2 z-[3] top-0 left-0 right-0 bg-white/95 backdrop-blur-sm" style="border-bottom: 1px solid rgba(226,232,240,0.8); box-shadow: 0 1px 8px rgba(0,0,0,0.04);">
+        <div class="flex items-center gap-1">
+            <button class="flex items-center gap-1.5 text-xs py-1.5 px-3 rounded-lg text-slate-600 hover:bg-emerald-50 hover:text-emerald-700 transition-all duration-150 font-medium" onclick="getAlbums()">
+                <i class="fas fa-layer-group text-emerald-400 text-xs"></i>相册
+            </button>
+            <div class="flex-row hidden lg:flex gap-0.5">
+                <a data-operate="movements" class="hidden text-xs py-1.5 px-3 rounded-lg text-slate-600 hover:bg-emerald-50 hover:text-emerald-700 transition-all duration-150 font-medium" href="javascript:void(0)">移动到相册</a>
+                <a data-operate="remove" class="hidden text-xs py-1.5 px-3 rounded-lg text-slate-600 hover:bg-emerald-50 hover:text-emerald-700 transition-all duration-150 font-medium" href="javascript:void(0)">移出当前相册</a>
+                <a data-operate="permission" class="hidden text-xs py-1.5 px-3 rounded-lg text-slate-600 hover:bg-emerald-50 hover:text-emerald-700 transition-all duration-150 font-medium" href="javascript:void(0)">设置权限</a>
+                <a data-operate="detail" class="hidden text-xs py-1.5 px-3 rounded-lg text-slate-600 hover:bg-emerald-50 hover:text-emerald-700 transition-all duration-150 font-medium" href="javascript:void(0)">详细信息</a>
+                <a data-operate="rename" class="hidden text-xs py-1.5 px-3 rounded-lg text-slate-600 hover:bg-emerald-50 hover:text-emerald-700 transition-all duration-150 font-medium" href="javascript:void(0)">重命名</a>
+                <a data-operate="delete" class="hidden text-xs py-1.5 px-3 rounded-lg text-red-500 hover:bg-red-50 hover:text-red-600 transition-all duration-150 font-medium" href="javascript:void(0)">删除</a>
             </div>
             <div class="block lg:hidden">
                 <x-dropdown direction="right">
                     <x-slot name="trigger">
-                        <a class="text-sm py-2 px-3 hover:bg-gray-100 rounded text-gray-800" href="javascript:void(0)"><i class="fas fa-ellipsis-h text-blue-500"></i></a>
+                        <button class="text-xs py-1.5 px-3 rounded-lg text-slate-600 hover:bg-emerald-50 hover:text-emerald-700 transition-all duration-150 flex items-center gap-1">
+                            <i class="fas fa-ellipsis-h text-emerald-400"></i>
+                            <span>更多</span>
+                        </button>
                     </x-slot>
 
                     <x-slot name="content">
-                        <x-dropdown-link data-operate="refresh" href="javascript:void(0)" @click="open = false">刷新</x-dropdown-link>
-                        <x-dropdown-link data-operate="movements" class="hidden" href="javascript:void(0)" @click="open = false">移动到相册</x-dropdown-link>
-                        <x-dropdown-link data-operate="remove" class="hidden" href="javascript:void(0)" @click="open = false">移出当前相册</x-dropdown-link>
-                        <x-dropdown-link data-operate="permission" class="hidden" href="javascript:void(0)" @click="open = false">设置权限</x-dropdown-link>
-                        <x-dropdown-link data-operate="detail" class="hidden" href="javascript:void(0)" @click="open = false">详细信息</x-dropdown-link>
-                        <x-dropdown-link data-operate="rename" class="hidden" href="javascript:void(0)" @click="open = false">重命名</x-dropdown-link>
-                        <x-dropdown-link data-operate="delete" class="hidden" href="javascript:void(0)" @click="open = false">删除</x-dropdown-link>
+                        <x-dropdown-link data-operate="refresh" href="javascript:void(0)" @click="open = false"><i class="fas fa-sync-alt w-4 text-emerald-400"></i>刷新</x-dropdown-link>
+                        <x-dropdown-link data-operate="movements" class="hidden" href="javascript:void(0)" @click="open = false"><i class="fas fa-folder-open w-4 text-emerald-400"></i>移动到相册</x-dropdown-link>
+                        <x-dropdown-link data-operate="remove" class="hidden" href="javascript:void(0)" @click="open = false"><i class="fas fa-folder-minus w-4 text-emerald-400"></i>移出当前相册</x-dropdown-link>
+                        <x-dropdown-link data-operate="permission" class="hidden" href="javascript:void(0)" @click="open = false"><i class="fas fa-eye w-4 text-emerald-400"></i>设置权限</x-dropdown-link>
+                        <x-dropdown-link data-operate="detail" class="hidden" href="javascript:void(0)" @click="open = false"><i class="fas fa-info-circle w-4 text-emerald-400"></i>详细信息</x-dropdown-link>
+                        <x-dropdown-link data-operate="rename" class="hidden" href="javascript:void(0)" @click="open = false"><i class="fas fa-pen w-4 text-emerald-400"></i>重命名</x-dropdown-link>
+                        <x-dropdown-link data-operate="delete" class="hidden text-red-500 hover:bg-red-50 hover:text-red-600" href="javascript:void(0)" @click="open = false"><i class="fas fa-trash w-4"></i>删除</x-dropdown-link>
                     </x-slot>
                 </x-dropdown>
             </div>
         </div>
-        <div class="flex space-x-2 items-center">
-            <input type="text" id="search" class="px-2.5 py-1.5 border-0 outline-none rounded bg-gray-100 text-sm transition-all duration-300 hidden md:block md:w-36 md:hover:w-52 md:focus:w-52" placeholder="输入关键字搜索...">
+        <div class="flex items-center gap-2">
+            <div class="relative hidden md:block">
+                <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+                <input type="text" id="search" class="pl-8 pr-4 py-1.5 rounded-lg border border-slate-200 bg-slate-50 text-sm text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-400 focus:bg-white transition-all duration-200 w-36 hover:w-52 focus:w-52" placeholder="搜索图片...">
+            </div>
             <x-dropdown direction="left">
                 <x-slot name="trigger">
-                    <a id="order" class="text-sm py-2 px-3 hover:bg-gray-100 rounded text-gray-800" href="javascript:void(0)">
+                    <button id="order" class="flex items-center gap-1.5 text-xs py-1.5 px-3 rounded-lg text-slate-600 hover:bg-emerald-50 hover:text-emerald-700 transition-all duration-150 font-medium border border-slate-200">
                         <span>最新</span>
-                        <i class="fas fa-sort-alpha-up text-blue-500"></i>
-                    </a>
+                        <i class="fas fa-sort text-emerald-400"></i>
+                    </button>
                 </x-slot>
 
                 <x-slot name="content">
-                    <x-dropdown-link href="javascript:void(0)" @click="setOrderBy('newest'); open = false">最新
-                    </x-dropdown-link>
-                    <x-dropdown-link href="javascript:void(0)" @click="setOrderBy('earliest'); open = false">最早
-                    </x-dropdown-link>
-                    <x-dropdown-link href="javascript:void(0)" @click="setOrderBy('utmost'); open = false">最大
-                    </x-dropdown-link>
-                    <x-dropdown-link href="javascript:void(0)" @click="setOrderBy('least'); open = false">最小
-                    </x-dropdown-link>
+                    <x-dropdown-link href="javascript:void(0)" @click="setOrderBy('newest'); open = false">最新</x-dropdown-link>
+                    <x-dropdown-link href="javascript:void(0)" @click="setOrderBy('earliest'); open = false">最早</x-dropdown-link>
+                    <x-dropdown-link href="javascript:void(0)" @click="setOrderBy('utmost'); open = false">最大</x-dropdown-link>
+                    <x-dropdown-link href="javascript:void(0)" @click="setOrderBy('least'); open = false">最小</x-dropdown-link>
                 </x-slot>
             </x-dropdown>
             <x-dropdown direction="left">
                 <x-slot name="trigger">
-                    <a id="permission" class="text-sm py-2 px-3 hover:bg-gray-100 rounded text-gray-800" href="javascript:void(0)">
+                    <button id="permission" class="flex items-center gap-1.5 text-xs py-1.5 px-3 rounded-lg text-slate-600 hover:bg-emerald-50 hover:text-emerald-700 transition-all duration-150 font-medium border border-slate-200">
                         <span>全部</span>
-                        <i class="fas fa-eye text-blue-500"></i>
-                    </a>
+                        <i class="fas fa-filter text-emerald-400"></i>
+                    </button>
                 </x-slot>
 
                 <x-slot name="content">
-                    <x-dropdown-link href="javascript:void(0)" @click="open = false; setPermission('all')">全部
-                    </x-dropdown-link>
-                    <x-dropdown-link href="javascript:void(0)" @click="open = false; setPermission('public')">公开
-                    </x-dropdown-link>
-                    <x-dropdown-link href="javascript:void(0)" @click="open = false; setPermission('private')">私有
-                    </x-dropdown-link>
+                    <x-dropdown-link href="javascript:void(0)" @click="open = false; setPermission('all')">全部</x-dropdown-link>
+                    <x-dropdown-link href="javascript:void(0)" @click="open = false; setPermission('public')">公开</x-dropdown-link>
+                    <x-dropdown-link href="javascript:void(0)" @click="open = false; setPermission('private')">私有</x-dropdown-link>
                 </x-slot>
             </x-dropdown>
         </div>
@@ -116,7 +117,7 @@
                 <form class="w-full space-y-2" action="/user/albums">
                     <input type="text" class="w-full rounded px-2.5 py-1.5 text-sm border-0 bg-gray-200" name="name" placeholder="请输入名称">
                     <textarea class="w-full resize-y rounded-md text-sm border-0 bg-gray-200" name="intro" placeholder="请输入简介"></textarea>
-                    <button class="w-full py-1 px-2 bg-indigo-500 text-white text-sm text-center tracking-wider font-semibold rounded-md">创建相册</button>
+                    <button class="w-full py-1 px-2 bg-emerald-500 hover:bg-emerald-600 text-white text-sm text-center tracking-wider font-semibold rounded-md transition-colors">创建相册</button>
                 </form>
             </div>
         </div>
@@ -139,7 +140,7 @@
             <form class="w-full space-y-2" action="/user/albums/__id__">
                 <input type="text" class="w-full rounded px-2.5 py-1.5 text-sm border-0 bg-gray-200" placeholder="请输入名称" name="name" value="__name__">
                 <textarea class="w-full resize-y rounded-md text-sm border-0 bg-gray-200" name="intro" placeholder="请输入简介">__intro__</textarea>
-                <button class="w-full py-1 px-2 bg-indigo-500 text-white text-sm text-center tracking-wider font-semibold rounded-md">确认修改</button>
+                <button class="w-full py-1 px-2 bg-emerald-500 hover:bg-emerald-600 text-white text-sm text-center tracking-wider font-semibold rounded-md transition-colors">确认修改</button>
             </form>
         </div>
     </script>
