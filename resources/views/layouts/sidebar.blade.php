@@ -55,6 +55,10 @@
                 <x-slot name="icon"><i class="fas fa-link"></i></x-slot>
                 <x-slot name="name">接口文档</x-slot>
             </x-nav-link>
+            <x-nav-link :href="route('api.tokens')" :active="request()->routeIs('api.tokens')">
+                <x-slot name="icon"><i class="fas fa-key"></i></x-slot>
+                <x-slot name="name">密钥管理</x-slot>
+            </x-nav-link>
             @endif
             @endif
 

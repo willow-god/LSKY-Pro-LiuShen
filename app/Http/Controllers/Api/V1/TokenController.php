@@ -12,6 +12,33 @@ use Illuminate\Validation\ValidationException;
 
 class TokenController extends Controller
 {
+    /**
+     * 获取当前用户的 Token 列表
+     */
+    public function index(): Response
+    {
+        /** @var User $user */
+        $user = Auth::user();
+
+        $tokens = $user->tokens()
+            ->select(['id', 'name', 'last_used_at', 'created_at'])
+            ->orderByDesc('created_at')
+            ->get()
+            ->map(function ($token) {
+                return [
+                    'id' => $token->id,
+                    'name' => $token->name,
+                    'last_used_at' => $token->last_used_at?->format('Y-m-d H:i:s'),
+                    'created_at' => $token->created_at->format('Y-m-d H:i:s'),
+                ];
+            });
+
+        return $this->success('success', compact('tokens'));
+    }
+
+    /**
+     * 创建 Token（API 方式，需验证密码）
+     */
     public function store(Request $request): Response
     {
         try {
@@ -35,6 +62,97 @@ class TokenController extends Controller
         return $this->success('success', compact('token'));
     }
 
+    /**
+     * Web 端创建 Token（已登录用户，需验证当前密码）
+     */
+    public function createWebToken(Request $request): Response
+    {
+        try {
+            $request->validate([
+                'name' => 'nullable|string|max:50',
+                'password' => 'required|string',
+            ]);
+        } catch (ValidationException $e) {
+            return $this->fail($e->validator->errors()->first());
+        }
+
+        /** @var User $user */
+        $user = Auth::user();
+
+        if (! Hash::check($request->password, $user->password)) {
+            return $this->fail('密码错误，请重新输入');
+        }
+
+        $name = $request->input('name') ?: $user->email;
+        $token = $user->createToken($name)->plainTextToken;
+
+        return $this->success('创建成功', compact('token'));
+    }
+
+    /**
+     * 修改 Token 名称（仅允许修改 name 字段）
+     */
+    public function update(Request $request, int $id): Response
+    {
+        try {
+            $request->validate([
+                'name' => 'required|string|max:50',
+            ]);
+        } catch (ValidationException $e) {
+            return $this->fail($e->validator->errors()->first());
+        }
+
+        /** @var User $user */
+        $user = Auth::user();
+
+        $token = $user->tokens()->find($id);
+
+        if (! $token) {
+            return $this->fail('Token 不存在');
+        }
+
+        // 严格限制：只允许修改 name 字段
+        $token->forceFill([
+            'name' => $request->input('name'),
+        ])->save();
+
+        return $this->success('修改成功');
+    }
+
+    /**
+     * 删除单个 Token（严格校验所有权，需验证当前密码）
+     */
+    public function destroy(Request $request, int $id): Response
+    {
+        try {
+            $request->validate([
+                'password' => 'required|string',
+            ]);
+        } catch (ValidationException $e) {
+            return $this->fail($e->validator->errors()->first());
+        }
+
+        /** @var User $user */
+        $user = Auth::user();
+
+        if (! Hash::check($request->password, $user->password)) {
+            return $this->fail('密码错误，请重新输入');
+        }
+
+        $token = $user->tokens()->find($id);
+
+        if (! $token) {
+            return $this->fail('Token 不存在');
+        }
+
+        $token->delete();
+
+        return $this->success('删除成功');
+    }
+
+    /**
+     * 清空当前用户的所有 Token
+     */
     public function clear(): Response
     {
         /** @var User $user */

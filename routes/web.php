@@ -52,6 +52,10 @@ Route::group(['middleware' => ['auth']], function () {
         'middleware' => CheckIsEnableApi::class
     ], function () {
         Route::get('', [ApiController::class, 'index'])->name('api');
+        Route::get('tokens', [ApiController::class, 'tokens'])->name('api.tokens');
+        Route::post('tokens', [\App\Http\Controllers\Api\V1\TokenController::class, 'createWebToken'])->name('api.tokens.create');
+        Route::put('tokens/{id}', [\App\Http\Controllers\Api\V1\TokenController::class, 'update'])->name('api.tokens.update');
+        Route::delete('tokens/{id}', [\App\Http\Controllers\Api\V1\TokenController::class, 'destroy'])->name('api.tokens.destroy');
     });
 
     Route::get('upload', fn () => view('user.upload'))->name('upload');
