@@ -2,12 +2,12 @@
 
 <x-app-layout>
     <div class="my-6 md:my-8 max-w-5xl">
-        <div class="mb-5 flex items-center justify-between">
-            <div class="flex items-center gap-2.5">
-                <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background: linear-gradient(135deg, rgba(16,185,129,0.15), rgba(13,148,136,0.15));">
+        <div class="mb-5 flex items-center justify-between gap-3">
+            <div class="flex items-center gap-2.5 min-w-0">
+                <div class="w-8 h-8 rounded-lg flex items-center justify-center shrink-0" style="background: linear-gradient(135deg, rgba(16,185,129,0.15), rgba(13,148,136,0.15));">
                     <i class="fas fa-key text-sm" style="color: #059669;"></i>
                 </div>
-                <h2 class="font-bold text-lg text-slate-800">API 密钥管理</h2>
+                <h2 class="font-bold text-lg text-slate-800 truncate">API 密钥管理</h2>
             </div>
             <x-button type="button" @click="$store.modal.open('create-token-modal')">
                 <i class="fas fa-plus mr-1.5"></i>新建密钥
@@ -21,7 +21,7 @@
             @else
                 <x-table :columns="['名称', '最后使用时间', '创建时间', '操作']">
                     @foreach($tokens as $token)
-                        <tr class="hover:bg-slate-50/60 transition-colors">
+                        <tr class="hover:bg-slate-50/60 transition-colors align-top">
                             <td class="px-5 py-4 whitespace-nowrap text-sm text-slate-700">
                                 <span id="token-name-display-{{ $token->id }}">{{ $token->name }}</span>
                             </td>
@@ -32,15 +32,15 @@
                                 {{ $token->created_at->format('Y-m-d H:i:s') }}
                             </td>
                             <td class="px-5 py-4 whitespace-nowrap text-sm">
-                                <div class="flex items-center gap-3">
+                                <div class="flex items-center gap-3 whitespace-nowrap">
                                     <button type="button"
-                                        class="token-edit-btn text-sky-500 hover:text-sky-700 text-sm font-medium transition-colors"
+                                        class="token-view-btn text-emerald-600 hover:text-emerald-700 text-sm font-medium transition-colors shrink-0"
                                         data-token-id="{{ $token->id }}"
                                         data-token-name="{{ $token->name }}">
-                                        <i class="fas fa-edit mr-1"></i>重命名
+                                        <i class="fas fa-eye mr-1"></i>查看
                                     </button>
                                     <button type="button"
-                                        class="token-delete-btn text-red-500 hover:text-red-700 text-sm font-medium transition-colors"
+                                        class="token-delete-btn text-red-500 hover:text-red-700 text-sm font-medium transition-colors shrink-0"
                                         data-token-id="{{ $token->id }}"
                                         data-token-name="{{ $token->name }}">
                                         <i class="fas fa-trash-alt mr-1"></i>删除
@@ -53,7 +53,8 @@
             @endif
         </div>
 
-        <div class="mt-4 text-sm text-slate-500">
+        <div class="mt-4 text-sm text-slate-500 space-y-1">
+            <p><i class="fas fa-info-circle mr-1"></i>提示：创建密钥时默认授予全部权限，你可以按需取消勾选。</p>
             <p><i class="fas fa-info-circle mr-1"></i>提示：删除密钥后，使用该密钥的 API 请求将立即失效。</p>
         </div>
     </div>
@@ -68,11 +69,12 @@
 
             <form id="create-token-form" onsubmit="return false;">
                 @csrf
+                <input type="text" value="{{ $currentUserEmail }}" autocomplete="username" tabindex="-1" class="hidden" aria-hidden="true">
                 <div class="mb-4">
                     <label for="token-name" class="block text-sm font-medium text-slate-700 mb-1.5">
                         密钥名称 <span class="text-slate-400 font-normal">（可选，默认使用邮箱）</span>
                     </label>
-                    <x-input type="text" id="token-name" name="name" placeholder="例如：PicGo、uPic、开发测试..." maxlength="50" />
+                    <x-input type="text" id="token-name" name="name" placeholder="例如：PicGo、uPic、开发测试..." maxlength="50" autocomplete="username" />
                 </div>
 
                 <div class="mb-4">
@@ -82,19 +84,57 @@
                     <x-input type="password" id="token-password" name="password" placeholder="请再次输入密码验证身份" autocomplete="current-password" required />
                 </div>
 
+                <div class="mb-4 rounded-xl border border-slate-200 bg-slate-50/70 p-4">
+                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-3 gap-3">
+                        <div>
+                            <p class="text-sm font-semibold text-slate-700">授权范围</p>
+                            <p class="text-xs text-slate-500 mt-1">默认全部勾选，创建后只能查看，不能修改。</p>
+                        </div>
+                        <button type="button" id="toggle-all-abilities" class="text-sm font-medium text-emerald-600 hover:text-emerald-700 transition-colors self-start sm:self-auto">取消全选</button>
+                    </div>
+
+                    <div class="space-y-4">
+                        @foreach($tokenAbilityGroups as $group)
+                            <div class="rounded-lg bg-white border border-slate-200 p-4">
+                                <div class="flex items-start justify-between gap-3 mb-3">
+                                    <label class="inline-flex items-start gap-2.5 text-sm text-slate-700 cursor-pointer">
+                                        <input type="checkbox" class="ability-group-toggle mt-0.5 rounded border-slate-300 text-emerald-600 focus:ring-emerald-500" data-group-key="{{ $group['key'] }}" checked>
+                                        <span>
+                                            <span class="font-semibold text-slate-700">{{ $group['label'] }}</span>
+                                            <span class="block text-xs text-slate-400 mt-1">{{ count($group['abilities']) }} 项权限</span>
+                                        </span>
+                                    </label>
+                                </div>
+                                <div class="flex flex-wrap gap-2.5">
+                                    @foreach($group['abilities'] as $abilityKey => $abilityLabel)
+                                        <label class="inline-flex items-center gap-2 rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-700 cursor-pointer transition-colors hover:border-emerald-200 hover:bg-emerald-50/60">
+                                            <input type="checkbox" name="abilities[]" value="{{ $abilityKey }}" data-group-key="{{ $group['key'] }}" class="ability-checkbox rounded border-slate-300 text-emerald-600 focus:ring-emerald-500" checked>
+                                            <span>{{ $abilityLabel }}</span>
+                                        </label>
+                                    @endforeach
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+
                 <div id="token-result" class="hidden mb-4 p-4 rounded-lg bg-emerald-50 border border-emerald-200">
                     <p class="text-sm font-medium text-emerald-700 mb-2">密钥创建成功，请立即复制保存：</p>
-                    <div class="flex items-center gap-2">
+                    <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
                         <code id="token-value" class="flex-1 block px-3 py-2 text-sm bg-white rounded border border-emerald-200 text-slate-700 break-all select-all"></code>
                         <button type="button" onclick="copyToken()" class="px-3 py-2 text-sm font-medium text-emerald-700 bg-emerald-100 hover:bg-emerald-200 rounded-lg transition-colors whitespace-nowrap">
                             <i class="fas fa-copy mr-1"></i>复制
                         </button>
                     </div>
-                    <p class="text-xs text-emerald-600 mt-2"><i class="fas fa-exclamation-triangle mr-1"></i>此密钥仅显示一次，关闭后将无法再次查看。</p>
+                    <div class="mt-4">
+                        <p class="text-xs font-semibold text-emerald-700 mb-2">已授予权限</p>
+                        <div id="token-abilities-result" class="space-y-2"></div>
+                    </div>
+                    <p class="text-xs text-emerald-600 mt-3"><i class="fas fa-sync-alt mr-1"></i>关闭弹窗后会自动刷新列表，此密钥关闭后将无法再次查看。</p>
                 </div>
 
-                <div class="flex justify-end gap-3 mt-6">
-                    <button type="button" @click="$store.modal.close('create-token-modal')" class="px-5 py-2 text-sm font-medium text-slate-600 bg-slate-100 hover:bg-slate-200 rounded-lg transition-colors">
+                <div class="flex flex-col-reverse sm:flex-row justify-end gap-3 mt-6">
+                    <button type="button" id="btn-close-create-token" @click="$store.modal.close('create-token-modal')" class="px-5 py-2 text-sm font-medium text-slate-600 bg-slate-100 hover:bg-slate-200 rounded-lg transition-colors">
                         关闭
                     </button>
                     <x-button type="button" id="btn-create-token" onclick="createToken()">
@@ -105,32 +145,51 @@
         </div>
     </x-modal>
 
-    {{-- 编辑 Token 名称弹窗 --}}
-    <x-modal id="edit-token-modal">
+    {{-- 查看 Token 弹窗 --}}
+    <x-modal id="view-token-modal">
         <div class="w-full">
-            <h3 class="text-lg font-bold text-slate-800 mb-1">重命名密钥</h3>
-            <p class="text-sm text-slate-500 mb-6">修改密钥的显示名称，便于识别和管理</p>
+            <div class="mb-6">
+                <h3 class="text-lg font-bold text-slate-800 mb-1">查看密钥</h3>
+                <p class="text-sm text-slate-500">可在此处重命名密钥，并查看当前授权范围</p>
+            </div>
 
-            <form id="edit-token-form" onsubmit="return false;">
-                @csrf
-                <input type="hidden" id="edit-token-id" />
+            <input type="hidden" id="view-token-id">
 
-                <div class="mb-4">
-                    <label for="edit-token-name" class="block text-sm font-medium text-slate-700 mb-1.5">
-                        密钥名称 <span class="text-red-500">*</span>
-                    </label>
-                    <x-input type="text" id="edit-token-name" name="name" placeholder="请输入密钥名称" maxlength="50" required />
-                </div>
-
-                <div class="flex justify-end gap-3 mt-6">
-                    <button type="button" @click="$store.modal.close('edit-token-modal')" class="px-5 py-2 text-sm font-medium text-slate-600 bg-slate-100 hover:bg-slate-200 rounded-lg transition-colors">
-                        取消
+            <div class="mb-4 rounded-xl border border-slate-200 bg-slate-50/70 p-4">
+                <p class="text-xs text-slate-500 mb-1">密钥名称</p>
+                <div class="flex flex-wrap items-start gap-x-3 gap-y-2">
+                    <p id="view-token-name-text" class="text-sm font-semibold text-slate-700 break-all min-w-0 flex-1"></p>
+                    <button type="button" id="btn-start-rename-token" onclick="beginRenameFromViewModal()" class="inline-flex items-center gap-1 text-sm font-medium text-sky-600 hover:text-sky-700 transition-colors shrink-0">
+                        <i class="fas fa-edit"></i>重命名
                     </button>
-                    <x-button type="button" id="btn-edit-token" onclick="confirmEditToken()">
-                        <i class="fas fa-save mr-1.5"></i>保存修改
-                    </x-button>
                 </div>
-            </form>
+
+                <div id="view-token-name-editor" class="hidden mt-3 border-t border-slate-200 p-3">
+                    <label for="view-token-name-input" class="block text-sm font-medium text-slate-700 mb-1.5">
+                        新名称 <span class="text-red-500">*</span>
+                    </label>
+                    <x-input type="text" id="view-token-name-input" name="view_token_name" placeholder="请输入密钥名称" maxlength="50" required autocomplete="off" />
+                    <div class="flex flex-col-reverse sm:flex-row justify-end gap-3 mt-4">
+                        <button type="button" onclick="cancelRenameFromViewModal()" class="px-5 py-2 text-sm font-medium text-slate-600 bg-slate-100 hover:bg-slate-200 rounded-lg transition-colors">
+                            取消
+                        </button>
+                        <x-button type="button" id="btn-save-view-token-name" onclick="saveTokenNameFromViewModal()">
+                            <i class="fas fa-save mr-1.5"></i>保存名称
+                        </x-button>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <p class="text-sm font-semibold text-slate-700 mb-3">已授予权限</p>
+                <div id="view-token-abilities" class="space-y-3"></div>
+            </div>
+
+            <div class="flex justify-end mt-6">
+                <button type="button" @click="$store.modal.close('view-token-modal')" class="px-5 py-2 text-sm font-medium text-slate-600 bg-slate-100 hover:bg-slate-200 rounded-lg transition-colors w-full sm:w-auto">
+                    关闭
+                </button>
+            </div>
         </div>
     </x-modal>
 
@@ -144,8 +203,9 @@
 
             <form id="delete-token-form" onsubmit="return false;">
                 @csrf
+                <input type="text" value="{{ $currentUserEmail }}" autocomplete="username" tabindex="-1" class="hidden" aria-hidden="true">
                 <div class="mb-4 p-3 rounded-lg bg-red-50 border border-red-100">
-                    <p class="text-sm text-red-700">
+                    <p class="text-sm text-red-700 break-all">
                         <i class="fas fa-exclamation-circle mr-1"></i>
                         确定要删除密钥「<span id="delete-token-name" class="font-semibold"></span>」吗？
                     </p>
@@ -161,7 +221,7 @@
                     <x-input type="password" id="delete-password" name="password" placeholder="请再次输入密码验证身份" autocomplete="current-password" required />
                 </div>
 
-                <div class="flex justify-end gap-3 mt-6">
+                <div class="flex flex-col-reverse sm:flex-row justify-end gap-3 mt-6">
                     <button type="button" @click="$store.modal.close('delete-token-modal')" class="px-5 py-2 text-sm font-medium text-slate-600 bg-slate-100 hover:bg-slate-200 rounded-lg transition-colors">
                         取消
                     </button>
@@ -175,10 +235,121 @@
 
     @push('scripts')
         <script>
+            const tokenAbilityGroups = @json($tokenAbilityGroups);
+            const tokenAbilitiesMap = @json($tokenAbilitiesMap);
+            let shouldReloadTokenList = false;
+
+            function getSelectedAbilities() {
+                return Array.from(document.querySelectorAll('.ability-checkbox:checked')).map(item => item.value);
+            }
+
+            function renderAbilityGroups(container, abilityGroups, emptyText = '暂无权限') {
+                container.innerHTML = '';
+
+                if (!abilityGroups.length) {
+                    const empty = document.createElement('p');
+                    empty.className = 'text-sm text-slate-500';
+                    empty.textContent = emptyText;
+                    container.appendChild(empty);
+                    return;
+                }
+
+                abilityGroups.forEach(group => {
+                    const block = document.createElement('div');
+                    block.className = 'rounded-lg border border-emerald-100 bg-white/80 p-3';
+
+                    const title = document.createElement('p');
+                    title.className = 'text-xs font-semibold text-emerald-700 mb-2';
+                    title.textContent = group.label;
+                    block.appendChild(title);
+
+                    const list = document.createElement('div');
+                    list.className = 'flex flex-wrap gap-2';
+
+                    group.abilities.forEach(ability => {
+                        const badge = document.createElement('span');
+                        badge.className = 'inline-flex items-center rounded-full px-2.5 py-1 text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-100';
+                        badge.textContent = ability.label;
+                        list.appendChild(badge);
+                    });
+
+                    block.appendChild(list);
+                    container.appendChild(block);
+                });
+            }
+
+            function syncTokenName(id, name) {
+                const displayEl = document.getElementById('token-name-display-' + id);
+                if (displayEl) {
+                    displayEl.textContent = name;
+                }
+
+                document.querySelectorAll(`[data-token-id="${id}"]`).forEach(button => {
+                    if ('tokenName' in button.dataset) {
+                        button.dataset.tokenName = name;
+                    }
+                });
+            }
+
+            function setViewRenameMode(editing) {
+                document.getElementById('btn-start-rename-token').classList.toggle('hidden', editing);
+                document.getElementById('view-token-name-editor').classList.toggle('hidden', !editing);
+            }
+
+            function openViewModal(id, name) {
+                document.getElementById('view-token-id').value = id;
+                document.getElementById('view-token-name-text').textContent = name;
+                document.getElementById('view-token-name-input').value = name;
+                setViewRenameMode(false);
+                renderAbilityGroups(document.getElementById('view-token-abilities'), tokenAbilitiesMap[String(id)] || []);
+                Alpine.store('modal').open('view-token-modal');
+            }
+
+            function beginRenameFromViewModal() {
+                setViewRenameMode(true);
+                const input = document.getElementById('view-token-name-input');
+                input.focus();
+                input.select();
+            }
+
+            function cancelRenameFromViewModal() {
+                document.getElementById('view-token-name-input').value = document.getElementById('view-token-name-text').textContent;
+                setViewRenameMode(false);
+            }
+
+            function updateGroupToggleState(groupKey) {
+                const checkboxes = document.querySelectorAll(`.ability-checkbox[data-group-key="${groupKey}"]`);
+                const toggle = document.querySelector(`.ability-group-toggle[data-group-key="${groupKey}"]`);
+
+                if (!toggle || !checkboxes.length) {
+                    return;
+                }
+
+                toggle.checked = Array.from(checkboxes).every(item => item.checked);
+            }
+
+            function updateToggleAllText() {
+                const checkboxes = document.querySelectorAll('.ability-checkbox');
+                const checked = document.querySelectorAll('.ability-checkbox:checked');
+                const toggleAllButton = document.getElementById('toggle-all-abilities');
+
+                if (!toggleAllButton) {
+                    return;
+                }
+
+                toggleAllButton.textContent = checkboxes.length === checked.length ? '取消全选' : '全选权限';
+            }
+
             function createToken() {
                 const password = document.getElementById('token-password').value.trim();
                 if (!password) {
                     toastr.warning('请输入密码以验证身份');
+                    return;
+                }
+
+                const abilities = getSelectedAbilities();
+                if (!abilities.length) {
+                    toastr.warning('请至少选择一项权限');
                     return;
                 }
 
@@ -191,22 +362,28 @@
                 axios.post('{{ route("api.tokens.create") }}', {
                     name: name || null,
                     password: password,
+                    abilities: abilities,
                     _token: document.querySelector('meta[name="csrf-token"]').content
                 }).then(response => {
                     btn.disabled = false;
                     btn.innerHTML = '<i class="fas fa-check mr-1.5"></i>确认创建';
 
                     if (response.data.status) {
+                        shouldReloadTokenList = true;
                         document.getElementById('token-value').textContent = response.data.data.token;
+                        renderAbilityGroups(document.getElementById('token-abilities-result'), response.data.data.ability_groups || []);
                         document.getElementById('token-result').classList.remove('hidden');
                         document.getElementById('token-name').disabled = true;
                         document.getElementById('token-password').disabled = true;
+                        document.querySelectorAll('.ability-checkbox, .ability-group-toggle').forEach(item => item.disabled = true);
+                        document.getElementById('toggle-all-abilities').disabled = true;
+                        document.getElementById('btn-close-create-token').textContent = '关闭并刷新列表';
                         btn.classList.add('hidden');
                         toastr.success('密钥创建成功');
                     } else {
                         toastr.warning(response.data.message);
                     }
-                }).catch(error => {
+                }).catch(() => {
                     btn.disabled = false;
                     btn.innerHTML = '<i class="fas fa-check mr-1.5"></i>确认创建';
                     toastr.error('请求失败，请稍后重试');
@@ -228,22 +405,16 @@
                 });
             }
 
-            function openEditModal(id, name) {
-                document.getElementById('edit-token-id').value = id;
-                document.getElementById('edit-token-name').value = name;
-                Alpine.store('modal').open('edit-token-modal');
-            }
-
-            function confirmEditToken() {
-                const id = document.getElementById('edit-token-id').value;
-                const name = document.getElementById('edit-token-name').value.trim();
+            function saveTokenNameFromViewModal() {
+                const id = document.getElementById('view-token-id').value;
+                const name = document.getElementById('view-token-name-input').value.trim();
 
                 if (!name) {
                     toastr.warning('请输入密钥名称');
                     return;
                 }
 
-                const btn = document.getElementById('btn-edit-token');
+                const btn = document.getElementById('btn-save-view-token-name');
                 btn.disabled = true;
                 btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-1.5"></i>保存中...';
 
@@ -252,22 +423,20 @@
                     _token: document.querySelector('meta[name="csrf-token"]').content
                 }).then(response => {
                     btn.disabled = false;
-                    btn.innerHTML = '<i class="fas fa-save mr-1.5"></i>保存修改';
+                    btn.innerHTML = '<i class="fas fa-save mr-1.5"></i>保存名称';
 
                     if (response.data.status) {
-                        Alpine.store('modal').close('edit-token-modal');
+                        document.getElementById('view-token-name-text').textContent = name;
+                        document.getElementById('view-token-name-input').value = name;
+                        syncTokenName(id, name);
+                        setViewRenameMode(false);
                         toastr.success('修改成功');
-                        // 更新页面上显示的名称
-                        const displayEl = document.getElementById('token-name-display-' + id);
-                        if (displayEl) {
-                            displayEl.textContent = name;
-                        }
                     } else {
                         toastr.warning(response.data.message);
                     }
-                }).catch(error => {
+                }).catch(() => {
                     btn.disabled = false;
-                    btn.innerHTML = '<i class="fas fa-save mr-1.5"></i>保存修改';
+                    btn.innerHTML = '<i class="fas fa-save mr-1.5"></i>保存名称';
                     toastr.error('修改失败，请稍后重试');
                 });
             }
@@ -304,11 +473,11 @@
                     if (response.data.status) {
                         Alpine.store('modal').close('delete-token-modal');
                         toastr.success('删除成功');
-                        setTimeout(() => location.reload(), 800);
+                        setTimeout(() => location.reload(), 600);
                     } else {
                         toastr.warning(response.data.message);
                     }
-                }).catch(error => {
+                }).catch(() => {
                     btn.disabled = false;
                     btn.innerHTML = '<i class="fas fa-trash-alt mr-1.5"></i>确认删除';
                     toastr.error('删除失败，请稍后重试');
@@ -316,39 +485,83 @@
             }
 
             document.addEventListener('click', (event) => {
-                const editButton = event.target.closest('.token-edit-btn');
-                if (editButton) {
-                    openEditModal(editButton.dataset.tokenId, editButton.dataset.tokenName || '');
+                const viewButton = event.target.closest('.token-view-btn');
+                if (viewButton) {
+                    openViewModal(viewButton.dataset.tokenId, viewButton.dataset.tokenName || '');
                     return;
                 }
 
                 const deleteButton = event.target.closest('.token-delete-btn');
                 if (deleteButton) {
                     openDeleteModal(deleteButton.dataset.tokenId, deleteButton.dataset.tokenName || '');
+                    return;
+                }
+
+                const groupToggle = event.target.closest('.ability-group-toggle');
+                if (groupToggle) {
+                    document.querySelectorAll(`.ability-checkbox[data-group-key="${groupToggle.dataset.groupKey}"]`).forEach(item => {
+                        item.checked = groupToggle.checked;
+                    });
+                    updateToggleAllText();
+                    return;
+                }
+
+                const toggleAllButton = event.target.closest('#toggle-all-abilities');
+                if (toggleAllButton) {
+                    const shouldCheck = toggleAllButton.textContent === '全选权限';
+                    document.querySelectorAll('.ability-checkbox, .ability-group-toggle').forEach(item => {
+                        item.checked = shouldCheck;
+                    });
+                    updateToggleAllText();
                 }
             });
 
-            // 弹窗关闭时重置状态
+            document.addEventListener('change', (event) => {
+                const checkbox = event.target.closest('.ability-checkbox');
+                if (!checkbox) {
+                    return;
+                }
+
+                updateGroupToggleState(checkbox.dataset.groupKey);
+                updateToggleAllText();
+            });
+
             document.addEventListener('alpine:initialized', () => {
                 const createModal = document.getElementById('create-token-modal');
                 if (createModal) {
                     const observer = new MutationObserver((mutations) => {
                         mutations.forEach((mutation) => {
-                            if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
-                                if (createModal.style.display === 'none') {
-                                    setTimeout(() => {
-                                        document.getElementById('create-token-form').reset();
-                                        document.getElementById('token-result').classList.add('hidden');
-                                        document.getElementById('token-name').disabled = false;
-                                        document.getElementById('token-password').disabled = false;
-                                        document.getElementById('btn-create-token').classList.remove('hidden');
-                                    }, 300);
-                                }
+                            if (mutation.type === 'attributes' && mutation.attributeName === 'style' && createModal.style.display === 'none') {
+                                const needsReload = shouldReloadTokenList;
+
+                                setTimeout(() => {
+                                    document.getElementById('create-token-form').reset();
+                                    document.getElementById('token-result').classList.add('hidden');
+                                    document.getElementById('token-abilities-result').innerHTML = '';
+                                    document.getElementById('token-name').disabled = false;
+                                    document.getElementById('token-password').disabled = false;
+                                    document.querySelectorAll('.ability-checkbox, .ability-group-toggle').forEach(item => {
+                                        item.disabled = false;
+                                        item.checked = true;
+                                    });
+                                    document.getElementById('toggle-all-abilities').disabled = false;
+                                    document.getElementById('btn-close-create-token').textContent = '关闭';
+                                    document.getElementById('btn-create-token').classList.remove('hidden');
+                                    shouldReloadTokenList = false;
+                                    updateToggleAllText();
+
+                                    if (needsReload) {
+                                        location.reload();
+                                    }
+                                }, 300);
                             }
                         });
                     });
                     observer.observe(createModal, { attributes: true });
                 }
+
+                tokenAbilityGroups.forEach(group => updateGroupToggleState(group.key));
+                updateToggleAllText();
             });
         </script>
     @endpush

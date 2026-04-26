@@ -32,6 +32,11 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests, Result;
 
+    protected function forbidden(string $message = null): Response
+    {
+        return $this->response(false, $message ?: config('token_abilities.forbidden_message'), [], 403);
+    }
+
     public function install(Request $request): View|Response
     {
         if (file_exists(base_path('installed.lock'))) {
@@ -109,7 +114,6 @@ class Controller extends BaseController
                 $user->is_adminer = true;
                 $user->status = UserStatus::Normal;
                 $user->email_verified_at = date('Y-m-d H:i:s');
-                // 设置默认策略组的 url 为当前请求 url
                 Strategy::query()->update(['configs->url' => $request->getSchemeAndHttpHost().'/i']);
                 $user->save();
             } catch (\Throwable $e) {
@@ -161,7 +165,6 @@ class Controller extends BaseController
                 $contents = $image->filesystem()->read($image->pathname);
                 $configs = collect($image->group?->configs->get(GroupConfigKey::WatermarkConfigs));
 
-                // 是否启用了水印功能，跳过gif和ico图片
                 if (
                     $image->group?->configs->get(GroupConfigKey::IsEnableWatermark) &&
                     $configs->get('mode', Mode::Overlay) == Mode::Dynamic &&
@@ -171,7 +174,6 @@ class Controller extends BaseController
                     $contents = $service->stickWatermark($contents, $configs)->encode($image->extension, $quality)->getEncoded();
                 }
                 $cacheTtl = (int)$image->group?->configs->get(GroupConfigKey::ImageCacheTtl, 0);
-                // 是否启用了缓存
                 if ($cacheTtl) {
                     Cache::remember($cacheKey, $cacheTtl, fn () => $contents);
                 } else {
@@ -185,12 +187,10 @@ class Controller extends BaseController
 
         $mimetype = $image->mimetype;
 
-        // ico svg 图片直接输出，不经过 InterventionImage 处理
         if (in_array($image->extension, ['ico', 'svg'])) {
             goto out;
         }
 
-        // 浏览器无法预览的图片，改为 png 格式输出
         if (in_array($image->extension, ['psd', 'tif', 'bmp'])) {
             $mimetype = 'image/png';
             $contents = InterventionImage::make($contents)->encode('png')->getEncoded();

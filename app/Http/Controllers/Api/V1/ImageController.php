@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Exceptions\UploadException;
+use App\Http\Controllers\Concerns\InteractsWithTokenAbilities;
 use App\Http\Controllers\Controller;
 use App\Models\Image;
 use App\Models\User;
@@ -16,27 +17,22 @@ use Illuminate\Support\Facades\Auth;
 
 class ImageController extends Controller
 {
+    use InteractsWithTokenAbilities;
+
     /**
      * @throws AuthenticationException
      */
     public function upload(Request $request, ImageService $service): Response
     {
         if ($request->hasHeader('Authorization')) {
-            $guards = array_keys(config('auth.guards'));
+            $authenticated = $this->authenticateOptionalBearerToken($request);
 
-            if (empty($guards)) {
-                $guards = [null];
-            }
-
-            foreach ($guards as $guard) {
-                if (Auth::guard($guard)->check()) {
-                    Auth::shouldUse($guard);
-                    break;
-                }
-            }
-
-            if (! Auth::check()) {
+            if (! $authenticated && ! Auth::check()) {
                 throw new AuthenticationException('Authentication failed.');
+            }
+
+            if ($response = $this->ensureTokenAbility('images.upload')) {
+                return $response;
             }
         }
 
@@ -58,6 +54,10 @@ class ImageController extends Controller
 
     public function images(Request $request): Response
     {
+        if ($response = $this->ensureTokenAbility('images.read')) {
+            return $response;
+        }
+
         /** @var User $user */
         $user = Auth::user();
 
@@ -75,6 +75,10 @@ class ImageController extends Controller
 
     public function destroy(Request $request): Response
     {
+        if ($response = $this->ensureTokenAbility('images.delete')) {
+            return $response;
+        }
+
         /** @var User $user */
         $user = Auth::user();
         (new UserService())->deleteImages([$request->route('key')], $user, 'key');

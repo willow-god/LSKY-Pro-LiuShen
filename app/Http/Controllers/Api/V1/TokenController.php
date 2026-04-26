@@ -2,16 +2,20 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Http\Controllers\Concerns\InteractsWithTokenAbilities;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 
 class TokenController extends Controller
 {
+    use InteractsWithTokenAbilities;
+
     /**
      * 获取当前用户的 Token 列表
      */
@@ -21,13 +25,15 @@ class TokenController extends Controller
         $user = Auth::user();
 
         $tokens = $user->tokens()
-            ->select(['id', 'name', 'last_used_at', 'created_at'])
+            ->select(['id', 'name', 'abilities', 'last_used_at', 'created_at'])
             ->orderByDesc('created_at')
             ->get()
             ->map(function ($token) {
                 return [
                     'id' => $token->id,
                     'name' => $token->name,
+                    'abilities' => $token->abilities ?: $this->allTokenAbilities(),
+                    'ability_groups' => $this->tokenAbilitiesForDisplay($token->abilities),
                     'last_used_at' => $token->last_used_at?->format('Y-m-d H:i:s'),
                     'created_at' => $token->created_at->format('Y-m-d H:i:s'),
                 ];
@@ -45,6 +51,8 @@ class TokenController extends Controller
             $request->validate([
                 'email' => 'required|email',
                 'password' => 'required',
+                'abilities' => 'nullable|array',
+                'abilities.*' => ['string', Rule::in($this->allTokenAbilities())],
             ]);
         } catch (ValidationException $e) {
             return $this->fail($e->validator->errors()->first());
@@ -57,9 +65,14 @@ class TokenController extends Controller
             return $this->fail('The email address or password is incorrect.');
         }
 
-        $token = $user->createToken($user->email)->plainTextToken;
+        $abilities = $this->normalizedRequestedAbilities($request->input('abilities'));
+        $token = $user->createToken($user->email, $abilities)->plainTextToken;
 
-        return $this->success('success', compact('token'));
+        return $this->success('success', [
+            'token' => $token,
+            'abilities' => $abilities,
+            'ability_groups' => $this->tokenAbilitiesForDisplay($abilities),
+        ]);
     }
 
     /**
@@ -71,6 +84,8 @@ class TokenController extends Controller
             $request->validate([
                 'name' => 'nullable|string|max:50',
                 'password' => 'required|string',
+                'abilities' => 'nullable|array',
+                'abilities.*' => ['string', Rule::in($this->allTokenAbilities())],
             ]);
         } catch (ValidationException $e) {
             return $this->fail($e->validator->errors()->first());
@@ -84,9 +99,14 @@ class TokenController extends Controller
         }
 
         $name = $request->input('name') ?: $user->email;
-        $token = $user->createToken($name)->plainTextToken;
+        $abilities = $this->normalizedRequestedAbilities($request->input('abilities'));
+        $token = $user->createToken($name, $abilities)->plainTextToken;
 
-        return $this->success('创建成功', compact('token'));
+        return $this->success('创建成功', [
+            'token' => $token,
+            'abilities' => $abilities,
+            'ability_groups' => $this->tokenAbilitiesForDisplay($abilities),
+        ]);
     }
 
     /**
@@ -111,7 +131,6 @@ class TokenController extends Controller
             return $this->fail('Token 不存在');
         }
 
-        // 严格限制：只允许修改 name 字段
         $token->forceFill([
             'name' => $request->input('name'),
         ])->save();

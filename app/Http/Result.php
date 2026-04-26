@@ -16,9 +16,9 @@ trait Result
         return $this->response(false, $message, $data);
     }
 
-    public function response(bool $status, string $message = '', $data = []): Response
+    public function response(bool $status, string $message = '', $data = [], int $statusCode = 200): Response
     {
         $data = $data ?: new \stdClass;
-        return response(compact('status', 'message', 'data'));
+        return response(compact('status', 'message', 'data'), $statusCode);
     }
 }

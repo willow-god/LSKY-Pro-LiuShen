@@ -122,6 +122,7 @@
             <div>
                 <p class="text-lg text-gray-700 font-semibold">生成 Token</p>
                 <x-code><span class="text-green-500 select-none">POST </span>/tokens</x-code>
+                <p class="text-sm text-slate-500 mt-2">支持通过 <span class="font-medium">abilities</span> 指定密钥权限；未传时默认授予全部权限。</p>
                 <div class="my-4 overflow-x-auto">
                     <p class="text-sm mb-2">请求参数(Body)</p>
                     <table class="min-w-full">
@@ -148,6 +149,46 @@
                             <td class="px-3 py-2 whitespace-nowrap"><span class="text-red-500">*</span>password</td>
                             <td class="px-3 py-2 whitespace-nowrap">String</td>
                             <td class="px-3 py-2 whitespace-nowrap">密码</td>
+                        </tr>
+                        <tr>
+                            <td class="px-3 py-2 whitespace-nowrap">abilities</td>
+                            <td class="px-3 py-2 whitespace-nowrap">String[]</td>
+                            <td class="px-3 py-2 whitespace-nowrap">可选权限数组，未传时默认为全部权限</td>
+                        </tr>
+                        <tr>
+                            <td class="px-3 py-2 whitespace-nowrap pl-6">images.read</td>
+                            <td class="px-3 py-2 whitespace-nowrap">String</td>
+                            <td class="px-3 py-2 whitespace-nowrap">获取图片列表</td>
+                        </tr>
+                        <tr>
+                            <td class="px-3 py-2 whitespace-nowrap pl-6">images.upload</td>
+                            <td class="px-3 py-2 whitespace-nowrap">String</td>
+                            <td class="px-3 py-2 whitespace-nowrap">上传图片</td>
+                        </tr>
+                        <tr>
+                            <td class="px-3 py-2 whitespace-nowrap pl-6">images.delete</td>
+                            <td class="px-3 py-2 whitespace-nowrap">String</td>
+                            <td class="px-3 py-2 whitespace-nowrap">删除图片</td>
+                        </tr>
+                        <tr>
+                            <td class="px-3 py-2 whitespace-nowrap pl-6">albums.read</td>
+                            <td class="px-3 py-2 whitespace-nowrap">String</td>
+                            <td class="px-3 py-2 whitespace-nowrap">获取相册列表</td>
+                        </tr>
+                        <tr>
+                            <td class="px-3 py-2 whitespace-nowrap pl-6">albums.delete</td>
+                            <td class="px-3 py-2 whitespace-nowrap">String</td>
+                            <td class="px-3 py-2 whitespace-nowrap">删除相册</td>
+                        </tr>
+                        <tr>
+                            <td class="px-3 py-2 whitespace-nowrap pl-6">profile.read</td>
+                            <td class="px-3 py-2 whitespace-nowrap">String</td>
+                            <td class="px-3 py-2 whitespace-nowrap">获取用户资料</td>
+                        </tr>
+                        <tr>
+                            <td class="px-3 py-2 whitespace-nowrap pl-6">strategies.read</td>
+                            <td class="px-3 py-2 whitespace-nowrap">String</td>
+                            <td class="px-3 py-2 whitespace-nowrap">获取可用策略</td>
                         </tr>
                         </tbody>
                     </table>
@@ -188,6 +229,11 @@
                             <td class="px-3 py-2 whitespace-nowrap pl-6">token</td>
                             <td class="px-3 py-2 whitespace-nowrap">String</td>
                             <td class="px-3 py-2 whitespace-nowrap">Token</td>
+                        </tr>
+                        <tr>
+                            <td class="px-3 py-2 whitespace-nowrap pl-6">abilities</td>
+                            <td class="px-3 py-2 whitespace-nowrap">String[]</td>
+                            <td class="px-3 py-2 whitespace-nowrap">已授予的权限列表</td>
                         </tr>
                         </tbody>
                     </table>
@@ -235,6 +281,7 @@
             <div>
                 <p class="text-lg text-gray-700 font-semibold">用户资料</p>
                 <x-code><span class="text-sky-500 select-none">GET </span>/profile</x-code>
+                <p class="text-sm text-slate-500 mt-2">所需权限：<span class="font-medium">profile.read</span></p>
                 <div class="my-4 overflow-x-auto">
                     <p class="text-sm mb-2">返回参数</p>
                     <table class="min-w-full">
@@ -323,6 +370,7 @@
             <div>
                 <p class="text-lg text-gray-700 font-semibold">策略列表</p>
                 <x-code><span class="text-sky-500 select-none">GET </span>/strategies</x-code>
+                <p class="text-sm text-slate-500 mt-2">游客访问保持不变；携带 Token 请求时所需权限：<span class="font-medium">strategies.read</span></p>
 
                 <div class="my-4 overflow-x-auto">
                     <p class="text-sm mb-2">请求参数(Query)</p>
@@ -408,6 +456,7 @@
             <div>
                 <p class="text-lg text-gray-700 font-semibold">上传图片</p>
                 <x-code><span class="text-green-500 select-none">POST </span>/upload</x-code>
+                <p class="text-sm text-slate-500 mt-2">游客上传保持不变；携带 Token 请求时所需权限：<span class="font-medium">images.upload</span></p>
 
                 <div class="my-4 overflow-x-auto">
                     <p class="text-sm mb-2">Headers</p>
@@ -585,6 +634,7 @@
             <div>
                 <p class="text-lg text-gray-700 font-semibold">图片列表</p>
                 <x-code><span class="text-sky-500 select-none">GET </span>/images</x-code>
+                <p class="text-sm text-slate-500 mt-2">所需权限：<span class="font-medium">images.read</span></p>
 
                 <div class="my-4 overflow-x-auto">
                     <p class="text-sm mb-2">请求参数(Query)</p>
@@ -756,6 +806,7 @@
             <div>
                 <p class="text-lg text-gray-700 font-semibold">删除图片</p>
                 <x-code><span class="text-red-300 select-none">DELETE </span>/images/:key</x-code>
+                <p class="text-sm text-slate-500 mt-2">所需权限：<span class="font-medium">images.delete</span></p>
 
                 <div class="my-4 overflow-x-auto">
                     <p class="text-sm mb-2">请求参数(Params)</p>
@@ -826,6 +877,7 @@
             <div>
                 <p class="text-lg text-gray-700 font-semibold">相册列表</p>
                 <x-code><span class="text-sky-500 select-none">GET </span>/albums</x-code>
+                <p class="text-sm text-slate-500 mt-2">所需权限：<span class="font-medium">albums.read</span></p>
 
                 <div class="my-4 overflow-x-auto">
                     <p class="text-sm mb-2">请求参数(Query)</p>
@@ -947,6 +999,7 @@
             <div>
                 <p class="text-lg text-gray-700 font-semibold">删除相册</p>
                 <x-code><span class="text-red-300 select-none">DELETE </span>/albums/:id</x-code>
+                <p class="text-sm text-slate-500 mt-2">所需权限：<span class="font-medium">albums.delete</span></p>
 
                 <div class="my-4 overflow-x-auto">
                     <p class="text-sm mb-2">请求参数(Params)</p>
