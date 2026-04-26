@@ -30,7 +30,7 @@
 
 - **原项目地址**：[https://github.com/lsky-org/lsky-pro](https://github.com/lsky-org/lsky-pro)
 - **本项目定位**：UI 美化 + 二次开发，**也可直接作为独立项目部署运行**
-- **Docker 镜像**：暂未打包 Docker 镜像，如有需要请自行构建
+- **Docker 镜像**：`willowgod/lsky-liushen:latest`
 
 > 原开源版本已停止维护，不再进行新特性更新和 bug 修复。本二开版本同样基于该冻结版本，**不承诺跟进上游更新**，请知悉。
 
