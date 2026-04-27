@@ -62,86 +62,112 @@
     {{-- 创建 Token 弹窗 --}}
     <x-modal id="create-token-modal">
         <div class="w-full">
-            <h3 class="text-lg font-bold text-slate-800 mb-1">新建 API 密钥</h3>
-            <p class="text-sm text-slate-500 mb-6">
-                <i class="fas fa-shield-alt mr-1 text-emerald-500"></i>为了安全，请再次输入密码验证身份
-            </p>
+            <div id="create-token-panel-form">
+                <h3 class="text-lg font-bold text-slate-800 mb-1">新建 API 密钥</h3>
+                <p class="text-sm text-slate-500 mb-6">
+                    <i class="fas fa-shield-alt mr-1 text-emerald-500"></i>为了安全，请再次输入密码验证身份
+                </p>
 
-            <form id="create-token-form" onsubmit="return false;">
-                @csrf
-                <input type="text" value="{{ $currentUserEmail }}" autocomplete="username" tabindex="-1" class="hidden" aria-hidden="true">
-                <div class="mb-4">
-                    <label for="token-name" class="block text-sm font-medium text-slate-700 mb-1.5">
-                        密钥名称 <span class="text-slate-400 font-normal">（可选，默认使用邮箱）</span>
-                    </label>
-                    <x-input type="text" id="token-name" name="name" placeholder="例如：PicGo、uPic、开发测试..." maxlength="50" autocomplete="username" />
-                </div>
+                <form id="create-token-form" onsubmit="return false;">
+                    @csrf
+                    <input type="text" value="{{ $currentUserEmail }}" autocomplete="username" tabindex="-1" class="hidden" aria-hidden="true">
+                    <div class="mb-4">
+                        <label for="token-name" class="block text-sm font-medium text-slate-700 mb-1.5">
+                            密钥名称 <span class="text-slate-400 font-normal">（可选，默认使用邮箱）</span>
+                        </label>
+                        <x-input type="text" id="token-name" name="name" placeholder="例如：PicGo、uPic、开发测试..." maxlength="50" autocomplete="username" />
+                    </div>
 
-                <div class="mb-4">
-                    <label for="token-password" class="block text-sm font-medium text-slate-700 mb-1.5">
-                        <i class="fas fa-lock mr-1 text-slate-400"></i>当前密码 <span class="text-red-500">*</span>
-                    </label>
-                    <x-input type="password" id="token-password" name="password" placeholder="请再次输入密码验证身份" autocomplete="current-password" required />
-                </div>
+                    <div class="mb-4">
+                        <label for="token-password" class="block text-sm font-medium text-slate-700 mb-1.5">
+                            <i class="fas fa-lock mr-1 text-slate-400"></i>当前密码 <span class="text-red-500">*</span>
+                        </label>
+                        <x-input type="password" id="token-password" name="password" placeholder="请再次输入密码验证身份" autocomplete="current-password" required />
+                    </div>
 
-                <div class="mb-4 rounded-xl border border-slate-200 bg-slate-50/70 p-4">
-                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-3 gap-3">
-                        <div>
+                    <div class="mb-4 rounded-xl border border-slate-200 bg-slate-50/70 p-4">
+                        <div class="mb-4">
                             <p class="text-sm font-semibold text-slate-700">授权范围</p>
                             <p class="text-xs text-slate-500 mt-1">默认全部勾选，创建后只能查看，不能修改。</p>
                         </div>
-                        <button type="button" id="toggle-all-abilities" class="text-sm font-medium text-emerald-600 hover:text-emerald-700 transition-colors self-start sm:self-auto">取消全选</button>
+
+                        <label class="inline-flex items-start gap-2.5 text-sm text-slate-700 cursor-pointer mb-4">
+                            <input type="checkbox" id="toggle-all-abilities" class="mt-0.5 rounded border-slate-300 text-emerald-600 focus:ring-emerald-500" checked>
+                            <span>
+                                <span class="font-semibold text-slate-700">权限组</span>
+                                <span class="block text-xs text-slate-400 mt-1">全选或取消全部权限</span>
+                            </span>
+                        </label>
+
+                        <div class="space-y-4">
+                            @foreach($tokenAbilityGroups as $group)
+                                <div class="rounded-lg bg-white border border-slate-200 p-4">
+                                    <div class="flex items-start justify-between gap-3 mb-3">
+                                        <label class="inline-flex items-start gap-2.5 text-sm text-slate-700 cursor-pointer">
+                                            <input type="checkbox" class="ability-group-toggle mt-0.5 rounded border-slate-300 text-emerald-600 focus:ring-emerald-500" data-group-key="{{ $group['key'] }}" checked>
+                                            <span>
+                                                <span class="font-semibold text-slate-700">{{ $group['label'] }}</span>
+                                                <span class="block text-xs text-slate-400 mt-1">{{ count($group['abilities']) }} 项权限</span>
+                                            </span>
+                                        </label>
+                                    </div>
+                                    <div class="flex flex-wrap gap-2.5">
+                                        @foreach($group['abilities'] as $abilityKey => $abilityLabel)
+                                            <label class="inline-flex items-center gap-2 rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-700 cursor-pointer transition-colors hover:border-emerald-200 hover:bg-emerald-50/60">
+                                                <input type="checkbox" name="abilities[]" value="{{ $abilityKey }}" data-group-key="{{ $group['key'] }}" class="ability-checkbox rounded border-slate-300 text-emerald-600 focus:ring-emerald-500" checked>
+                                                <span>{{ $abilityLabel }}</span>
+                                            </label>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
                     </div>
 
-                    <div class="space-y-4">
-                        @foreach($tokenAbilityGroups as $group)
-                            <div class="rounded-lg bg-white border border-slate-200 p-4">
-                                <div class="flex items-start justify-between gap-3 mb-3">
-                                    <label class="inline-flex items-start gap-2.5 text-sm text-slate-700 cursor-pointer">
-                                        <input type="checkbox" class="ability-group-toggle mt-0.5 rounded border-slate-300 text-emerald-600 focus:ring-emerald-500" data-group-key="{{ $group['key'] }}" checked>
-                                        <span>
-                                            <span class="font-semibold text-slate-700">{{ $group['label'] }}</span>
-                                            <span class="block text-xs text-slate-400 mt-1">{{ count($group['abilities']) }} 项权限</span>
-                                        </span>
-                                    </label>
-                                </div>
-                                <div class="flex flex-wrap gap-2.5">
-                                    @foreach($group['abilities'] as $abilityKey => $abilityLabel)
-                                        <label class="inline-flex items-center gap-2 rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-700 cursor-pointer transition-colors hover:border-emerald-200 hover:bg-emerald-50/60">
-                                            <input type="checkbox" name="abilities[]" value="{{ $abilityKey }}" data-group-key="{{ $group['key'] }}" class="ability-checkbox rounded border-slate-300 text-emerald-600 focus:ring-emerald-500" checked>
-                                            <span>{{ $abilityLabel }}</span>
-                                        </label>
-                                    @endforeach
-                                </div>
-                            </div>
-                        @endforeach
+                    <div class="flex flex-col-reverse sm:flex-row justify-end gap-3 mt-6">
+                        <button type="button" id="btn-close-create-token" onclick="closeCreateTokenModal()" class="px-5 py-2 text-sm font-medium text-slate-600 bg-slate-100 hover:bg-slate-200 rounded-lg transition-colors">
+                            关闭
+                        </button>
+                        <x-button type="button" id="btn-create-token" onclick="createToken()">
+                            <i class="fas fa-check mr-1.5"></i>确认创建
+                        </x-button>
                     </div>
+                </form>
+            </div>
+
+            <div id="create-token-panel-result" class="hidden">
+                <h3 class="text-lg font-bold text-slate-800 mb-1">API 密钥创建成功</h3>
+                <p class="text-sm text-slate-500 mb-6">请立即复制保存此密钥，关闭后将无法再次查看完整明文。</p>
+
+                <div class="mb-4 rounded-xl border border-emerald-200 bg-emerald-50 p-4">
+                    <p class="text-xs text-emerald-700 mb-1">密钥名称</p>
+                    <p id="token-result-name" class="text-sm font-semibold text-emerald-900 break-all"></p>
                 </div>
 
-                <div id="token-result" class="hidden mb-4 p-4 rounded-lg bg-emerald-50 border border-emerald-200">
-                    <p class="text-sm font-medium text-emerald-700 mb-2">密钥创建成功，请立即复制保存：</p>
-                    <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
-                        <code id="token-value" class="flex-1 block px-3 py-2 text-sm bg-white rounded border border-emerald-200 text-slate-700 break-all select-all"></code>
-                        <button type="button" onclick="copyToken()" class="px-3 py-2 text-sm font-medium text-emerald-700 bg-emerald-100 hover:bg-emerald-200 rounded-lg transition-colors whitespace-nowrap">
-                            <i class="fas fa-copy mr-1"></i>复制
+                <div class="mb-4 rounded-xl border border-emerald-200 bg-emerald-50 p-4">
+                    <div class="flex items-center justify-between gap-3 mb-2">
+                        <p class="text-sm font-medium text-emerald-700">密钥内容</p>
+                        <button type="button" onclick="copyToken()" class="inline-flex items-center gap-1 rounded-lg bg-white/80 px-3 py-1.5 text-sm font-medium text-emerald-700 hover:bg-white transition-colors shrink-0 max-w-[120px] sm:max-w-none">
+                            <i class="fas fa-copy shrink-0"></i>
+                            <span class="truncate">复制</span>
                         </button>
                     </div>
-                    <div class="mt-4">
-                        <p class="text-xs font-semibold text-emerald-700 mb-2">已授予权限</p>
-                        <div id="token-abilities-result" class="space-y-2"></div>
-                    </div>
-                    <p class="text-xs text-emerald-600 mt-3"><i class="fas fa-sync-alt mr-1"></i>关闭弹窗后会自动刷新列表，此密钥关闭后将无法再次查看。</p>
+                    <code id="token-value" class="block w-full rounded-lg border border-emerald-200 bg-white px-3 py-2 text-sm text-slate-700 overflow-hidden text-ellipsis whitespace-nowrap"></code>
                 </div>
 
-                <div class="flex flex-col-reverse sm:flex-row justify-end gap-3 mt-6">
-                    <button type="button" id="btn-close-create-token" @click="$store.modal.close('create-token-modal')" class="px-5 py-2 text-sm font-medium text-slate-600 bg-slate-100 hover:bg-slate-200 rounded-lg transition-colors">
-                        关闭
-                    </button>
-                    <x-button type="button" id="btn-create-token" onclick="createToken()">
-                        <i class="fas fa-check mr-1.5"></i>确认创建
-                    </x-button>
+                <div class="mb-4 rounded-xl border border-emerald-200 bg-emerald-50 p-4">
+                    <p class="text-xs font-semibold text-emerald-700 mb-3">已授予权限</p>
+                    <div id="token-abilities-result" class="space-y-2"></div>
                 </div>
-            </form>
+
+                <p class="text-xs text-emerald-600 mb-6"><i class="fas fa-sync-alt mr-1"></i>关闭后会自动刷新列表，以显示最新创建的密钥。</p>
+
+                <div class="flex flex-col-reverse sm:flex-row justify-end gap-3">
+                    <button type="button" onclick="closeCreateTokenModalAndReload()" class="px-5 py-2 text-sm font-medium text-slate-600 bg-slate-100 hover:bg-slate-200 rounded-lg transition-colors">
+                        关闭并刷新列表
+                    </button>
+                </div>
+            </div>
         </div>
     </x-modal>
 
@@ -237,7 +263,6 @@
         <script>
             const tokenAbilityGroups = @json($tokenAbilityGroups);
             const tokenAbilitiesMap = @json($tokenAbilitiesMap);
-            let shouldReloadTokenList = false;
 
             function getSelectedAbilities() {
                 return Array.from(document.querySelectorAll('.ability-checkbox:checked')).map(item => item.value);
@@ -328,16 +353,45 @@
                 toggle.checked = Array.from(checkboxes).every(item => item.checked);
             }
 
-            function updateToggleAllText() {
+            function updateToggleAllState() {
                 const checkboxes = document.querySelectorAll('.ability-checkbox');
                 const checked = document.querySelectorAll('.ability-checkbox:checked');
-                const toggleAllButton = document.getElementById('toggle-all-abilities');
+                const toggleAll = document.getElementById('toggle-all-abilities');
 
-                if (!toggleAllButton) {
+                if (!toggleAll) {
                     return;
                 }
 
-                toggleAllButton.textContent = checkboxes.length === checked.length ? '取消全选' : '全选权限';
+                toggleAll.checked = checkboxes.length === checked.length;
+            }
+
+            function closeCreateTokenModal() {
+                Alpine.store('modal').close('create-token-modal');
+            }
+
+            function closeCreateTokenModalAndReload() {
+                Alpine.store('modal').close('create-token-modal');
+                setTimeout(() => location.reload(), 600);
+            }
+
+            function resetCreateTokenModal() {
+                document.getElementById('create-token-form').reset();
+                document.getElementById('create-token-panel-form').classList.remove('hidden');
+                document.getElementById('create-token-panel-result').classList.add('hidden');
+                document.getElementById('token-abilities-result').innerHTML = '';
+                document.getElementById('token-value').textContent = '';
+                document.getElementById('token-result-name').textContent = '';
+                document.getElementById('token-name').disabled = false;
+                document.getElementById('token-password').disabled = false;
+                document.querySelectorAll('.ability-checkbox, .ability-group-toggle').forEach(item => {
+                    item.disabled = false;
+                    item.checked = true;
+                });
+                document.getElementById('toggle-all-abilities').disabled = false;
+                document.getElementById('btn-close-create-token').textContent = '关闭';
+                document.getElementById('btn-create-token').classList.remove('hidden');
+                updateToggleAllState();
+                tokenAbilityGroups.forEach(group => updateGroupToggleState(group.key));
             }
 
             function createToken() {
@@ -369,16 +423,11 @@
                     btn.innerHTML = '<i class="fas fa-check mr-1.5"></i>确认创建';
 
                     if (response.data.status) {
-                        shouldReloadTokenList = true;
+                        document.getElementById('token-result-name').textContent = name || '{{ $currentUserEmail }}';
                         document.getElementById('token-value').textContent = response.data.data.token;
                         renderAbilityGroups(document.getElementById('token-abilities-result'), response.data.data.ability_groups || []);
-                        document.getElementById('token-result').classList.remove('hidden');
-                        document.getElementById('token-name').disabled = true;
-                        document.getElementById('token-password').disabled = true;
-                        document.querySelectorAll('.ability-checkbox, .ability-group-toggle').forEach(item => item.disabled = true);
-                        document.getElementById('toggle-all-abilities').disabled = true;
-                        document.getElementById('btn-close-create-token').textContent = '关闭并刷新列表';
-                        btn.classList.add('hidden');
+                        document.getElementById('create-token-panel-form').classList.add('hidden');
+                        document.getElementById('create-token-panel-result').classList.remove('hidden');
                         toastr.success('密钥创建成功');
                     } else {
                         toastr.warning(response.data.message);
@@ -502,28 +551,33 @@
                     document.querySelectorAll(`.ability-checkbox[data-group-key="${groupToggle.dataset.groupKey}"]`).forEach(item => {
                         item.checked = groupToggle.checked;
                     });
-                    updateToggleAllText();
+                    updateToggleAllState();
                     return;
                 }
 
-                const toggleAllButton = event.target.closest('#toggle-all-abilities');
-                if (toggleAllButton) {
-                    const shouldCheck = toggleAllButton.textContent === '全选权限';
+                const toggleAll = event.target.closest('#toggle-all-abilities');
+                if (toggleAll) {
                     document.querySelectorAll('.ability-checkbox, .ability-group-toggle').forEach(item => {
-                        item.checked = shouldCheck;
+                        item.checked = toggleAll.checked;
                     });
-                    updateToggleAllText();
+                    return;
                 }
             });
 
             document.addEventListener('change', (event) => {
-                const checkbox = event.target.closest('.ability-checkbox');
+                const checkbox = event.target.closest('.ability-checkbox, #toggle-all-abilities');
                 if (!checkbox) {
                     return;
                 }
 
+                if (checkbox.id === 'toggle-all-abilities') {
+                    tokenAbilityGroups.forEach(group => updateGroupToggleState(group.key));
+                    updateToggleAllState();
+                    return;
+                }
+
                 updateGroupToggleState(checkbox.dataset.groupKey);
-                updateToggleAllText();
+                updateToggleAllState();
             });
 
             document.addEventListener('alpine:initialized', () => {
@@ -532,27 +586,8 @@
                     const observer = new MutationObserver((mutations) => {
                         mutations.forEach((mutation) => {
                             if (mutation.type === 'attributes' && mutation.attributeName === 'style' && createModal.style.display === 'none') {
-                                const needsReload = shouldReloadTokenList;
-
                                 setTimeout(() => {
-                                    document.getElementById('create-token-form').reset();
-                                    document.getElementById('token-result').classList.add('hidden');
-                                    document.getElementById('token-abilities-result').innerHTML = '';
-                                    document.getElementById('token-name').disabled = false;
-                                    document.getElementById('token-password').disabled = false;
-                                    document.querySelectorAll('.ability-checkbox, .ability-group-toggle').forEach(item => {
-                                        item.disabled = false;
-                                        item.checked = true;
-                                    });
-                                    document.getElementById('toggle-all-abilities').disabled = false;
-                                    document.getElementById('btn-close-create-token').textContent = '关闭';
-                                    document.getElementById('btn-create-token').classList.remove('hidden');
-                                    shouldReloadTokenList = false;
-                                    updateToggleAllText();
-
-                                    if (needsReload) {
-                                        location.reload();
-                                    }
+                                    resetCreateTokenModal();
                                 }, 300);
                             }
                         });
@@ -561,7 +596,7 @@
                 }
 
                 tokenAbilityGroups.forEach(group => updateGroupToggleState(group.key));
-                updateToggleAllText();
+                updateToggleAllState();
             });
         </script>
     @endpush

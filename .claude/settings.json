@@ -1,7 +1,14 @@
 {
   "permissions": {
     "allow": [
-      "Bash(php artisan *)"
+      "Bash(php artisan *)",
+      "Bash(curl -sS -i -H \"Authorization: Bearer 7|xRy3H1h0lIzDnB7JAaZJ4RCYzbKiQktWTqMcx55v\" -H \"Accept: application/json\" \"https://img.liiiu.cn/api/v1/strategies\")",
+      "Bash(curl -sS -i -H \"Authorization: Bearer 7|xRy3H1h0lIzDnB7JAaZJ4RCYzbKiQktWTqMcx55v\" -H \"Accept: application/json\" \"https://img.liiiu.cn/api/v1/albums\")",
+      "Bash(curl -sS -i -H \"Authorization: Bearer 7|xRy3H1h0lIzDnB7JAaZJ4RCYzbKiQktWTqMcx55v\" -H \"Accept: application/json\" \"https://img.liiiu.cn/api/v1/profile\")",
+      "Bash(curl -sS -i -H \"Authorization: Bearer 7|xRy3H1h0lIzDnB7JAaZJ4RCYzbKiQktWTqMcx55v\" -H \"Accept: application/json\" \"https://img.liiiu.cn/api/v1/images\")",
+      "Bash(curl -sS -i -H \"Authorization: Bearer 7|xRy3H1h0lIzDnB7JAaZJ4RCYzbKiQktWTqMcx55v\" -H \"Accept: application/json\" -F \"file=@public/favicon.ico\" \"https://img.liiiu.cn/api/v1/upload\")",
+      "Bash(curl -sS -i -X DELETE -H \"Authorization: Bearer 7|xRy3H1h0lIzDnB7JAaZJ4RCYzbKiQktWTqMcx55v\" -H \"Accept: application/json\" \"https://img.liiiu.cn/api/v1/images/0q2P6z\")",
+      "Bash(curl -sS -i -X DELETE -H \"Authorization: Bearer 7|xRy3H1h0lIzDnB7JAaZJ4RCYzbKiQktWTqMcx55v\" -H \"Accept: application/json\" \"https://img.liiiu.cn/api/v1/albums/1\")"
     ]
   }
 }
