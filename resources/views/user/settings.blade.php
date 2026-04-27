@@ -11,7 +11,7 @@
 
         <form action="{{ route('settings.update') }}" method="POST">
             @csrf
-            <div class="rounded-2xl overflow-hidden" style="background: white; border: 1px solid rgba(226,232,240,0.8); box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 16px rgba(16,185,129,0.05);">
+            <div class="rounded-2xl overflow-hidden" style="background: var(--panel-bg-strong); border: 1px solid var(--border-strong); box-shadow: var(--card-shadow);">
                 <div class="px-6 py-5">
                     <div class="grid grid-cols-6 gap-5">
                         <div class="col-span-6 sm:col-span-3">
@@ -87,7 +87,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="px-6 py-4 flex justify-end" style="background: rgba(248,250,252,0.8); border-top: 1px solid rgba(226,232,240,0.8);">
+                <div class="px-6 py-4 flex justify-end" style="background: var(--card-header-bg); border-top: 1px solid var(--border-strong);">
                     <x-button><i class="fas fa-save mr-1.5"></i>保存设置</x-button>
                 </div>
             </div>

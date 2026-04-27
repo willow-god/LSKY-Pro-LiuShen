@@ -3,9 +3,12 @@ require('./bootstrap');
 import Alpine from 'alpinejs';
 import Sidebar from './stores/sidebar';
 import Modal from './stores/modal';
+import Theme from './stores/theme';
 
 Alpine.store('sidebar', Sidebar);
 Alpine.store('modal', Modal);
+Alpine.store('theme', Theme);
+Alpine.store('theme').init();
 
 window.Alpine = Alpine;
 

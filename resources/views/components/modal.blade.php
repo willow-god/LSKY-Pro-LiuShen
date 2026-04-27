@@ -26,8 +26,8 @@
              x-show="$store.modal.isOpen('{{ $id }}')"
              class="flex text-base text-left transform transition w-full md:inline-block md:max-w-2xl md:px-4 md:my-8 md:align-middle lg:max-w-4xl"
         >
-            <div class="w-full relative flex bg-white px-4 pt-12 pb-6 overflow-hidden sm:px-6 sm:pt-10 md:p-6 lg:p-8 rounded-2xl" style="box-shadow: 0 25px 60px rgba(0,0,0,0.15), 0 8px 20px rgba(0,0,0,0.08); border: 1px solid rgba(226,232,240,0.6);">
-                <button type="button" class="absolute top-3 right-3 w-8 h-8 rounded-lg flex items-center justify-center text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-all duration-150" @click="$store.modal.close('{{ $id }}')">
+            <div class="w-full relative flex px-4 pt-12 pb-6 overflow-hidden sm:px-6 sm:pt-10 md:p-6 lg:p-8 rounded-2xl" style="background: var(--modal-bg); box-shadow: 0 25px 60px rgba(0,0,0,0.15), 0 8px 20px rgba(0,0,0,0.08); border: 1px solid var(--modal-border);">
+                <button type="button" class="absolute top-3 right-3 w-8 h-8 rounded-lg flex items-center justify-center text-slate-400 hover:text-slate-600 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all duration-150" @click="$store.modal.close('{{ $id }}')">
                     <span class="sr-only">Close</span>
                     <i class="fas fa-times text-sm"></i>
                 </button>
@@ -36,7 +36,7 @@
                     <x-loading-spin />
                 </div>
 
-                <div class="w-full" x-show="! $store.modal.isLoading('{{ $id }}')">
+                <div class="w-full text-[var(--text-primary)]" x-show="! $store.modal.isLoading('{{ $id }}')">
                     {{ $slot ?? '' }}
                 </div>
             </div>

@@ -26,7 +26,7 @@
 
         <x-table :columns="['ID', '用户名', '邮箱', '角色组', '总容量', '剩余容量', '图片数量', '相册数量', '状态', '操作']">
             @foreach($users as $user)
-            <tr data-id="{{ $user->id }}" data-json='{{ $user->toJson() }}' class="hover:bg-slate-50/80 transition-colors">
+            <tr data-id="{{ $user->id }}" data-json='{{ $user->toJson() }}' class="hover:bg-emerald-50/40 transition-colors">
                 <td class="px-5 py-3.5 whitespace-nowrap text-sm text-slate-600">{{ $user->id }}</td>
                 <td class="px-5 py-3.5 whitespace-nowrap text-sm font-medium text-slate-800">{{ $user->name }}</td>
                 <td class="px-5 py-3.5 whitespace-nowrap text-sm text-slate-600">{{ $user->email }}</td>

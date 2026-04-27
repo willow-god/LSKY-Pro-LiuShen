@@ -9,6 +9,23 @@
 
         <title>{{ \App\Utils::config(\App\Enums\ConfigKey::AppName) }}</title>
 
+        <script>
+            (() => {
+                try {
+                    const storedTheme = localStorage.getItem('theme');
+                    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                    const theme = storedTheme === 'dark' || storedTheme === 'light'
+                        ? storedTheme
+                        : (prefersDark ? 'dark' : 'light');
+
+                    document.documentElement.classList.toggle('dark', theme === 'dark');
+                    document.documentElement.style.colorScheme = theme;
+                } catch (error) {
+                    document.documentElement.classList.toggle('dark', window.matchMedia('(prefers-color-scheme: dark)').matches);
+                }
+            })();
+        </script>
+
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -24,9 +41,19 @@
             body { font-family: 'Inter', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans CJK SC', 'Source Han Sans SC', 'WenQuanYi Micro Hei', sans-serif; }
         </style>
     </head>
-    <body class="font-sans antialiased">
-        <div class="min-h-screen text-slate-900" style="background: linear-gradient(135deg, #f0f4ff 0%, #faf5ff 50%, #f0f9ff 100%);">
+    <body class="font-sans antialiased bg-[var(--content-bg)] text-[var(--text-primary)] transition-colors duration-300">
+        <div class="min-h-screen text-[var(--text-primary)] transition-colors duration-300 relative" x-data x-cloak style="background: var(--guest-bg);">
             {{ $slot }}
+
+            <button
+                type="button"
+                class="theme-fab fixed right-4 floating-safe-bottom z-[19] inline-flex h-12 w-12 items-center justify-center rounded-full backdrop-blur-sm sm:right-6"
+                @click="$store.theme.toggle()"
+                :aria-label="$store.theme.isDark ? '切换到浅色模式' : '切换到深色模式'"
+                :title="$store.theme.isDark ? '切换到浅色模式' : '切换到深色模式'"
+            >
+                <i class="fas text-base" :class="$store.theme.isDark ? 'fa-sun' : 'fa-moon'"></i>
+            </button>
         </div>
     </body>
     <!-- Scripts -->

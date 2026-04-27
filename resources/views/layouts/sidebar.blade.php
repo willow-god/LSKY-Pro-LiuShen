@@ -1,16 +1,16 @@
-<nav class="transition-all duration-300 -left-[600px] sm:left-0 w-3/4 sm:w-64 h-screen fixed z-10 flex flex-col" style="background: #ffffff; border-right: 1px solid rgba(226,232,240,0.9); box-shadow: 2px 0 16px rgba(0,0,0,0.04);" :class="{
+<nav class="transition-all duration-300 -left-[600px] sm:left-0 w-3/4 sm:w-64 h-screen fixed z-10 flex flex-col border-r shadow-[var(--sidebar-shadow)]" style="background: var(--sidebar-bg); border-color: var(--sidebar-border);" :class="{
     '-left-[600px]': ! $store.sidebar.open,
     'left-0': $store.sidebar.open
 }">
     {{-- Brand / Logo --}}
-    <div class="px-5 h-14 flex justify-between items-center flex-shrink-0" style="background: #ffffff; border-bottom: 1px solid rgba(226,232,240,0.8);">
+    <div class="px-5 h-14 flex justify-between items-center flex-shrink-0 border-b" style="background: var(--sidebar-surface); border-color: var(--sidebar-border);">
         <a href="/" class="flex items-center gap-2 truncate">
             <span class="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0" style="background: linear-gradient(135deg, #10b981, #0d9488);">
                 <i class="fas fa-feather-alt text-white text-sm"></i>
             </span>
-            <span class="font-bold text-base truncate" style="background: linear-gradient(135deg, #059669, #0d9488); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">{{ \App\Utils::config(\App\Enums\ConfigKey::AppName) }}</span>
+            <span class="font-bold text-base truncate gradient-text">{{ \App\Utils::config(\App\Enums\ConfigKey::AppName) }}</span>
         </a>
-        <a href="javascript:void(0)" class="sm:hidden flex w-8 h-8 rounded-lg items-center justify-center text-slate-500 hover:text-slate-700 hover:bg-slate-100 transition-colors" @click="$store.sidebar.open = false">
+        <a href="javascript:void(0)" class="sm:hidden flex w-8 h-8 rounded-lg items-center justify-center text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" @click="$store.sidebar.open = false">
             <i class="fas fa-times text-sm"></i>
         </a>
     </div>
@@ -27,7 +27,7 @@
             </div>
 
             {{-- 我的 --}}
-            <p class="text-xs font-semibold uppercase tracking-widest px-3 mb-2" style="color: #94a3b8;">我的</p>
+            <p class="text-xs font-semibold uppercase tracking-widest px-3 mb-2 text-[var(--text-muted)]">我的</p>
             <x-nav-link :href="route('upload')" :active="request()->routeIs('upload')">
                 <x-slot name="icon"><i class="fas fa-cloud-upload-alt"></i></x-slot>
                 <x-slot name="name">上传图片</x-slot>
@@ -43,7 +43,7 @@
 
             {{-- 公共 --}}
             @if(\App\Utils::config(\App\Enums\ConfigKey::IsEnableGallery) || \App\Utils::config(\App\Enums\ConfigKey::IsEnableApi))
-            <p class="text-xs font-semibold uppercase tracking-widest px-3 mb-2 mt-4" style="color: #94a3b8;">公共</p>
+            <p class="text-xs font-semibold uppercase tracking-widest px-3 mb-2 mt-4 text-[var(--text-muted)]">公共</p>
             @if(\App\Utils::config(\App\Enums\ConfigKey::IsEnableGallery))
             <x-nav-link :href="route('gallery')" :active="request()->routeIs('gallery')">
                 <x-slot name="icon"><i class="fas fa-chalkboard"></i></x-slot>
@@ -64,7 +64,7 @@
 
             {{-- 系统管理 --}}
             @if(Auth::user()->is_adminer)
-            <p class="text-xs font-semibold uppercase tracking-widest px-3 mb-2 mt-4" style="color: #94a3b8;">系统管理</p>
+            <p class="text-xs font-semibold uppercase tracking-widest px-3 mb-2 mt-4 text-[var(--text-muted)]">系统管理</p>
             <x-nav-link :href="route('admin.console')" :active="request()->is('admin/console*')">
                 <x-slot name="icon"><i class="fas fa-terminal"></i></x-slot>
                 <x-slot name="name">控制台</x-slot>
@@ -93,17 +93,17 @@
         </div>
 
         {{-- 容量进度 --}}
-        <div id="capacity-progress" class="mt-6 mx-1 p-4 rounded-xl" style="background: rgba(16,185,129,0.05); border: 1px solid rgba(16,185,129,0.12);">
+        <div id="capacity-progress" class="mt-6 mx-1 p-4 rounded-xl border" style="background: var(--capacity-bg); border-color: var(--capacity-border);">
             <div class="flex items-center justify-between mb-2">
-                <p class="text-xs font-medium text-slate-600">容量使用</p>
+                <p class="text-xs font-medium text-[var(--text-secondary)]">容量使用</p>
                 <i class="fas fa-database text-xs text-emerald-400"></i>
             </div>
             <progress class="w-full h-1.5 rounded-full" value="{{ Auth::user()->use_capacity }}" max="{{ Auth::user()->capacity }}"></progress>
             <div class="flex justify-between mt-2">
-                <p class="text-xs truncate text-emerald-600">
+                <p class="text-xs truncate text-emerald-600 dark:text-emerald-400">
                     <span class="used">{{ \App\Utils::formatSize(Auth::user()->use_capacity * 1024) }}</span>
                 </p>
-                <p class="text-xs text-slate-400">
+                <p class="text-xs text-[var(--text-muted)]">
                     <span class="total">{{ \App\Utils::formatSize(Auth::user()->capacity * 1024) }}</span>
                 </p>
             </div>

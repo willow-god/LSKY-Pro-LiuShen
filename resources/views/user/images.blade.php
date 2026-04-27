@@ -7,7 +7,7 @@
 @endpush
 
 <x-app-layout>
-    <div class="relative flex justify-between items-center px-3 py-2 z-[3] top-0 left-0 right-0 bg-white/95 backdrop-blur-sm" style="border-bottom: 1px solid rgba(226,232,240,0.8); box-shadow: 0 1px 8px rgba(0,0,0,0.04);">
+    <div class="relative flex justify-between items-center px-3 py-2 z-[3] top-0 left-0 right-0 bg-white/95 backdrop-blur-sm" style="border-bottom: 1px solid var(--toolbar-border); box-shadow: 0 1px 8px rgba(0,0,0,0.04);">
         <div class="flex items-center gap-1">
             <button class="flex items-center gap-1.5 text-xs py-1.5 px-3 rounded-lg text-slate-600 hover:bg-emerald-50 hover:text-emerald-700 transition-all duration-150 font-medium" onclick="getAlbums()">
                 <i class="fas fa-layer-group text-emerald-400 text-xs"></i>相册
@@ -79,15 +79,15 @@
     </div>
     <div class="relative inset-0 h-full overflow-hidden">
         <!-- content -->
-        <div id="images-scroll" class="absolute inset-0 overflow-y-scroll dragselect select-none">
+        <div id="images-scroll" class="absolute inset-0 overflow-y-scroll dragselect select-none" style="background: var(--content-surface);">
             <div id="images-grid" class="dragselect"></div>
         </div>
         <!-- right drawer -->
-        <div id="drawer-mask" class="absolute hidden inset-0 bg-gray-500 bg-opacity-50 z-[2]" onclick="drawer.close()"></div>
-        <div id="drawer" class="absolute bg-white w-64 md:w-72 top-0 -right-[1000px] bottom-0 z-[2] flex flex-col transition-all duration-300">
-            <div class="flex justify-between items-center text-md px-3 py-1 border-b">
-                <span class="text-gray-600 truncate" id="drawer-title"></span>
-                <a href="javascript:drawer.close()" class="p-2"><i class="fas fa-times text-blue-500"></i></a>
+        <div id="drawer-mask" class="absolute hidden inset-0 z-[2]" style="background: rgba(2, 6, 23, 0.56); backdrop-filter: blur(2px);" onclick="drawer.close()"></div>
+        <div id="drawer" class="absolute w-64 md:w-72 top-0 -right-[1000px] bottom-0 z-[2] flex flex-col transition-all duration-300" style="background: var(--drawer-bg); border-left: 1px solid var(--drawer-border); box-shadow: -12px 0 32px rgba(0,0,0,0.18);">
+            <div class="flex justify-between items-center text-md px-3 py-1 border-b" style="border-color: var(--drawer-border);">
+                <span class="truncate text-[var(--text-secondary)]" id="drawer-title"></span>
+                <a href="javascript:drawer.close()" class="p-2 text-emerald-500 hover:text-emerald-400 transition-colors"><i class="fas fa-times"></i></a>
             </div>
             <div id="drawer-content" class="overflow-y-auto"></div>
         </div>
@@ -97,7 +97,7 @@
         <a href="javascript:void(0)" data-id="__id__" data-json='__json__' class="images-item relative cursor-default rounded outline outline-2 outline-offset-2 outline-transparent">
             <div class="image-selector absolute z-[2] top-0 right-0 overflow-hidden cursor-pointer sm:hidden group-hover:block">
                 <div class="p-1 text-xl sm:text-2xl">
-                    <i class="fas fa-check-circle block rounded-full bg-white text-white border border-gray-500"></i>
+                    <i class="fas fa-check-circle block rounded-full bg-white text-white border border-gray-500 shadow-sm"></i>
                 </div>
             </div>
             <div class="image-mask absolute left-0 right-0 bottom-0 h-20 z-[1] bg-gradient-to-t from-black" onclick="$(this).siblings('img').trigger('click')">
@@ -124,7 +124,7 @@
     </script>
 
     <script type="text/html" id="albums-item-tpl">
-        <a href="javascript:void(0)" data-id="__id__" data-json='__json__' title="__intro__" class="albums-item flex justify-between items-center group px-2 h-7 rounded w-full bg-gray-100 text-gray-800 hover:bg-blue-300 hover:text-white">
+        <a href="javascript:void(0)" data-id="__id__" data-json='__json__' title="__intro__" class="albums-item flex justify-between items-center group px-2 h-7 rounded w-full bg-gray-100 text-gray-800 hover:bg-blue-300 hover:text-white border border-transparent transition-colors">
             <span class="text-sm truncate w-[80%] name">__name__</span>
             <div class="flex items-center justify-center space-x-1 hidden group-hover:block">
                 <span class="update"><i class="fas fa-edit text-xs"></i></span>
@@ -146,7 +146,7 @@
     </script>
 
     <script type="text/html" id="image-detail-tpl">
-        <div class="my-4 px-4 space-y-3">
+        <div class="my-4 px-4 space-y-3 text-[var(--text-primary)]">
             <div>
                 <span class="text-sm font-semibold">相册名称</span>
                 <p class="my-2 break-words text-gray-700">__album_name__</p>
@@ -309,7 +309,7 @@
             }
 
             const getAlbums = (options, callback) => {
-                let title = '__title__ <i class="cursor-pointer fas fa-plus text-blue-500" onclick="$(\'#album-add\').toggleClass(\'hidden\')"></i>'.replace(/__title__/g, (options || {}).title || '我的相册');
+                let title = '__title__ <i class="cursor-pointer fas fa-plus text-emerald-500" onclick="$(\'#album-add\').toggleClass(\'hidden\')"></i>'.replace(/__title__/g, (options || {}).title || '我的相册');
                 let content = $('#albums-container-tpl').html();
                 drawer.toggle(title, content, function () {
                     let $albums = $('#albums-container');

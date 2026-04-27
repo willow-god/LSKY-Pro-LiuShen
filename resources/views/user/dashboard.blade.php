@@ -1,11 +1,40 @@
 @section('title', '仪表盘')
 
+@push('styles')
+    <style>
+        html.dark .dashboard-stat-card {
+            border-color: rgba(51,65,85,0.92) !important;
+            box-shadow: 0 14px 34px rgba(0,0,0,0.24) !important;
+        }
+
+        html.dark .dashboard-stat-card:nth-child(1) { background: linear-gradient(135deg, rgba(6,78,59,0.88), rgba(15,118,110,0.84)) !important; }
+        html.dark .dashboard-stat-card:nth-child(2) { background: linear-gradient(135deg, rgba(12,74,110,0.88), rgba(14,116,144,0.82)) !important; }
+        html.dark .dashboard-stat-card:nth-child(3) { background: linear-gradient(135deg, rgba(127,29,29,0.86), rgba(153,27,27,0.78)) !important; }
+        html.dark .dashboard-stat-card:nth-child(4) { background: linear-gradient(135deg, rgba(92,77,12,0.82), rgba(120,113,28,0.74)) !important; }
+
+        html.dark .dashboard-stat-card p,
+        html.dark .dashboard-stat-card i {
+            color: #e2e8f0 !important;
+        }
+
+        html.dark .dashboard-capacity-card {
+            background: var(--card-bg) !important;
+            border-color: rgba(51,65,85,0.9) !important;
+            box-shadow: 0 12px 32px rgba(0,0,0,0.26) !important;
+        }
+
+        html.dark .dashboard-capacity-track {
+            background: rgba(30,41,59,0.92) !important;
+        }
+    </style>
+@endpush
+
 <x-app-layout>
     <div class="my-6 md:my-8 space-y-6">
         {{-- 统计卡片 --}}
         <div class="grid grid-cols-2 xl:grid-cols-4 gap-4">
             {{-- 图片数量 --}}
-            <div class="stat-card rounded-2xl p-5 flex items-center gap-4 relative overflow-hidden" style="background: linear-gradient(135deg, #ecfdf5, #d1fae5); border: 1px solid rgba(16,185,129,0.2); box-shadow: 0 4px 20px rgba(16,185,129,0.1);">
+            <div class="dashboard-stat-card stat-card rounded-2xl p-5 flex items-center gap-4 relative overflow-hidden" style="background: linear-gradient(135deg, #ecfdf5, #d1fae5); border: 1px solid rgba(16,185,129,0.2); box-shadow: 0 4px 20px rgba(16,185,129,0.1);">
                 <div class="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0" style="background: rgba(16,185,129,0.15);">
                     <i class="fas fa-images text-xl" style="color: #059669;"></i>
                 </div>
@@ -16,7 +45,7 @@
             </div>
 
             {{-- 可用储存 --}}
-            <div class="stat-card rounded-2xl p-5 flex items-center gap-4 relative overflow-hidden" style="background: linear-gradient(135deg, #f0f9ff, #e0f2fe); border: 1px solid rgba(14,165,233,0.2); box-shadow: 0 4px 20px rgba(14,165,233,0.1);">
+            <div class="dashboard-stat-card stat-card rounded-2xl p-5 flex items-center gap-4 relative overflow-hidden" style="background: linear-gradient(135deg, #f0f9ff, #e0f2fe); border: 1px solid rgba(14,165,233,0.2); box-shadow: 0 4px 20px rgba(14,165,233,0.1);">
                 <div class="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0" style="background: rgba(14,165,233,0.15);">
                     <i class="fas fa-database text-xl" style="color: #0284c7;"></i>
                 </div>
@@ -27,7 +56,7 @@
             </div>
 
             {{-- 已用储存 --}}
-            <div class="stat-card rounded-2xl p-5 flex items-center gap-4 relative overflow-hidden" style="background: linear-gradient(135deg, #f0fdfa, #fbcccc); border: 1px solid rgba(184, 83, 20, 0.2); box-shadow: 0 4px 20px rgba(20,184,166,0.1);">
+            <div class="dashboard-stat-card stat-card rounded-2xl p-5 flex items-center gap-4 relative overflow-hidden" style="background: linear-gradient(135deg, #f0fdfa, #fbcccc); border: 1px solid rgba(184, 83, 20, 0.2); box-shadow: 0 4px 20px rgba(20,184,166,0.1);">
                 <div class="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0" style="background: rgba(184, 20, 20, 0.15);">
                     <i class="fas fa-hdd text-xl" style="color: #940d0d;"></i>
                 </div>
@@ -38,7 +67,7 @@
             </div>
 
             {{-- 总储存 --}}
-            <div class="stat-card rounded-2xl p-5 flex items-center gap-4 relative overflow-hidden" style="background: linear-gradient(135deg, #f8fafc, #fffde8); border: 1px solid rgba(139, 138, 100, 0.18); box-shadow: 0 4px 20px rgba(100,116,139,0.1);">
+            <div class="dashboard-stat-card stat-card rounded-2xl p-5 flex items-center gap-4 relative overflow-hidden" style="background: linear-gradient(135deg, #f8fafc, #fffde8); border: 1px solid rgba(139, 138, 100, 0.18); box-shadow: 0 4px 20px rgba(100,116,139,0.1);">
                 <div class="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0" style="background: rgba(100,116,139,0.1);">
                     <i class="fas fa-server text-xl" style="color: #64748b;"></i>
                 </div>
@@ -56,7 +85,7 @@
             $pct      = min(100, round($usedKB / $totalKB * 100, 1));
             $barColor = $pct >= 90 ? 'linear-gradient(90deg,#ef4444,#f97316)' : ($pct >= 70 ? 'linear-gradient(90deg,#f97316,#fbbf24)' : 'linear-gradient(90deg,#10b981,#0d9488)');
         @endphp
-        <div class="rounded-2xl p-5" style="background: white; border: 1px solid rgba(226,232,240,0.8); box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 6px 20px rgba(16,185,129,0.07);">
+        <div class="dashboard-capacity-card rounded-2xl p-5" style="background: var(--panel-bg-strong); border: 1px solid var(--border-strong); box-shadow: var(--card-shadow-hover);">
             <div class="flex items-center justify-between mb-3">
                 <div class="flex items-center gap-2">
                     <div class="w-7 h-7 rounded-lg flex items-center justify-center" style="background: rgba(16,185,129,0.1);">
@@ -69,7 +98,7 @@
                     <span class="text-slate-400 text-xs ml-1">已使用</span>
                 </div>
             </div>
-            <div class="h-2.5 rounded-full bg-slate-100 overflow-hidden">
+            <div class="dashboard-capacity-track h-2.5 rounded-full bg-slate-100 overflow-hidden">
                 <div class="h-full rounded-full transition-all duration-700" style="width: {{ $pct }}%; background: {{ $barColor }};"></div>
             </div>
             <div class="flex justify-between mt-2">

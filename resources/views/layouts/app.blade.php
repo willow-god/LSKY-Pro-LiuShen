@@ -9,6 +9,23 @@
 
     <title>{{ \App\Utils::config(\App\Enums\ConfigKey::AppName) }}</title>
 
+    <script>
+        (() => {
+            try {
+                const storedTheme = localStorage.getItem('theme');
+                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                const theme = storedTheme === 'dark' || storedTheme === 'light'
+                    ? storedTheme
+                    : (prefersDark ? 'dark' : 'light');
+
+                document.documentElement.classList.toggle('dark', theme === 'dark');
+                document.documentElement.style.colorScheme = theme;
+            } catch (error) {
+                document.documentElement.classList.toggle('dark', window.matchMedia('(prefers-color-scheme: dark)').matches);
+            }
+        })();
+    </script>
+
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -24,8 +41,8 @@
         body { font-family: 'Inter', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans CJK SC', 'Source Han Sans SC', 'WenQuanYi Micro Hei', sans-serif; }
     </style>
 </head>
-<body class="font-sans antialiased overflow-hidden">
-<div class="min-h-screen" style="background-color: #f1f5f9;" x-data x-cloak>
+<body class="font-sans antialiased overflow-hidden bg-[var(--content-bg)] text-[var(--text-primary)] transition-colors duration-300">
+<div class="min-h-screen bg-[var(--content-bg)] text-[var(--text-primary)] transition-colors duration-300" x-data x-cloak>
     @include('layouts.sidebar')
     @include('layouts.header')
     <div
@@ -44,9 +61,19 @@
     >
 
     </div>
-    <x-container class="flex flex-col overflow-y-auto absolute pb-14 top-14 left-0 right-0 bottom-0 transition-all duration-300 min-h-screen h-full">
+    <x-container class="flex flex-col overflow-y-auto absolute pb-14 top-14 left-0 right-0 bottom-0 transition-all duration-300 min-h-screen h-full" style="background: var(--content-surface);">
         {{ $slot }}
     </x-container>
+
+    <button
+        type="button"
+        class="theme-fab fixed right-4 floating-safe-bottom z-[19] inline-flex h-12 w-12 items-center justify-center rounded-full backdrop-blur-sm sm:right-6"
+        @click="$store.theme.toggle()"
+        :aria-label="$store.theme.isDark ? '切换到浅色模式' : '切换到深色模式'"
+        :title="$store.theme.isDark ? '切换到浅色模式' : '切换到深色模式'"
+    >
+        <i class="fas text-base" :class="$store.theme.isDark ? 'fa-sun' : 'fa-moon'"></i>
+    </button>
 </div>
 </body>
 <!-- Scripts -->
@@ -72,3 +99,4 @@
 @endif
 @stack('scripts')
 </html>
+

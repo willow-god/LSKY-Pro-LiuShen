@@ -15,13 +15,13 @@
         </div>
 
         {{-- Token 列表 --}}
-        <div class="rounded-2xl overflow-hidden" style="background: white; border: 1px solid rgba(226,232,240,0.8); box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 16px rgba(16,185,129,0.05);">
+        <div class="rounded-2xl overflow-hidden" style="background: var(--panel-bg-strong); border: 1px solid var(--border-strong); box-shadow: var(--card-shadow);">
             @if($tokens->isEmpty())
                 <x-no-data message="暂无 API 密钥" />
             @else
                 <x-table :columns="['名称', '最后使用时间', '创建时间', '操作']">
                     @foreach($tokens as $token)
-                        <tr class="hover:bg-slate-50/60 transition-colors align-top">
+                        <tr class="hover:bg-emerald-50/40 transition-colors align-top">
                             <td class="px-5 py-4 whitespace-nowrap text-sm text-slate-700">
                                 <span id="token-name-display-{{ $token->id }}">{{ $token->name }}</span>
                             </td>

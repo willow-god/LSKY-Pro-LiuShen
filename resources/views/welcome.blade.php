@@ -96,6 +96,71 @@
             border-color: rgba(16,185,129,0.3);
             color: #059669;
         }
+
+        html.dark .hero-bg {
+            background: radial-gradient(circle at top, rgba(16,185,129,0.08), transparent 35%), #020617;
+        }
+
+        html.dark .hero-bg::before {
+            background:
+                radial-gradient(ellipse 78% 70% at 50% 44%,
+                    rgba(16,185,129,0.18) 0%,
+                    rgba(13,148,136,0.12) 28%,
+                    rgba(14,165,233,0.08) 48%,
+                    rgba(15,23,42,0.03) 62%,
+                    transparent 78%);
+        }
+
+        html.dark .hero-bg::after {
+            background:
+                radial-gradient(circle 600px at 8% 18%, rgba(16,185,129,0.12) 0%, transparent 100%),
+                radial-gradient(circle 500px at 95% 82%, rgba(13,148,136,0.10) 0%, transparent 100%),
+                radial-gradient(circle 420px at 88% 8%, rgba(14,165,233,0.09) 0%, transparent 100%),
+                radial-gradient(circle 380px at 3% 90%, rgba(16,185,129,0.08) 0%, transparent 100%);
+        }
+
+        html.dark .grid-pattern {
+            background-image: radial-gradient(circle, rgba(148,163,184,0.18) 1px, transparent 1px);
+        }
+
+        html.dark .hero-noise {
+            opacity: 0.22;
+            mix-blend-mode: screen;
+        }
+
+        html.dark .nav-link-hover:hover {
+            color: #34d399;
+            background: rgba(16,185,129,0.12);
+        }
+
+        html.dark .upload-section {
+            background: rgba(15,23,42,0.82);
+            border-color: rgba(51,65,85,0.9);
+            box-shadow: 0 18px 48px rgba(0,0,0,0.32), 0 6px 16px rgba(2,6,23,0.24);
+        }
+
+        html.dark .feature-pill {
+            background: rgba(15,23,42,0.7);
+            border-color: rgba(51,65,85,0.88);
+            color: #cbd5e1;
+        }
+
+        html.dark .feature-pill:hover {
+            background: rgba(16,185,129,0.14);
+            border-color: rgba(16,185,129,0.3);
+            color: #a7f3d0;
+        }
+
+        html.dark .welcome-header {
+            background: rgba(2,6,23,0.78) !important;
+            border-bottom-color: rgba(51,65,85,0.88) !important;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.2) !important;
+        }
+
+        html.dark .welcome-footer {
+            background: rgba(2,6,23,0.62) !important;
+            border-top-color: rgba(51,65,85,0.82) !important;
+        }
     </style>
 @endpush
 
@@ -105,7 +170,7 @@
         <div class="hero-noise"></div>
 
         {{-- 顶部导航 --}}
-            <header class="relative z-20 w-full" style="background: rgba(255,255,255,0.88); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid rgba(16,185,129,0.1); box-shadow: 0 1px 12px rgba(0,0,0,0.04);">
+            <header class="relative z-20 w-full welcome-header" style="background: rgba(255,255,255,0.88); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid rgba(16,185,129,0.1); box-shadow: 0 1px 12px rgba(0,0,0,0.04);">
             <div class="container mx-auto px-5 sm:px-10 2xl:px-60 h-16 flex justify-between items-center">
                 {{-- Logo --}}
                 <a href="{{ route('/') }}" class="flex items-center gap-2.5">
@@ -178,7 +243,7 @@
         </main>
 
         {{-- 底部 --}}
-        <footer class="relative z-10 py-4" style="background: rgba(255,255,255,0.6); border-top: 1px solid rgba(16,185,129,0.08);">
+        <footer class="relative z-10 py-4 welcome-footer" style="background: rgba(255,255,255,0.6); border-top: 1px solid rgba(16,185,129,0.08);">
             <p class="text-center text-slate-400 text-xs">
                 初始项目:&nbsp;<a href="https://github.com/lsky-org/lsky-pro" target="_blank" rel="noreferrer" class="hover:text-emerald-500 transition-colors">兰空图床</a>
                 &nbsp;|&nbsp;

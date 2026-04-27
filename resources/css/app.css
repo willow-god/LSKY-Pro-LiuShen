@@ -29,6 +29,13 @@ nav[aria-label="Pagination"] > div > a {
     font-size: 0.8125rem;
 }
 
+html.dark nav[aria-label="Pagination"] > div > span,
+html.dark nav[aria-label="Pagination"] > div > a {
+    border-color: rgba(51, 65, 85, 0.9) !important;
+    color: #cbd5e1 !important;
+    background: rgba(15, 23, 42, 0.82);
+}
+
 nav[aria-label="Pagination"] > div > a:hover {
     background: rgba(99, 102, 241, 0.06) !important;
     color: #6366f1 !important;
@@ -53,9 +60,19 @@ nav[aria-label="Pagination"] > div > span[aria-current="page"] > span {
     transition: box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1), transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+html.dark .admin-section {
+    background: var(--card-bg);
+    border-color: rgba(51, 65, 85, 0.9);
+    box-shadow: 0 10px 32px rgba(0,0,0,0.28), 0 4px 16px rgba(2,6,23,0.25);
+}
+
 .admin-section:hover {
     box-shadow: 0 4px 24px rgba(0, 0, 0, 0.07), 0 8px 32px rgba(16, 185, 129, 0.09);
     transform: translateY(-1px);
+}
+
+html.dark .admin-section:hover {
+    box-shadow: 0 14px 38px rgba(0,0,0,0.34), 0 8px 24px rgba(2,6,23,0.28);
 }
 
 /* 管理页面 section 标题 */
@@ -69,6 +86,10 @@ nav[aria-label="Pagination"] > div > span[aria-current="page"] > span {
     gap: 8px;
 }
 
+html.dark .admin-section-title {
+    color: #f8fafc;
+}
+
 .admin-section-title::before {
     content: '';
     width: 3px;
@@ -76,5 +97,9 @@ nav[aria-label="Pagination"] > div > span[aria-current="page"] > span {
     border-radius: 99px;
     background: linear-gradient(180deg, #10b981, #059669);
     display: inline-block;
+}
+
+html.dark .shadow-custom {
+    box-shadow: 0 10px 30px rgba(0,0,0,0.24), 0 4px 12px rgba(2,6,23,0.22);
 }
 

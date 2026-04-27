@@ -1,5 +1,29 @@
 @section('title', '系统控制台')
 
+@push('styles')
+    <style>
+        html.dark .stat-card:nth-child(-n+4) {
+            border-color: rgba(51,65,85,0.92) !important;
+            box-shadow: 0 14px 34px rgba(0,0,0,0.24) !important;
+        }
+
+        html.dark .stat-card:nth-child(1) { background: linear-gradient(135deg, rgba(6,78,59,0.88), rgba(15,118,110,0.84)) !important; }
+        html.dark .stat-card:nth-child(2) { background: linear-gradient(135deg, rgba(12,74,110,0.88), rgba(14,116,144,0.82)) !important; }
+        html.dark .stat-card:nth-child(3) { background: linear-gradient(135deg, rgba(19,78,74,0.88), rgba(13,148,136,0.8)) !important; }
+        html.dark .stat-card:nth-child(4) { background: linear-gradient(135deg, rgba(15,23,42,0.96), rgba(30,41,59,0.92)) !important; }
+
+        html.dark .stat-card:nth-child(-n+4) p,
+        html.dark .stat-card:nth-child(-n+4) i {
+            color: #e2e8f0 !important;
+        }
+
+        html.dark .stat-card:nth-child(n+5) {
+            background: var(--card-bg) !important;
+            border: 1px solid rgba(51,65,85,0.88);
+        }
+    </style>
+@endpush
+
 <x-app-layout>
     @if(config('app.debug'))
         <p class="mt-4 p-2 rounded-md text-sm bg-red-500 text-white">
