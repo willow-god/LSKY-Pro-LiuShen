@@ -83,8 +83,6 @@
    docker exec -it <容器名> php artisan cache:clear
    ```
 
-> 由于目前**未提供独立的 Docker 镜像**，如需 Docker 部署本项目，请基于原项目 Docker 镜像，将代码目录替换为本仓库内容，或自行编写 `Dockerfile` 构建镜像。
-
 ### 方式三：作为独立项目全新部署
 
 本项目完整保留了 Lsky Pro 的所有功能，可脱离原项目**独立部署运行**，步骤与原项目安装流程一致：
