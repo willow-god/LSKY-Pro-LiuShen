@@ -11,7 +11,7 @@ module.exports = {
     theme: {
         extend: {
             fontFamily: {
-                sans: ['GuanKiapTsingKhai', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans CJK SC', 'Source Han Sans SC', 'WenQuanYi Micro Hei', ...defaultTheme.fontFamily.sans],
+                sans: [...defaultTheme.fontFamily.sans],
             },
             boxShadow: {
                 custom: '0px 4px 6px -1px rgba(0, 0, 0, 0.04)',

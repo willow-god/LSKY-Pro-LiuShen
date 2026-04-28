@@ -11,7 +11,9 @@
       "Bash(curl -sS -i -X DELETE -H \"Authorization: Bearer 7|xRy3H1h0lIzDnB7JAaZJ4RCYzbKiQktWTqMcx55v\" -H \"Accept: application/json\" \"https://img.liiiu.cn/api/v1/albums/1\")",
       "Bash(npm run *)",
       "WebFetch(domain:jsd.liiiu.cn)",
-      "Bash(curl -L --max-time 20 \"https://jsd.liiiu.cn/gh/willow-god/Sharding-fonts/GuanKiapTsingKhai/result.min.css\")"
+      "Bash(curl -L --max-time 20 \"https://jsd.liiiu.cn/gh/willow-god/Sharding-fonts/GuanKiapTsingKhai/result.min.css\")",
+      "Bash(git -C \"e:/Programming/PHP/LSKY-Pro-LiuShen/.claude/worktrees/agent-a48926c77efe143fe\" status --short)",
+      "Bash(git -C \"e:/Programming/PHP/LSKY-Pro-LiuShen/.claude/worktrees/agent-a48926c77efe143fe\" diff -- app/Http/Controllers/Admin/SettingController.php app/Enums/ConfigKey.php resources/views/admin/setting/index.blade.php config/convention.php resources/views/layouts/app.blade.php resources/views/layouts/guest.blade.php)"
     ]
   }
 }

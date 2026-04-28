@@ -26,8 +26,6 @@
             })();
         </script>
 
-        <!-- Fonts -->
-        <link rel="stylesheet" href="https://jsd.liiiu.cn/gh/willow-god/Sharding-fonts/GuanKiapTsingKhai/result.min.css">
         <!-- FontAwesome -->
         <link rel="stylesheet" href="{{ asset('css/fontawesome.css') }}">
         @stack('styles')
@@ -36,8 +34,9 @@
         <link rel="stylesheet" href="{{ asset('css/common.css') }}?t=20260302">
         <link rel="stylesheet" href="{{ asset('css/app.css') }}?t=20260302">
         <style>
-            body { font-family: 'GuanKiapTsingKhai', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans CJK SC', 'Source Han Sans SC', 'WenQuanYi Micro Hei', sans-serif; }
+            body { font-family: 'Inter', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans CJK SC', 'Source Han Sans SC', 'WenQuanYi Micro Hei', sans-serif; }
         </style>
+        @include('layouts.custom-code-loader', ['type' => 'css'])
     </head>
     <body class="font-sans antialiased bg-[var(--content-bg)] text-[var(--text-primary)] transition-colors duration-300">
         <div class="min-h-screen text-[var(--text-primary)] transition-colors duration-300 relative" x-data x-cloak style="background: var(--guest-bg);">
@@ -60,4 +59,5 @@
         <script src="{{ asset('js/custom.js') }}"></script>
     @endif
     @stack('scripts')
+@include('layouts.custom-code-loader', ['type' => 'js'])
 </html>

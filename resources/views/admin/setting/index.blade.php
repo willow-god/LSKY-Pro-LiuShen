@@ -74,6 +74,26 @@
             </div>
         </form>
 
+        <p class="admin-section-title">自定义代码</p>
+        <form action="{{ route('admin.settings.save') }}">
+            <div class="admin-section space-y-4">
+                <div>
+                    <label for="custom_css" class="block text-sm font-medium text-slate-700">自定义 CSS</label>
+                    <p class="text-xs text-slate-400 mb-1.5">自定义样式将注入到所有页面的 &lt;head&gt; 中，无需包裹 &lt;style&gt; 标签</p>
+                    <x-textarea name="custom_css" id="custom_css" placeholder="/* 例如：修改主题色 */&#10;:root { --primary: #ef4444; }" rows="8" spellcheck="false">{{ $configs->get('custom_css') }}</x-textarea>
+                </div>
+                <div>
+                    <label for="custom_js" class="block text-sm font-medium text-slate-700">自定义 JavaScript</label>
+                    <p class="text-xs text-slate-400 mb-1.5">自定义脚本将注入到所有页面的底部，无需包裹 &lt;script&gt; 标签</p>
+                    <x-textarea name="custom_js" id="custom_js" placeholder="// 例如：添加统计代码&#10;console.log('Hello Lsky Pro');" rows="8" spellcheck="false">{{ $configs->get('custom_js') }}</x-textarea>
+                </div>
+
+                <div class="text-right">
+                    <x-button type="submit">保存更改</x-button>
+                </div>
+            </div>
+        </form>
+
         <p class="admin-section-title">邮件配置</p>
         <div class="admin-section space-y-4">
             <x-fieldset title="发信驱动">

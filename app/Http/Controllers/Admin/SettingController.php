@@ -22,12 +22,60 @@ class SettingController extends Controller
         return view('admin.setting.index', compact('configs'));
     }
 
+    public function customCode(Request $request): Response
+    {
+        $css = Utils::config(ConfigKey::CustomCss, '');
+        $js = Utils::config(ConfigKey::CustomJs, '');
+
+        $css = is_string($css) ? $css : '';
+        $js = is_string($js) ? $js : '';
+        $type = $request->query('type');
+
+        if ($type === 'css') {
+            return $this->success('success', [
+                'css' => $css,
+                'css_hash' => md5($css),
+            ]);
+        }
+
+        if ($type === 'js') {
+            return $this->success('success', [
+                'js' => $js,
+                'js_hash' => md5($js),
+            ]);
+        }
+
+        return $this->success('success', [
+            'css' => $css,
+            'css_hash' => md5($css),
+            'js' => $js,
+            'js_hash' => md5($js),
+        ]);
+    }
+
+
     public function save(Request $request): Response
     {
-        foreach ($request->all() as $key => $value) {
-            Config::query()->where('name', $key)->update(['value' => $value]);
+        try {
+            foreach ($request->except(['_token', '_method']) as $key => $value) {
+                if (is_array($value)) {
+                    $value = json_encode($value, JSON_UNESCAPED_UNICODE);
+                } elseif (is_null($value)) {
+                    $value = '';
+                } elseif (is_bool($value) || is_int($value) || is_float($value)) {
+                    $value = (string) $value;
+                }
+
+                $config = Config::query()->firstOrNew(['name' => $key]);
+                $config->value = $value;
+                $config->save();
+            }
+            Cache::flush();
+        } catch (\Throwable $e) {
+            Utils::e($e, '保存系统设置时出现异常');
+            return $this->fail($e->getMessage());
         }
-        Cache::flush();
+
         return $this->success('保存成功');
     }
 

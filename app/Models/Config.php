@@ -12,6 +12,10 @@ class Config extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = 'name';
+
+    protected $fillable = ['name', 'value'];
+
     public $incrementing = false;
 
     protected $keyType = 'string';

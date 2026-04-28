@@ -45,4 +45,10 @@ final class ConfigKey
 
     /** @var string 角色组默认配置 */
     const Group = 'group';
+
+    /** @var string 自定义 CSS */
+    const CustomCss = 'custom_css';
+
+    /** @var string 自定义 JS */
+    const CustomJs = 'custom_js';
 }

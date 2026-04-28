@@ -29,6 +29,8 @@ return [
         ConfigKey::IsAllowGuestUpload => 1,
         ConfigKey::UserInitialCapacity => 512000,
         ConfigKey::IsUserNeedVerify => 0,
+        ConfigKey::CustomCss => '',
+        ConfigKey::CustomJs => '',
         ConfigKey::Mail => [
             'default' => 'smtp',
             'mailers' => [

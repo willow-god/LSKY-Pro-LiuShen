@@ -37,6 +37,7 @@ Route::get('/', fn () => view('welcome'))
 
 Route::any('install', [Controller::class, 'install'])->name('install');
 Route::post('upload', [Controller::class, 'upload']);
+Route::get('custom-code', [AdminSettingController::class, 'customCode'])->name('custom.code');
 Route::group(['middleware' => ['auth']], function () {
     Route::get('dashboard', [UserController::class, 'dashboard'])->name('dashboard');
     Route::get('gallery', [GalleryController::class, 'index'])->middleware(CheckIsEnableGallery::class)->name('gallery');

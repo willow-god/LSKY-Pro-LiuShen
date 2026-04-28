@@ -240,85 +240,85 @@
     <script type="text/html" id="search-grammar-tpl">
         <p class="text-gray-600">默认输入关键字搜索会根据图片的别名、原始名称进行匹配，你也可以使用下面的搜索语法进行高级搜索，并可以以任意组合使用这些搜索限定符来缩小结果范围。例如查找用户名为张三，邮箱为 a@qq.com 且图片拓展名为 jpg 的所有图片：</p>
         <p class="text-gray-600 mb-2"><b>name:张三 email:a@qq.com extension:jpg</b></p>
-        <table class="min-w-full divide-y divide-gray-200">
-            <thead class="bg-gray-50">
-            <tr>
-                <th scope="col" class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">
+        <table class="min-w-full w-full">
+            <thead>
+            <tr style="background: var(--card-header-bg); border-bottom: 1px solid var(--border-strong);">
+                <th scope="col" class="px-3 py-3 text-left text-xs font-semibold uppercase tracking-wider whitespace-nowrap text-[var(--text-secondary)]">
                     限定符
                 </th>
-                <th scope="col" class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">
+                <th scope="col" class="px-3 py-3 text-left text-xs font-semibold uppercase tracking-wider whitespace-nowrap text-[var(--text-secondary)]">
                     示例
                 </th>
             </tr>
             </thead>
-            <tbody class="bg-white divide-y divide-gray-200">
+            <tbody style="background: var(--card-bg);" class="divide-y">
             <tr>
-                <td class="px-3 py-2 text-gray-600 text-sm">name:<span class="italic">USERNAME</span></td>
-                <td class="px-3 py-2 text-sm">匹配用户名为 USERNAME 的图片</td>
+                <td class="px-3 py-2 text-sm text-[var(--text-secondary)]">name:<span class="italic">USERNAME</span></td>
+                <td class="px-3 py-2 text-sm text-[var(--text-primary)]">匹配用户名为 USERNAME 的图片</td>
             </tr>
             <tr>
-                <td class="px-3 py-2 text-gray-600 text-sm">album:<span class="italic">ALBUM_NAME</span></td>
-                <td class="px-3 py-2 text-sm">匹配所在相册名称为 ALBUM_NAME 的图片</td>
+                <td class="px-3 py-2 text-sm text-[var(--text-secondary)]">album:<span class="italic">ALBUM_NAME</span></td>
+                <td class="px-3 py-2 text-sm text-[var(--text-primary)]">匹配所在相册名称为 ALBUM_NAME 的图片</td>
             </tr>
             <tr>
-                <td class="px-3 py-2 text-gray-600 text-sm">group:<span class="italic">GROUP_NAME</span></td>
-                <td class="px-3 py-2 text-sm">匹配图片所属组名称为 GROUP_NAME 的图片</td>
+                <td class="px-3 py-2 text-sm text-[var(--text-secondary)]">group:<span class="italic">GROUP_NAME</span></td>
+                <td class="px-3 py-2 text-sm text-[var(--text-primary)]">匹配图片所属组名称为 GROUP_NAME 的图片</td>
             </tr>
             <tr>
-                <td class="px-3 py-2 text-gray-600 text-sm">strategy:<span class="italic">STRATEGY_NAME</span></td>
-                <td class="px-3 py-2 text-sm">匹配图片所属策略名称为 STRATEGY_NAME 的图片</td>
+                <td class="px-3 py-2 text-sm text-[var(--text-secondary)]">strategy:<span class="italic">STRATEGY_NAME</span></td>
+                <td class="px-3 py-2 text-sm text-[var(--text-primary)]">匹配图片所属策略名称为 STRATEGY_NAME 的图片</td>
             </tr>
             <tr>
-                <td class="px-3 py-2 text-gray-600 text-sm">email:<span class="italic">EMAIL</span></td>
-                <td class="px-3 py-2 text-sm">匹配用户邮箱为 EMAIL 的图片</td>
+                <td class="px-3 py-2 text-sm text-[var(--text-secondary)]">email:<span class="italic">EMAIL</span></td>
+                <td class="px-3 py-2 text-sm text-[var(--text-primary)]">匹配用户邮箱为 EMAIL 的图片</td>
             </tr>
             <tr>
-                <td class="px-3 py-2 text-gray-600 text-sm">extension:<span class="italic">EXTENSION</span></td>
-                <td class="px-3 py-2 text-sm">匹配图片拓展名为 EXTENSION 的图片</td>
+                <td class="px-3 py-2 text-sm text-[var(--text-secondary)]">extension:<span class="italic">EXTENSION</span></td>
+                <td class="px-3 py-2 text-sm text-[var(--text-primary)]">匹配图片拓展名为 EXTENSION 的图片</td>
             </tr>
             <tr>
-                <td class="px-3 py-2 text-gray-600 text-sm">md5:<span class="italic">FILE_MD5</span></td>
-                <td class="px-3 py-2 text-sm">匹配图片文件 md5 值名为 FILE_MD5 的图片</td>
+                <td class="px-3 py-2 text-sm text-[var(--text-secondary)]">md5:<span class="italic">FILE_MD5</span></td>
+                <td class="px-3 py-2 text-sm text-[var(--text-primary)]">匹配图片文件 md5 值名为 FILE_MD5 的图片</td>
             </tr>
             <tr>
-                <td class="px-3 py-2 text-gray-600 text-sm">sha1:<span class="italic">FILE_SHA1</span></td>
-                <td class="px-3 py-2 text-sm">匹配图片文件 sha1 值名为 FILE_SHA1 的图片</td>
+                <td class="px-3 py-2 text-sm text-[var(--text-secondary)]">sha1:<span class="italic">FILE_SHA1</span></td>
+                <td class="px-3 py-2 text-sm text-[var(--text-primary)]">匹配图片文件 sha1 值名为 FILE_SHA1 的图片</td>
             </tr>
             <tr>
-                <td class="px-3 py-2 text-gray-600 text-sm">ip:<span class="italic">UPLOAD_IP</span></td>
-                <td class="px-3 py-2 text-sm">匹配上传 IP 为 UPLOAD_IP 的图片</td>
+                <td class="px-3 py-2 text-sm text-[var(--text-secondary)]">ip:<span class="italic">UPLOAD_IP</span></td>
+                <td class="px-3 py-2 text-sm text-[var(--text-primary)]">匹配上传 IP 为 UPLOAD_IP 的图片</td>
             </tr>
             <tr>
-                <td class="px-3 py-2 text-gray-600 text-sm">is:public</td>
-                <td class="px-3 py-2 text-sm">匹配公开的图片</td>
+                <td class="px-3 py-2 text-sm text-[var(--text-secondary)]">is:public</td>
+                <td class="px-3 py-2 text-sm text-[var(--text-primary)]">匹配公开的图片</td>
             </tr>
             <tr>
-                <td class="px-3 py-2 text-gray-600 text-sm">is:private</td>
-                <td class="px-3 py-2 text-sm">匹配私有的图片</td>
+                <td class="px-3 py-2 text-sm text-[var(--text-secondary)]">is:private</td>
+                <td class="px-3 py-2 text-sm text-[var(--text-primary)]">匹配私有的图片</td>
             </tr>
             <tr>
-                <td class="px-3 py-2 text-gray-600 text-sm">is:unhealthy</td>
-                <td class="px-3 py-2 text-sm">匹配不健康的图片</td>
+                <td class="px-3 py-2 text-sm text-[var(--text-secondary)]">is:unhealthy</td>
+                <td class="px-3 py-2 text-sm text-[var(--text-primary)]">匹配不健康的图片</td>
             </tr>
             <tr>
-                <td class="px-3 py-2 text-gray-600 text-sm">is:guest</td>
-                <td class="px-3 py-2 text-sm">匹配游客上传的图片</td>
+                <td class="px-3 py-2 text-sm text-[var(--text-secondary)]">is:guest</td>
+                <td class="px-3 py-2 text-sm text-[var(--text-primary)]">匹配游客上传的图片</td>
             </tr>
             <tr>
-                <td class="px-3 py-2 text-gray-600 text-sm">is:adminer</td>
-                <td class="px-3 py-2 text-sm">匹配管理员上传的图片</td>
+                <td class="px-3 py-2 text-sm text-[var(--text-secondary)]">is:adminer</td>
+                <td class="px-3 py-2 text-sm text-[var(--text-primary)]">匹配管理员上传的图片</td>
             </tr>
             <tr>
-                <td class="px-3 py-2 text-gray-600 text-sm">order:earliest</td>
-                <td class="px-3 py-2 text-sm">按最早上传的进行排序</td>
+                <td class="px-3 py-2 text-sm text-[var(--text-secondary)]">order:earliest</td>
+                <td class="px-3 py-2 text-sm text-[var(--text-primary)]">按最早上传的进行排序</td>
             </tr>
             <tr>
-                <td class="px-3 py-2 text-gray-600 text-sm">order:utmost</td>
-                <td class="px-3 py-2 text-sm">按图片大小，从大到小进行排序</td>
+                <td class="px-3 py-2 text-sm text-[var(--text-secondary)]">order:utmost</td>
+                <td class="px-3 py-2 text-sm text-[var(--text-primary)]">按图片大小，从大到小进行排序</td>
             </tr>
             <tr>
-                <td class="px-3 py-2 text-gray-600 text-sm">order:least</td>
-                <td class="px-3 py-2 text-sm">按图片大小，从小到大进行排序</td>
+                <td class="px-3 py-2 text-sm text-[var(--text-secondary)]">order:least</td>
+                <td class="px-3 py-2 text-sm text-[var(--text-primary)]">按图片大小，从小到大进行排序</td>
             </tr>
             </tbody>
         </table>
