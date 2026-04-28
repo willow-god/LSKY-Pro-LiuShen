@@ -21,7 +21,7 @@
             @else
                 <x-table :columns="['名称', '最后使用时间', '创建时间', '操作']">
                     @foreach($tokens as $token)
-                        <tr class="hover:bg-emerald-50/40 transition-colors align-top">
+                        <tr class="align-top">
                             <td class="px-5 py-4 whitespace-nowrap text-sm text-slate-700">
                                 <span id="token-name-display-{{ $token->id }}">{{ $token->name }}</span>
                             </td>

@@ -74,7 +74,7 @@ html.dark {
     --sidebar-text-muted: #7c93b4;
     --sidebar-shadow: 2px 0 20px rgba(2, 6, 23, 0.22);
     --header-bg: rgba(8, 15, 30, 0.84);
-    --header-border: rgba(71, 85, 105, 0.72);
+    --header-border: rgba(51, 65, 85, 0.40);
     --header-shadow: 0 1px 18px rgba(2, 6, 23, 0.18);
     --content-bg: #08101d;
     --content-surface: #0f1b2d;
@@ -114,6 +114,13 @@ html.dark {
     --upload-dropzone-bg-hover: linear-gradient(135deg, rgba(19, 85, 76, 0.22), rgba(26, 120, 110, 0.18));
     --upload-dropzone-border: rgba(82, 97, 121, 0.78);
     --upload-dropzone-border-hover: rgba(52, 211, 153, 0.34);
+}
+
+// Tailwind preflight 默认边框色在暗色模式下过于明亮，覆盖为深色
+html.dark *,
+html.dark ::before,
+html.dark ::after {
+    border-color: rgba(51, 65, 85, 0.9);
 }
 
 // ==========================================
@@ -846,15 +853,25 @@ input:checked + .slider:before {
 // ==========================================
 table {
     thead tr {
-        background: linear-gradient(135deg, rgba(99, 102, 241, 0.04), rgba(139, 92, 246, 0.04));
+        background: linear-gradient(135deg, rgba(16, 185, 129, 0.06), rgba(13, 148, 136, 0.04));
     }
 
     tbody tr {
         transition: background-color 0.15s;
 
         &:hover {
-            background-color: rgba(99, 102, 241, 0.03);
+            background-color: rgba(16, 185, 129, 0.07);
         }
+    }
+}
+
+html.dark table {
+    thead tr {
+        background: linear-gradient(135deg, rgba(16, 185, 129, 0.08), rgba(13, 148, 136, 0.05));
+    }
+
+    tbody tr:hover {
+        background-color: rgba(16, 185, 129, 0.09);
     }
 }
 
