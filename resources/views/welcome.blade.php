@@ -98,68 +98,68 @@
         }
 
         html.dark .hero-bg {
-            background: radial-gradient(circle at top, rgba(16,185,129,0.08), transparent 35%), #020617;
+            background: radial-gradient(circle at top, rgba(52,211,153,0.06), transparent 38%), #08101d;
         }
 
         html.dark .hero-bg::before {
             background:
                 radial-gradient(ellipse 78% 70% at 50% 44%,
-                    rgba(16,185,129,0.18) 0%,
-                    rgba(13,148,136,0.12) 28%,
-                    rgba(14,165,233,0.08) 48%,
-                    rgba(15,23,42,0.03) 62%,
-                    transparent 78%);
+                    rgba(110,231,183,0.12) 0%,
+                    rgba(94,234,212,0.08) 30%,
+                    rgba(125,211,252,0.05) 50%,
+                    rgba(15,23,42,0.02) 64%,
+                    transparent 80%);
         }
 
         html.dark .hero-bg::after {
             background:
-                radial-gradient(circle 600px at 8% 18%, rgba(16,185,129,0.12) 0%, transparent 100%),
-                radial-gradient(circle 500px at 95% 82%, rgba(13,148,136,0.10) 0%, transparent 100%),
-                radial-gradient(circle 420px at 88% 8%, rgba(14,165,233,0.09) 0%, transparent 100%),
-                radial-gradient(circle 380px at 3% 90%, rgba(16,185,129,0.08) 0%, transparent 100%);
+                radial-gradient(circle 600px at 8% 18%, rgba(52,211,153,0.08) 0%, transparent 100%),
+                radial-gradient(circle 500px at 95% 82%, rgba(45,212,191,0.07) 0%, transparent 100%),
+                radial-gradient(circle 420px at 88% 8%, rgba(125,211,252,0.06) 0%, transparent 100%),
+                radial-gradient(circle 380px at 3% 90%, rgba(52,211,153,0.05) 0%, transparent 100%);
         }
 
         html.dark .grid-pattern {
-            background-image: radial-gradient(circle, rgba(148,163,184,0.18) 1px, transparent 1px);
+            background-image: radial-gradient(circle, rgba(148,163,184,0.14) 1px, transparent 1px);
         }
 
         html.dark .hero-noise {
-            opacity: 0.22;
+            opacity: 0.16;
             mix-blend-mode: screen;
         }
 
         html.dark .nav-link-hover:hover {
-            color: #34d399;
-            background: rgba(16,185,129,0.12);
+            color: #6ee7b7;
+            background: rgba(52,211,153,0.10);
         }
 
         html.dark .upload-section {
-            background: rgba(15,23,42,0.82);
-            border-color: rgba(51,65,85,0.9);
-            box-shadow: 0 18px 48px rgba(0,0,0,0.32), 0 6px 16px rgba(2,6,23,0.24);
+            background: rgba(20,31,52,0.72);
+            border-color: rgba(94,112,139,0.42);
+            box-shadow: 0 18px 38px rgba(2,6,23,0.16), 0 6px 16px rgba(15,23,42,0.10);
         }
 
         html.dark .feature-pill {
-            background: rgba(15,23,42,0.7);
-            border-color: rgba(51,65,85,0.88);
-            color: #cbd5e1;
+            background: rgba(20,31,52,0.56);
+            border-color: rgba(94,112,139,0.40);
+            color: #d5e2f4;
         }
 
         html.dark .feature-pill:hover {
-            background: rgba(16,185,129,0.14);
-            border-color: rgba(16,185,129,0.3);
-            color: #a7f3d0;
+            background: rgba(52,211,153,0.12);
+            border-color: rgba(52,211,153,0.24);
+            color: #d8f5ea;
         }
 
         html.dark .welcome-header {
-            background: rgba(2,6,23,0.78) !important;
-            border-bottom-color: rgba(51,65,85,0.88) !important;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.2) !important;
+            background: rgba(8,15,30,0.68) !important;
+            border-bottom-color: rgba(94,112,139,0.40) !important;
+            box-shadow: 0 8px 20px rgba(2,6,23,0.12) !important;
         }
 
         html.dark .welcome-footer {
-            background: rgba(2,6,23,0.62) !important;
-            border-top-color: rgba(51,65,85,0.82) !important;
+            background: rgba(8,15,30,0.50) !important;
+            border-top-color: rgba(94,112,139,0.34) !important;
         }
     </style>
 @endpush

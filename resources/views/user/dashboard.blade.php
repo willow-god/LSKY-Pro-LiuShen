@@ -3,28 +3,35 @@
 @push('styles')
     <style>
         html.dark .dashboard-stat-card {
-            border-color: rgba(51,65,85,0.92) !important;
-            box-shadow: 0 14px 34px rgba(0,0,0,0.24) !important;
+            border-color: rgba(125, 146, 177, 0.34) !important;
+            box-shadow: 0 12px 30px rgba(2, 6, 23, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.06) !important;
         }
 
-        html.dark .dashboard-stat-card:nth-child(1) { background: linear-gradient(135deg, rgba(6,78,59,0.88), rgba(15,118,110,0.84)) !important; }
-        html.dark .dashboard-stat-card:nth-child(2) { background: linear-gradient(135deg, rgba(12,74,110,0.88), rgba(14,116,144,0.82)) !important; }
-        html.dark .dashboard-stat-card:nth-child(3) { background: linear-gradient(135deg, rgba(127,29,29,0.86), rgba(153,27,27,0.78)) !important; }
-        html.dark .dashboard-stat-card:nth-child(4) { background: linear-gradient(135deg, rgba(92,77,12,0.82), rgba(120,113,28,0.74)) !important; }
+        html.dark .dashboard-stat-card:nth-child(1) { background: linear-gradient(135deg, rgba(110, 231, 183, 0.24), rgba(45, 212, 191, 0.16)), linear-gradient(135deg, rgba(22,35,56,0.92), rgba(29,52,72,0.9)) !important; }
+        html.dark .dashboard-stat-card:nth-child(2) { background: linear-gradient(135deg, rgba(125, 211, 252, 0.24), rgba(103, 232, 249, 0.14)), linear-gradient(135deg, rgba(22,35,56,0.92), rgba(27,51,76,0.9)) !important; }
+        html.dark .dashboard-stat-card:nth-child(3) { background: linear-gradient(135deg, rgba(252, 165, 165, 0.22), rgba(251, 113, 133, 0.15)), linear-gradient(135deg, rgba(38,35,54,0.92), rgba(58,41,58,0.88)) !important; }
+        html.dark .dashboard-stat-card:nth-child(4) { background: linear-gradient(135deg, rgba(253, 230, 138, 0.20), rgba(203, 213, 225, 0.14)), linear-gradient(135deg, rgba(24,36,55,0.92), rgba(50,52,65,0.88)) !important; }
 
-        html.dark .dashboard-stat-card p,
+        html.dark .dashboard-stat-card p:first-child {
+            color: rgba(226, 232, 240, 0.78) !important;
+        }
+
+        html.dark .dashboard-stat-card p:last-child {
+            color: #f4f9ff !important;
+        }
+
         html.dark .dashboard-stat-card i {
-            color: #e2e8f0 !important;
+            color: rgba(236, 253, 245, 0.92) !important;
         }
 
         html.dark .dashboard-capacity-card {
-            background: var(--card-bg) !important;
-            border-color: rgba(51,65,85,0.9) !important;
-            box-shadow: 0 12px 32px rgba(0,0,0,0.26) !important;
+            background: linear-gradient(135deg, rgba(22,35,56,0.96), rgba(26,42,65,0.92)) !important;
+            border-color: rgba(94,112,139,0.48) !important;
+            box-shadow: 0 12px 30px rgba(2,6,23,0.16) !important;
         }
 
         html.dark .dashboard-capacity-track {
-            background: rgba(30,41,59,0.92) !important;
+            background: rgba(44,59,83,0.82) !important;
         }
     </style>
 @endpush

@@ -9,7 +9,9 @@
       "Bash(curl -sS -i -H \"Authorization: Bearer 7|xRy3H1h0lIzDnB7JAaZJ4RCYzbKiQktWTqMcx55v\" -H \"Accept: application/json\" -F \"file=@public/favicon.ico\" \"https://img.liiiu.cn/api/v1/upload\")",
       "Bash(curl -sS -i -X DELETE -H \"Authorization: Bearer 7|xRy3H1h0lIzDnB7JAaZJ4RCYzbKiQktWTqMcx55v\" -H \"Accept: application/json\" \"https://img.liiiu.cn/api/v1/images/0q2P6z\")",
       "Bash(curl -sS -i -X DELETE -H \"Authorization: Bearer 7|xRy3H1h0lIzDnB7JAaZJ4RCYzbKiQktWTqMcx55v\" -H \"Accept: application/json\" \"https://img.liiiu.cn/api/v1/albums/1\")",
-      "Bash(npm run *)"
+      "Bash(npm run *)",
+      "WebFetch(domain:jsd.liiiu.cn)",
+      "Bash(curl -L --max-time 20 \"https://jsd.liiiu.cn/gh/willow-god/Sharding-fonts/GuanKiapTsingKhai/result.min.css\")"
     ]
   }
 }
