@@ -27,9 +27,7 @@
         </script>
 
         <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+        <link rel="stylesheet" href="https://jsd.liiiu.cn/gh/willow-god/Sharding-fonts/GuanKiapTsingKhai/result.min.css">
         <!-- FontAwesome -->
         <link rel="stylesheet" href="{{ asset('css/fontawesome.css') }}">
         @stack('styles')
@@ -38,7 +36,7 @@
         <link rel="stylesheet" href="{{ asset('css/common.css') }}?t=20260302">
         <link rel="stylesheet" href="{{ asset('css/app.css') }}?t=20260302">
         <style>
-            body { font-family: 'Inter', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans CJK SC', 'Source Han Sans SC', 'WenQuanYi Micro Hei', sans-serif; }
+            body { font-family: 'GuanKiapTsingKhai', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans CJK SC', 'Source Han Sans SC', 'WenQuanYi Micro Hei', sans-serif; }
         </style>
     </head>
     <body class="font-sans antialiased bg-[var(--content-bg)] text-[var(--text-primary)] transition-colors duration-300">

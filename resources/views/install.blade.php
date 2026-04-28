@@ -7,7 +7,7 @@
     <title>Lsky Pro 安装程序</title>
 
     <!-- Fonts -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
+    <link rel="stylesheet" href="https://jsd.liiiu.cn/gh/willow-god/Sharding-fonts/GuanKiapTsingKhai/result.min.css">
     <link rel="stylesheet" href="{{ asset('css/fontawesome.css') }}">
 
     <!-- Styles -->

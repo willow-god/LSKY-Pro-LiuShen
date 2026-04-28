@@ -3,23 +3,28 @@
 @push('styles')
     <style>
         html.dark .stat-card:nth-child(-n+4) {
-            border-color: rgba(51,65,85,0.92) !important;
-            box-shadow: 0 14px 34px rgba(0,0,0,0.24) !important;
+            border-color: rgba(125, 146, 177, 0.34) !important;
+            box-shadow: 0 12px 30px rgba(2, 6, 23, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.06) !important;
         }
 
-        html.dark .stat-card:nth-child(1) { background: linear-gradient(135deg, rgba(6,78,59,0.88), rgba(15,118,110,0.84)) !important; }
-        html.dark .stat-card:nth-child(2) { background: linear-gradient(135deg, rgba(12,74,110,0.88), rgba(14,116,144,0.82)) !important; }
-        html.dark .stat-card:nth-child(3) { background: linear-gradient(135deg, rgba(19,78,74,0.88), rgba(13,148,136,0.8)) !important; }
-        html.dark .stat-card:nth-child(4) { background: linear-gradient(135deg, rgba(15,23,42,0.96), rgba(30,41,59,0.92)) !important; }
+        html.dark .stat-card:nth-child(1) { background: linear-gradient(135deg, rgba(110, 231, 183, 0.24), rgba(45, 212, 191, 0.16)), linear-gradient(135deg, rgba(22,35,56,0.92), rgba(29,52,72,0.9)) !important; }
+        html.dark .stat-card:nth-child(2) { background: linear-gradient(135deg, rgba(125, 211, 252, 0.24), rgba(103, 232, 249, 0.14)), linear-gradient(135deg, rgba(22,35,56,0.92), rgba(27,51,76,0.9)) !important; }
+        html.dark .stat-card:nth-child(3) { background: linear-gradient(135deg, rgba(153, 246, 228, 0.22), rgba(94, 234, 212, 0.14)), linear-gradient(135deg, rgba(22,35,56,0.92), rgba(27,57,70,0.88)) !important; }
+        html.dark .stat-card:nth-child(4) { background: linear-gradient(135deg, rgba(226, 232, 240, 0.16), rgba(148, 163, 184, 0.12)), linear-gradient(135deg, rgba(24,36,55,0.92), rgba(45,58,78,0.88)) !important; }
 
-        html.dark .stat-card:nth-child(-n+4) p,
+        html.dark .stat-card:nth-child(-n+4) p:first-child,
         html.dark .stat-card:nth-child(-n+4) i {
-            color: #e2e8f0 !important;
+            color: rgba(226, 232, 240, 0.82) !important;
+        }
+
+        html.dark .stat-card:nth-child(-n+4) p:last-child {
+            color: #f4f9ff !important;
         }
 
         html.dark .stat-card:nth-child(n+5) {
-            background: var(--card-bg) !important;
-            border: 1px solid rgba(51,65,85,0.88);
+            background: linear-gradient(135deg, rgba(22,35,56,0.96), rgba(26,42,65,0.92)) !important;
+            border: 1px solid rgba(94,112,139,0.46);
+            box-shadow: 0 12px 28px rgba(2,6,23,0.14) !important;
         }
     </style>
 @endpush
