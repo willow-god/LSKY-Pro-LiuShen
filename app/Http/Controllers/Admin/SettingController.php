@@ -58,7 +58,13 @@ class SettingController extends Controller
     {
         try {
             foreach ($request->except(['_token', '_method']) as $key => $value) {
-                if (is_array($value)) {
+                if (ConfigKey::OauthClientSecret === $key) {
+                    $value = is_string($value) ? trim($value) : $value;
+                    if ($value === '') {
+                        continue;
+                    }
+                    $value = encrypt($value);
+                } elseif (is_array($value)) {
                     $value = json_encode($value, JSON_UNESCAPED_UNICODE);
                 } elseif (is_null($value)) {
                     $value = '';

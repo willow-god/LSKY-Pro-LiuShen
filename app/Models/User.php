@@ -38,6 +38,7 @@ use Laravel\Sanctum\HasApiTokens;
  * @property-read Group $group
  * @property-read \Illuminate\Database\Eloquent\Collection $albums
  * @property-read \Illuminate\Database\Eloquent\Collection $images
+ * @property-read \Illuminate\Database\Eloquent\Collection $oauthAccounts
  */
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -126,5 +127,10 @@ class User extends Authenticatable implements MustVerifyEmail
     public function images(): HasMany
     {
         return $this->hasMany(Image::class, 'user_id', 'id');
+    }
+
+    public function oauthAccounts(): HasMany
+    {
+        return $this->hasMany(OAuthAccount::class, 'user_id', 'id');
     }
 }

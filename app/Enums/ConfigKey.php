@@ -51,4 +51,43 @@ final class ConfigKey
 
     /** @var string 自定义 JS */
     const CustomJs = 'custom_js';
+
+    /** @var string 是否启用 OAuth 登录 */
+    const OauthEnable = 'oauth_enable';
+
+    /** @var string 是否允许 OAuth 快速注册 */
+    const OauthAllowRegister = 'oauth_allow_register';
+
+    /** @var string OAuth 登录展示名称 */
+    const OauthProviderName = 'oauth_provider_name';
+
+    /** @var string OAuth 客户端 ID */
+    const OauthClientId = 'oauth_client_id';
+
+    /** @var string OAuth 客户端密钥 */
+    const OauthClientSecret = 'oauth_client_secret';
+
+    /** @var string OAuth 授权地址 */
+    const OauthAuthorizeUrl = 'oauth_authorize_url';
+
+    /** @var string OAuth Token 地址 */
+    const OauthTokenUrl = 'oauth_token_url';
+
+    /** @var string OAuth 用户信息地址 */
+    const OauthUserinfoUrl = 'oauth_userinfo_url';
+
+    /** @var string OAuth Scope */
+    const OauthScope = 'oauth_scope';
+
+    /** @var string OAuth 唯一标识字段 */
+    const OauthUserIdField = 'oauth_user_id_field';
+
+    /** @var string OAuth 用户名字段 */
+    const OauthUserNameField = 'oauth_user_name_field';
+
+    /** @var string OAuth 邮箱字段 */
+    const OauthUserEmailField = 'oauth_user_email_field';
+
+    /** @var string 是否启用 OAuth PKCE */
+    const OauthPkceEnable = 'oauth_pkce_enable';
 }

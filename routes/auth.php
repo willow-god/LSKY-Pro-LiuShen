@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\ConfirmablePasswordController;
 use App\Http\Controllers\Auth\EmailVerificationNotificationController;
 use App\Http\Controllers\Auth\EmailVerificationPromptController;
 use App\Http\Controllers\Auth\NewPasswordController;
+use App\Http\Controllers\Auth\OAuthController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
@@ -66,3 +67,18 @@ Route::post('/confirm-password', [
 Route::post('/logout', [
     AuthenticatedSessionController::class, 'destroy',
 ])->middleware('auth')->name('logout');
+
+// OAuth 登录（需游客状态）
+Route::prefix('oauth')->middleware(['guest', 'oauth.enabled', 'throttle:10,1'])->group(function () {
+    Route::get('redirect', [OAuthController::class, 'redirect'])->name('oauth.redirect');
+    Route::get('callback', [OAuthController::class, 'callback'])->name('oauth.callback');
+});
+
+// OAuth 绑定（需登录状态）
+Route::prefix('oauth')->middleware(['auth', 'throttle:10,1'])->group(function () {
+    Route::get('bind', [OAuthController::class, 'bindRedirect'])->name('oauth.bind.redirect');
+    Route::get('bind/callback', [OAuthController::class, 'bindCallback'])->name('oauth.bind.callback');
+});
+
+Route::delete('oauth/unbind/{oauthAccount}', [OAuthController::class, 'unbind'])
+    ->middleware(['auth', 'throttle:10,1'])->name('oauth.unbind');

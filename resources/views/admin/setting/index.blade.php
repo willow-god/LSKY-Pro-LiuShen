@@ -60,6 +60,82 @@
             </div>
         </form>
 
+        <p class="admin-section-title">OAuth 2.0 登录</p>
+        <form action="{{ route('admin.settings.save') }}">
+            <div class="admin-section space-y-4">
+                <input type="hidden" name="oauth_enable" value="0">
+                <x-fieldset title="是否启用 OAuth 登录" faq="启用或关闭第三方 OAuth 2.0 登录功能">
+                    <x-switch name="oauth_enable" value="1" :checked="(bool) $configs->get('oauth_enable')" />
+                </x-fieldset>
+                <input type="hidden" name="oauth_allow_register" value="0">
+                <x-fieldset title="是否允许 OAuth 注册" faq="开启后，用户可通过 OAuth 直接注册并登录；关闭后，用户需先使用邮箱注册，然后在个人设置中绑定 OAuth 账号">
+                    <x-switch name="oauth_allow_register" value="1" :checked="(bool) $configs->get('oauth_allow_register')" />
+                </x-fieldset>
+                <input type="hidden" name="oauth_pkce_enable" value="0">
+                <x-fieldset title="是否启用 PKCE" faq="PKCE (Proof Key for Code Exchange) 增强授权码流程的安全性，推荐开启">
+                    <x-switch name="oauth_pkce_enable" value="1" :checked="(bool) $configs->get('oauth_pkce_enable', true)" />
+                </x-fieldset>
+                <div>
+                    <label for="oauth_provider_name" class="block text-sm font-medium text-slate-700">登录按钮显示名称</label>
+                    <x-input type="text" name="oauth_provider_name" id="oauth_provider_name" value="{{ $configs->get('oauth_provider_name') }}" placeholder="例如：GitHub / Google / 企业 SSO"/>
+                </div>
+                <div>
+                    <label for="oauth_client_id" class="block text-sm font-medium text-slate-700"><span class="text-red-600">*</span>Client ID</label>
+                    <x-input type="text" name="oauth_client_id" id="oauth_client_id" value="{{ $configs->get('oauth_client_id') }}" placeholder="OAuth 应用的 Client ID" autocomplete="off"/>
+                </div>
+                <div>
+                    <label for="oauth_client_secret" class="block text-sm font-medium text-slate-700"><span class="text-red-600">*</span>Client Secret</label>
+                    <x-input type="password" name="oauth_client_secret" id="oauth_client_secret" value="{{ $configs->get('oauth_client_secret') }}" placeholder="OAuth 应用的 Client Secret" autocomplete="new-password"/>
+                </div>
+                <div>
+                    <label for="oauth_authorize_url" class="block text-sm font-medium text-slate-700"><span class="text-red-600">*</span>授权地址</label>
+                    <x-input type="url" name="oauth_authorize_url" id="oauth_authorize_url" value="{{ $configs->get('oauth_authorize_url') }}" placeholder="https://provider.example.com/oauth/authorize"/>
+                </div>
+                <div>
+                    <label for="oauth_token_url" class="block text-sm font-medium text-slate-700"><span class="text-red-600">*</span>Token 地址</label>
+                    <x-input type="url" name="oauth_token_url" id="oauth_token_url" value="{{ $configs->get('oauth_token_url') }}" placeholder="https://provider.example.com/oauth/token"/>
+                </div>
+                <div>
+                    <label for="oauth_userinfo_url" class="block text-sm font-medium text-slate-700"><span class="text-red-600">*</span>用户信息地址</label>
+                    <x-input type="url" name="oauth_userinfo_url" id="oauth_userinfo_url" value="{{ $configs->get('oauth_userinfo_url') }}" placeholder="https://provider.example.com/oauth/userinfo"/>
+                </div>
+                <div class="rounded-xl border border-sky-200 bg-sky-50 px-4 py-3 text-sm text-sky-700 space-y-2">
+                    <p class="font-medium">请在 OAuth 提供方后台配置以下回调地址：</p>
+                    <div>
+                        <p class="text-xs text-sky-600 mb-1">登录回调</p>
+                        <x-input type="text" :value="route('oauth.callback')" readonly onclick="this.select()" />
+                    </div>
+                    <div>
+                        <p class="text-xs text-sky-600 mb-1">绑定回调</p>
+                        <x-input type="text" :value="route('oauth.bind.callback')" readonly onclick="this.select()" />
+                    </div>
+                </div>
+
+                <div>
+                    <label for="oauth_scope" class="block text-sm font-medium text-slate-700">Scope</label>
+                    <x-input type="text" name="oauth_scope" id="oauth_scope" value="{{ $configs->get('oauth_scope', 'openid profile email') }}" placeholder="openid profile email"/>
+                </div>
+                <div class="grid grid-cols-3 gap-4">
+                    <div>
+                        <label for="oauth_user_id_field" class="block text-sm font-medium text-slate-700">用户标识字段</label>
+                        <x-input type="text" name="oauth_user_id_field" id="oauth_user_id_field" value="{{ $configs->get('oauth_user_id_field', 'sub') }}" placeholder="sub"/>
+                    </div>
+                    <div>
+                        <label for="oauth_user_name_field" class="block text-sm font-medium text-slate-700">用户名字段</label>
+                        <x-input type="text" name="oauth_user_name_field" id="oauth_user_name_field" value="{{ $configs->get('oauth_user_name_field', 'name') }}" placeholder="name"/>
+                    </div>
+                    <div>
+                        <label for="oauth_user_email_field" class="block text-sm font-medium text-slate-700">邮箱字段</label>
+                        <x-input type="text" name="oauth_user_email_field" id="oauth_user_email_field" value="{{ $configs->get('oauth_user_email_field', 'email') }}" placeholder="email"/>
+                    </div>
+                </div>
+
+                <div class="text-right">
+                    <x-button type="submit">保存更改</x-button>
+                </div>
+            </div>
+        </form>
+
         <p class="admin-section-title">用户</p>
         <form action="{{ route('admin.settings.save') }}">
             <div class="admin-section space-y-4">
@@ -112,11 +188,11 @@
                     </div>
                     <div>
                         <label for="mail[mailers][smtp][username]" class="block text-sm font-medium text-slate-700"><span class="text-red-600">*</span>用户名</label>
-                        <x-input type="text" name="mail[mailers][smtp][username]" id="mail[mailers][smtp][username]" value="{{ $configs['mail']['mailers']['smtp']['username'] ?? '' }}" placeholder="请输入用户名"/>
+                        <x-input type="text" name="mail[mailers][smtp][username]" id="mail[mailers][smtp][username]" value="{{ $configs['mail']['mailers']['smtp']['username'] ?? '' }}" placeholder="请输入用户名" autocomplete="off"/>
                     </div>
                     <div>
                         <label for="mail[mailers][smtp][password]" class="block text-sm font-medium text-slate-700"><span class="text-red-600">*</span>密码</label>
-                        <x-input type="password" name="mail[mailers][smtp][password]" id="mail[mailers][smtp][password]" value="{{ $configs['mail']['mailers']['smtp']['password'] ?? '' }}" placeholder="请输入密码"/>
+                        <x-input type="password" name="mail[mailers][smtp][password]" id="mail[mailers][smtp][password]" value="{{ $configs['mail']['mailers']['smtp']['password'] ?? '' }}" placeholder="请输入密码" autocomplete="new-password"/>
                     </div>
                     <div>
                         <label for="mail[mailers][smtp][encryption]" class="block text-sm font-medium text-slate-700">加密方式</label>

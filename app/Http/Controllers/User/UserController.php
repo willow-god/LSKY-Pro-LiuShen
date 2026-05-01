@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 
@@ -27,7 +28,12 @@ class UserController extends Controller
 
     public function settings(): View
     {
-        return view('user.settings');
+        /** @var User $user */
+        $user = Auth::user();
+        $oauthTableExists = Schema::hasTable('oauth_accounts');
+        $oauthAccounts = $oauthTableExists ? $user->oauthAccounts()->get() : collect();
+
+        return view('user.settings', compact('oauthAccounts', 'oauthTableExists'));
     }
 
     public function update(UserSettingRequest $request): Response

@@ -57,7 +57,18 @@ class Utils
                     case ConfigKey::IsEnableApi:
                     case ConfigKey::IsEnableRegistration:
                     case ConfigKey::IsUserNeedVerify:
+                    case ConfigKey::OauthEnable:
+                    case ConfigKey::OauthAllowRegister:
+                    case ConfigKey::OauthPkceEnable:
                         $value = (bool) $value;
+                        break;
+                    case ConfigKey::OauthClientSecret:
+                        if (is_string($value) && $value !== '') {
+                            try {
+                                $value = decrypt($value);
+                            } catch (\Throwable) {
+                            }
+                        }
                         break;
                     case ConfigKey::Mail:
                     case ConfigKey::Group:
