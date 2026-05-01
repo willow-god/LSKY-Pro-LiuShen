@@ -126,7 +126,7 @@
                         @else
                             <div class="divide-y divide-slate-100/80">
                                 @foreach ($strategies as $strategy)
-                                    <div class="flex items-start gap-3 px-5 py-3.5 hover:bg-emerald-50/50 transition-colors duration-150">
+                                    <div class="dashboard-strategy-item flex items-start gap-3 px-5 py-3.5 transition-colors duration-150">
                                         <div class="mt-0.5 w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0" style="background: rgba(16,185,129,0.1);">
                                             <i class="fas fa-server text-xs" style="color: #10b981;"></i>
                                         </div>

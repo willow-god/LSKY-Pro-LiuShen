@@ -99,7 +99,7 @@
                     <label for="oauth_userinfo_url" class="block text-sm font-medium text-slate-700"><span class="text-red-600">*</span>用户信息地址</label>
                     <x-input type="url" name="oauth_userinfo_url" id="oauth_userinfo_url" value="{{ $configs->get('oauth_userinfo_url') }}" placeholder="https://provider.example.com/oauth/userinfo"/>
                 </div>
-                <div class="rounded-xl border border-sky-200 bg-sky-50 px-4 py-3 text-sm text-sky-700 space-y-2">
+                <div class="rounded-xl border border-sky-200 bg-sky-50 px-4 py-3 text-sm text-sky-700 space-y-2 oauth-callback-notice">
                     <p class="font-medium">请在 OAuth 提供方后台配置以下回调地址：</p>
                     <div>
                         <p class="text-xs text-sky-600 mb-1">登录回调</p>
